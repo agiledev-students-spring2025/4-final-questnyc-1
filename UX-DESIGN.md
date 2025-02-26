@@ -1,8 +1,9 @@
 # User Experience Design
 
-This repository contains instructions and files for two assignments that together comprise the user experience design phase of a web app.
+## Prototype Link
 
-Replace the contents of this file with the completed assignments, as described in:
+[QuestNYC Prototype](https://www.figma.com/proto/ew4G3gF7yhqSMWSDMDvNWH/QuestNYC-Wireframes?node-id=4-14&t=KKYycQJPi3ckFxcH-1)
 
-- [app map & wireframe instructions](instructions-0a-app-map-wireframes.md).
-- [prototype instructions](instructions-0b-prototyping.md)
+## App Map
+
+![App Map](/ux-design/QuestNYC_app_map.png)
