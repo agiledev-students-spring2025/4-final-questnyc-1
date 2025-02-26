@@ -6,4 +6,4 @@
 
 ## App Map
 
-![App Map](/ux-design/QuestNYC app map.png)
+![App Map](/ux-design/QuestNYC_app_map.png)
