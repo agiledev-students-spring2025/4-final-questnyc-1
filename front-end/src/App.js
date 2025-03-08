@@ -10,6 +10,7 @@ import ProfilePage from './pages/ProfilePage'
 import FriendProfilePage from './pages/FriendProfilePage'
 import FriendsListPage from './pages/FriendsListPage'
 import InviteFriendPage from './pages/InviteFriendPage'
+import Home from './pages/Home'
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <div>
             <Routes>
                 <Route path="/" element={<SplashPage />} />
+                <Route path="/home-page" element={<Home />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/create-account" element={<CreateAccountPage />} />
                 <Route path="/reset-password" element={<PasswordResetPrompt />} />
@@ -25,7 +27,6 @@ function App() {
                 <Route path="/friend-profile-page" element={<FriendProfilePage />} />
                 <Route path="/friends-list-page" element={<FriendsListPage />} />
                 <Route path="/invite-friend-page" element={<InviteFriendPage />} />
-
                
 
             </Routes>
