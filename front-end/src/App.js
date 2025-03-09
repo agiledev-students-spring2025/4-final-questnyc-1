@@ -1,6 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
+
+
 import SplashPage from './pages/SplashPage.js';
 import LoginPage from './pages/LoginPage.js';
 import CreateAccountPage from './pages/CreateAccountPage.js';
@@ -13,6 +15,9 @@ import InviteFriendPage from './pages/InviteFriendPage.js';
 import Home from './pages/Home.js';
 import QuestDetailPage from './pages/QuestDetailPage.js';
 import CompletedQuestsPage from './pages/CompletedQuestsPage.js';
+import LeaderboardPage from './pages/LeaderboardPage'
+import AchievementsPage from './pages/AchievementsPage'
+
 
 function App() {
     return (
@@ -30,6 +35,9 @@ function App() {
                 <Route path="/invite-friend-page" element={<InviteFriendPage />} />
                 <Route path="/quest-detail" element={<QuestDetailPage />} />
                 <Route path="/completed-quests" element={<CompletedQuestsPage />} />
+                <Route path="/leaderboard" element={<LeaderboardPage />} />
+                <Route path="/achievements" element={<AchievementsPage />} />
+               
             </Routes>
         </div>
     );
