@@ -13,6 +13,8 @@ import InviteFriendPage from './pages/InviteFriendPage'
 import Home from './pages/Home'
 import LeaderboardPage from './pages/LeaderboardPage'
 import AchievementsPage from './pages/AchievementsPage'
+import QuestDetailPage from './pages/QuestDetailPage.js';
+import CompletedQuestsPage from './pages/CompletedQuestsPage.js';
 
 
 function App() {
@@ -31,7 +33,9 @@ function App() {
                 <Route path="/invite-friend-page" element={<InviteFriendPage />} />
                 <Route path="/leaderboard" element={<LeaderboardPage />} />
                 <Route path="/achievements" element={<AchievementsPage />} />
-               
+                <Route path="/quest-detail" element={<QuestDetailPage />} />
+                <Route path="/completed-quests" element={<CompletedQuestsPage />} />
+
 
             </Routes>
         </div>
