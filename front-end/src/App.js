@@ -11,6 +11,8 @@ import FriendProfilePage from './pages/FriendProfilePage'
 import FriendsListPage from './pages/FriendsListPage'
 import InviteFriendPage from './pages/InviteFriendPage'
 import Home from './pages/Home'
+import LeaderboardPage from './pages/LeaderboardPage'
+import AchievementsPage from './pages/AchievementsPage'
 
 
 function App() {
@@ -27,6 +29,8 @@ function App() {
                 <Route path="/friend-profile-page" element={<FriendProfilePage />} />
                 <Route path="/friends-list-page" element={<FriendsListPage />} />
                 <Route path="/invite-friend-page" element={<InviteFriendPage />} />
+                <Route path="/leaderboard" element={<LeaderboardPage />} />
+                <Route path="/achievements" element={<AchievementsPage />} />
                
 
             </Routes>
