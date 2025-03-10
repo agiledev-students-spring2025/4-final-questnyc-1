@@ -62,8 +62,8 @@ function ProfilePage() {
             {/* Action Buttons */}
             <div style={{ marginTop: '20px' }}>
                 <button style={buttonStyle}>Achievements</button>
-                <button style={buttonStyle}>Completed Quests</button>
-                <button style={buttonStyle} onClick={() => navigate('/friends-list-page')}>Friends List</button> {/* ✅ Navigates to Friends List */}
+                <button style={buttonStyle} onClick={() => navigate('/completed-quests')}>Completed Quests</button>
+                <button style={buttonStyle} onClick={() => navigate('/friends-list-page')}>Friends List</button>
                 <button style={buttonStyle}>Change Password</button>
             </div>
 
