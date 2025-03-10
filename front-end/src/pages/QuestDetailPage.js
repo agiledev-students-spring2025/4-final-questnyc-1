@@ -51,19 +51,22 @@ function QuestDetailPage() {
             
             {/* Accept Button */}
             <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-                <button 
-                    style={{
-                        backgroundColor: '#ccc',
-                        border: 'none',
-                        padding: '10px 20px',
-                        fontSize: '16px',
-                        cursor: 'pointer',
-                        width: '150px'
-                    }}
-                    onClick={() => console.log('Quest accepted')}
-                >
-                    Accept Quest
-                </button>
+            <button 
+                style={{
+                    backgroundColor: '#ccc',
+                    border: 'none',
+                    padding: '10px 20px',
+                    fontSize: '16px',
+                    cursor: 'pointer',
+                    width: '150px'
+                }}
+                onClick={() => {
+                    console.log('Quest accepted');
+                    navigate("/home-page"); // Navigate back to the home page
+                }}
+            >
+                Accept Quest
+            </button>
             </div>
             
             {/* Bottom Navigation Menu */}
