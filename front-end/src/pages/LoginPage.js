@@ -10,7 +10,8 @@ function LoginPage() {
         e.preventDefault();
         // Handle login logic here
         console.log('Logging in with:', { username, password });
-        // On success, maybe navigate somewhere
+        // On success, navigate to home page
+        navigate('/home-page');
     };
 
     return (
