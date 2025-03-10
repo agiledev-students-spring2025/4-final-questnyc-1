@@ -1,0 +1,97 @@
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    background-color: gray;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.bottom-nav button {
+    background: lightgray;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.bottom-nav .active {
+    font-weight: bold;
+}
+
+.achievements-container {
+    text-align: center;
+    margin: auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    width: 35%;
+}
+
+.achievements-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+}
+
+.achievements-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.achievement-item {
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: space-between;
+    background-color: lightgray;
+    padding: 10px;
+    border-radius: 5px;
+    width: 80%;
+}
+
+.achievement-name {
+    flex-grow: 2;
+    text-align: left;
+    /* font-weight: bold; */
+    font-size: 0.95em;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.progress-bar {
+    flex-grow: 3;
+    /* padding-left: 10px; */
+    height: 15px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background-color: #3b82f6;
+}
+
+.progress-bar.completed .progress {
+    background-color: #3b82f6;
+}
+
+.progress-text {
+    flex-grow: 1;
+    text-align: right;
+    font-weight: bold;
+    padding-left: 10px;
+    padding-top: 10px;
+}

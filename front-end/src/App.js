@@ -6,13 +6,16 @@ import LoginPage from './pages/LoginPage.js';
 import CreateAccountPage from './pages/CreateAccountPage.js';
 import PasswordResetPrompt from './pages/PasswordResetPrompt.js';
 import PasswordResetConfirmation from './pages/PasswordResetConfirmation.js';
-import ProfilePage from './pages/ProfilePage.js';
-import FriendProfilePage from './pages/FriendProfilePage.js';
-import FriendsListPage from './pages/FriendsListPage.js';
-import InviteFriendPage from './pages/InviteFriendPage.js';
-import Home from './pages/Home.js';
+import ProfilePage from './pages/ProfilePage.js'
+import FriendProfilePage from './pages/FriendProfilePage.js'
+import FriendsListPage from './pages/FriendsListPage.js'
+import InviteFriendPage from './pages/InviteFriendPage.js'
+import Home from './pages/Home.js'
+import LeaderboardPage from './pages/LeaderboardPage.js'
+import AchievementsPage from './pages/AchievementsPage.js'
 import QuestDetailPage from './pages/QuestDetailPage.js';
 import CompletedQuestsPage from './pages/CompletedQuestsPage.js';
+
 
 function App() {
     return (
@@ -28,8 +31,12 @@ function App() {
                 <Route path="/friend-profile-page" element={<FriendProfilePage />} />
                 <Route path="/friends-list-page" element={<FriendsListPage />} />
                 <Route path="/invite-friend-page" element={<InviteFriendPage />} />
+                <Route path="/leaderboard" element={<LeaderboardPage />} />
+                <Route path="/achievements" element={<AchievementsPage />} />
                 <Route path="/quest-detail" element={<QuestDetailPage />} />
                 <Route path="/completed-quests" element={<CompletedQuestsPage />} />
+
+
             </Routes>
         </div>
     );
