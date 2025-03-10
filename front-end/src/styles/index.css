@@ -1,0 +1,63 @@
+/* (imports all global styles) */
+
+/* Import design tokens and variables */
+@import './global/variables.css';
+
+/* Import component styles */
+@import './global/components.css';
+
+/* Essential reset and base styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--background);
+}
+
+body {
+  padding-bottom: 60px; /* Space for fixed bottom navigation */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  color: var(--text-primary);
+  font-weight: var(--weight-bold);
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: var(--spacing-md);
+}
+
+a {
+  color: var(--secondary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Container for most pages */
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: var(--spacing-md);
+}
+
+/* Common utility classes */
+.text-center { text-align: center; }
+.mt-md { margin-top: var(--spacing-md); }
+.mb-md { margin-bottom: var(--spacing-md); }
