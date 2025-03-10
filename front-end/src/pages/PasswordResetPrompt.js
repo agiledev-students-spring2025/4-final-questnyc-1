@@ -6,36 +6,34 @@ function PasswordResetPrompt() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle sending reset link
         console.log('Sending reset link to:', email, confirmEmail);
     };
 
     return (
         <div style={{ margin: '50px' }}>
-            <div style={{ width: 150, height: 150, backgroundColor: '#ccc' }}>
-                Logo
-            </div>
+            <div style={{ width: 150, height: 150, backgroundColor: '#ccc' }}>Logo</div>
             <h2>Reset Password</h2>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Current email address</label><br />
+                    <label>Current email address</label>
+                    <br />
                     <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                    /><br /><br />
+                    />
                 </div>
                 <div>
-                    <label>Re-enter email address</label><br />
+                    <label>Re-enter email address</label>
+                    <br />
                     <input
                         type="email"
                         value={confirmEmail}
                         onChange={(e) => setConfirmEmail(e.target.value)}
-                    /><br /><br />
+                    />
                 </div>
                 <button type="submit">Send Reset Link</button>
             </form>
-
             <p><a href="#">Privacy Policy</a></p>
             <p>© 2025 QuestNYC Team</p>
         </div>
