@@ -10,6 +10,8 @@
     --text-secondary: #6b7280;  /* Secondary text */
     --border: #e5e7eb;          /* Border color */
     --success: #4CAF50;         /* Progress bar complete */
+    --error: #dc3545;           /* Error messages */
+    --warning: #ffc107;         /* Warning messages */
     
     /* Spacing */
     --spacing-xs: 4px;
@@ -41,4 +43,13 @@
     /* Shadows */
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+    /* Layout */
+    --container-width: 400px;  /* Standard container width for mobile */
+    
+    /* Z-index layers */
+    --z-base: 1;
+    --z-overlay: 10;
+    --z-modal: 100;
+    --z-toast: 1000;
   }
