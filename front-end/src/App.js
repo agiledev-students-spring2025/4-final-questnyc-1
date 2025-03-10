@@ -1,18 +1,18 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import SplashPage from './pages/SplashPage';
-import LoginPage from './pages/LoginPage';
-import CreateAccountPage from './pages/CreateAccountPage';
-import PasswordResetPrompt from './pages/PasswordResetPrompt';
-import PasswordResetConfirmation from './pages/PasswordResetConfirmation';
-import ProfilePage from './pages/ProfilePage'
-import FriendProfilePage from './pages/FriendProfilePage'
-import FriendsListPage from './pages/FriendsListPage'
-import InviteFriendPage from './pages/InviteFriendPage'
-import Home from './pages/Home'
-import LeaderboardPage from './pages/LeaderboardPage'
-import AchievementsPage from './pages/AchievementsPage'
+import SplashPage from './pages/SplashPage.js';
+import LoginPage from './pages/LoginPage.js';
+import CreateAccountPage from './pages/CreateAccountPage.js';
+import PasswordResetPrompt from './pages/PasswordResetPrompt.js';
+import PasswordResetConfirmation from './pages/PasswordResetConfirmation.js';
+import ProfilePage from './pages/ProfilePage.js'
+import FriendProfilePage from './pages/FriendProfilePage.js'
+import FriendsListPage from './pages/FriendsListPage.js'
+import InviteFriendPage from './pages/InviteFriendPage.js'
+import Home from './pages/Home.js'
+import LeaderboardPage from './pages/LeaderboardPage.js'
+import AchievementsPage from './pages/AchievementsPage.js'
 import QuestDetailPage from './pages/QuestDetailPage.js';
 import CompletedQuestsPage from './pages/CompletedQuestsPage.js';
 
