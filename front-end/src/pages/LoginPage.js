@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../styles/index.css';
 
 function LoginPage() {
     const navigate = useNavigate();
@@ -15,40 +16,53 @@ function LoginPage() {
     };
 
     return (
-        <div style={{ margin: '50px' }}>
-            <div style={{ width: 150, height: 150, backgroundColor: '#ccc' }}>
+        <div className="container">
+            <div className="profile-pic mt-lg mb-md flex justify-center items-center">
                 Logo
             </div>
-            <h2>Log In</h2>
+            
+            <h2 className="text-center mb-md">Log In</h2>
+            
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Username</label><br />
+                    <label>Username</label>
                     <input
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                    /><br /><br />
+                    />
                 </div>
                 <div>
-                    <label>Password</label><br />
+                    <label>Password</label>
                     <input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                    /><br /><br />
+                    />
                 </div>
-                <button type="submit">Login</button>
+                <button type="submit" className="btn btn-primary btn-block">Login</button>
             </form>
 
-            <p>
-                <button onClick={() => navigate('/create-account')}>Create An Account</button>
-            </p>
-            <p>
-                <button onClick={() => navigate('/reset-password')}>Forgot Password?</button>
-            </p>
+            <div className="text-center mt-md">
+                <button 
+                    onClick={() => navigate('/create-account')}
+                    className="btn btn-block"
+                >
+                    Create An Account
+                </button>
+                
+                <button 
+                    onClick={() => navigate('/reset-password')}
+                    className="btn btn-block"
+                >
+                    Forgot Password?
+                </button>
+            </div>
 
-            <p><a href="#">Privacy Policy</a></p>
-            <p>© 2025 QuestNYC Team</p>
+            <div className="text-center mt-lg">
+                <p className="mb-sm"><a href="#">Privacy Policy</a></p>
+                <p>© 2025 QuestNYC Team</p>
+            </div>
         </div>
     );
 }
