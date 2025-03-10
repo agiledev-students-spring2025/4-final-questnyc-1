@@ -27,7 +27,7 @@ const Home = () => {
         <div className="progress-bar">
           <div className="progress-fill" style={{ width: `${currentQuest.progress}%` }}></div>
         </div>
-        <a href="#" className="more-info">More Information →</a>
+        <a onClick={() => navigate('/quest-detail')} className="more-info" style={{ cursor: 'pointer' }}>More Information →</a>
       </div>
       
       {/* Available Quests */}
@@ -39,7 +39,7 @@ const Home = () => {
             <h3 className="quest-name">{quest.name}</h3>
             <p className="route-label">Route</p>
             <p className="quest-route">{quest.route}</p>
-            <a href="#" className="more-info">More Information →</a>
+            <a onClick={() => navigate('/quest-detail')} className="more-info" style={{ cursor: 'pointer' }}>More Information →</a>
           </div>
         ))}
       </div>
