@@ -1,22 +1,20 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-
-
 import SplashPage from './pages/SplashPage.js';
 import LoginPage from './pages/LoginPage.js';
 import CreateAccountPage from './pages/CreateAccountPage.js';
 import PasswordResetPrompt from './pages/PasswordResetPrompt.js';
 import PasswordResetConfirmation from './pages/PasswordResetConfirmation.js';
-import ProfilePage from './pages/ProfilePage.js';
-import FriendProfilePage from './pages/FriendProfilePage.js';
-import FriendsListPage from './pages/FriendsListPage.js';
-import InviteFriendPage from './pages/InviteFriendPage.js';
-import Home from './pages/Home.js';
+import ProfilePage from './pages/ProfilePage.js'
+import FriendProfilePage from './pages/FriendProfilePage.js'
+import FriendsListPage from './pages/FriendsListPage.js'
+import InviteFriendPage from './pages/InviteFriendPage.js'
+import Home from './pages/Home.js'
+import LeaderboardPage from './pages/LeaderboardPage.js'
+import AchievementsPage from './pages/AchievementsPage.js'
 import QuestDetailPage from './pages/QuestDetailPage.js';
 import CompletedQuestsPage from './pages/CompletedQuestsPage.js';
-import LeaderboardPage from './pages/LeaderboardPage'
-import AchievementsPage from './pages/AchievementsPage'
 
 
 function App() {
@@ -33,11 +31,12 @@ function App() {
                 <Route path="/friend-profile-page" element={<FriendProfilePage />} />
                 <Route path="/friends-list-page" element={<FriendsListPage />} />
                 <Route path="/invite-friend-page" element={<InviteFriendPage />} />
-                <Route path="/quest-detail" element={<QuestDetailPage />} />
-                <Route path="/completed-quests" element={<CompletedQuestsPage />} />
                 <Route path="/leaderboard" element={<LeaderboardPage />} />
                 <Route path="/achievements" element={<AchievementsPage />} />
-               
+                <Route path="/quest-detail" element={<QuestDetailPage />} />
+                <Route path="/completed-quests" element={<CompletedQuestsPage />} />
+
+
             </Routes>
         </div>
     );
