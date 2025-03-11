@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../styles/index.css';
 
 function LoginPage() {
     const navigate = useNavigate();
@@ -13,13 +14,16 @@ function LoginPage() {
     };
 
     return (
-        <div style={{ margin: '50px' }}>
-            <div style={{ width: 150, height: 150, backgroundColor: '#ccc' }}>Logo</div>
-            <h2>Log In</h2>
+        <div className="container">
+            <div className="profile-pic mt-lg mb-md flex justify-center items-center">
+                Logo
+            </div>
+            
+            <h2 className="text-center mb-md">Log In</h2>
+            
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Username</label>
-                    <br />
                     <input
                         type="text"
                         value={username}
@@ -28,23 +32,35 @@ function LoginPage() {
                 </div>
                 <div>
                     <label>Password</label>
-                    <br />
                     <input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-                <button type="submit">Login</button>
+                <button type="submit" className="btn btn-primary btn-block">Login</button>
             </form>
-            <p>
-                <button onClick={() => navigate('/create-account')}>Create An Account</button>
-            </p>
-            <p>
-                <button onClick={() => navigate('/reset-password')}>Forgot Password?</button>
-            </p>
-            <p><a href="#">Privacy Policy</a></p>
-            <p>© 2025 QuestNYC Team</p>
+
+            <div className="text-center mt-md">
+                <button 
+                    onClick={() => navigate('/create-account')}
+                    className="btn btn-block"
+                >
+                    Create An Account
+                </button>
+                
+                <button 
+                    onClick={() => navigate('/reset-password')}
+                    className="btn btn-block"
+                >
+                    Forgot Password?
+                </button>
+            </div>
+
+            <div className="text-center mt-lg">
+                <p className="mb-sm"><a href="#">Privacy Policy</a></p>
+                <p>© 2025 QuestNYC Team</p>
+            </div>
         </div>
     );
 }

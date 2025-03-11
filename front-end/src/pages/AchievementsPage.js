@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './AchievementsPage.css';
+import '../styles/index.css';
 
 function AchievementsPage() {
     const navigate = useNavigate();
@@ -13,62 +13,43 @@ function AchievementsPage() {
         { name: 'Achievement #5', progress: 2, total: 2, completed: true },
     ];
 
-
     return (
-        <div className="achievements-container">
+        <div className="container achievements-container">
             <h1 className="achievements-title">Achievements</h1>
-            <h2 className="section-title">In Progress</h2>
+            
+            <h2 className="section-header">In Progress</h2>
             <div className="achievements-section">
                 {achievements.filter(a => !a.completed).map((a, index) => (
                     <div key={index} className="achievement-item">
                         <span className="achievement-name">{a.name}</span>
-                        <div className="progress-bar">
-                            <div className="progress" style={{ width: `${(a.progress / a.total) * 100}%` }}></div>
+                        <div className="progress-container">
+                            <div className="progress-fill" style={{ width: `${(a.progress / a.total) * 100}%` }}></div>
                         </div>
                         <span className="progress-text">{a.progress}/{a.total}</span>
                     </div>
                 ))}
             </div>
-            <h2 className="section-title">Completed</h2>
+            
+            <h2 className="section-header">Completed</h2>
             <div className="achievements-section">
                 {achievements.filter(a => a.completed).map((a, index) => (
                     <div key={index} className="achievement-item">
                         <span className="achievement-name">{a.name}</span>
-                        <div className="progress-bar completed">
-                            <div className="progress" style={{ width: '100%' }}></div>
+                        <div className="progress-container">
+                            <div className="progress-fill completed" style={{ width: '100%' }}></div>
                         </div>
                         <span className="progress-text">{a.progress}/{a.total}</span>
                     </div>
                 ))}
             </div>
-            <div style={navBarStyle}>
-                <button style={iconButtonStyle} onClick={() => navigate("/home-page")}>🏠</button>
-                <button style={iconButtonStyle} onClick={() => navigate("/profile-page")}>👤</button>
-                <button style={iconButtonStyle} onClick={() => navigate("/leaderboard")}>🏆</button>
+            
+            <div className="nav-bar">
+                <button className="nav-icon" onClick={() => navigate("/home-page")}>🏠</button>
+                <button className="nav-icon" onClick={() => navigate("/profile-page")}>👤</button>
+                <button className="nav-icon active" onClick={() => navigate("/leaderboard")}>🏆</button>
             </div>
         </div>
     );
 }
 
-    const navBarStyle = {
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'space-around',
-        padding: '10px 0',
-        backgroundColor: '#f8f9fa',
-        borderTop: '1px solid #ddd'
-    };
-
-    const iconButtonStyle = {
-        background: 'none',
-        border: 'none',
-        fontSize: '24px',
-        cursor: 'pointer'
-    };
-
-    export default AchievementsPage;
-
-
+export default AchievementsPage;

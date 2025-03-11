@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../styles/index.css';
 
 function CompletedQuestsPage() {
     const navigate = useNavigate();
@@ -33,84 +34,41 @@ function CompletedQuestsPage() {
     ];
     
     return (
-        <div style={{ margin: '20px', maxWidth: '400px', marginLeft: 'auto', marginRight: 'auto' }}>
+        <div className="container">
             {/* Page Title */}
-            <h1 style={{ textAlign: 'center', margin: '0', fontSize: '28px' }}>Completed Quests</h1>
-            <hr style={{ marginTop: '8px', marginBottom: '20px' }} />
+            <h1 className="section-header text-center">Completed Quests</h1>
+            <hr className="separator" />
             
             {/* Completed Quests List */}
-            <div style={{ marginBottom: '80px' }}>
+            <div className="mb-lg">
                 {completedQuests.map((quest) => (
-                    <div key={quest.id} style={questCardStyle}>
-                        <h2 style={{ margin: '0 0 5px 0', fontSize: '20px' }}>{quest.title}</h2>
-                        <div style={{ textAlign: 'center' }}>
-                            <p style={{ margin: '0 0 5px 0', fontWeight: 'bold' }}>{quest.information}</p>
-                            <p style={{ margin: '0 0 10px 0', fontSize: '14px' }}>{quest.description}</p>
+                    <div key={quest.id} className="quest-item mb-md">
+                        <h2 className="quest-name mb-xs">{quest.title}</h2>
+                        <div className="text-center">
+                            <p className="mb-xs" style={{ fontWeight: 'var(--weight-bold)' }}>{quest.information}</p>
+                            <p className="mb-sm" style={{ fontSize: 'var(--font-sm)' }}>{quest.description}</p>
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <div style={progressBarContainerStyle}>
+                        <div className="flex items-center">
+                            <div className="progress-container">
                                 <div 
-                                    style={{
-                                        ...progressBarStyle,
-                                        width: `${quest.progressPercent}%`
-                                    }}
+                                    className="progress-fill completed"
+                                    style={{ width: `${quest.progressPercent}%` }}
                                 ></div>
                             </div>
-                            <span style={{ marginLeft: '10px', fontWeight: 'bold' }}>{quest.progress}</span>
+                            <span style={{ marginLeft: 'var(--spacing-sm)', fontWeight: 'var(--weight-bold)' }}>{quest.progress}</span>
                         </div>
                     </div>
                 ))}
             </div>
             
             {/* Bottom Navigation Menu */}
-            <div style={navBarStyle}>
-                <button style={iconButtonStyle} onClick={() => navigate("/home-page")}>🏠</button>
-                <button style={iconButtonStyle} onClick={() => navigate("/profile-page")}>👤</button>
-                <button style={iconButtonStyle} onClick={() => navigate("/leaderboard")}>🏆</button>
+            <div className="nav-bar">
+                <button className="nav-icon" onClick={() => navigate("/home-page")}>🏠</button>
+                <button className="nav-icon active" onClick={() => navigate("/profile-page")}>👤</button>
+                <button className="nav-icon" onClick={() => navigate("/leaderboard")}>🏆</button>
             </div>
         </div>
     );
 }
-
-/* Styles */
-const questCardStyle = {
-    backgroundColor: '#ddd',
-    borderRadius: '10px',
-    padding: '15px',
-    marginBottom: '20px'
-};
-
-const progressBarContainerStyle = {
-    flex: 1,
-    backgroundColor: '#fff',
-    height: '15px',
-    borderRadius: '10px',
-    overflow: 'hidden'
-};
-
-const progressBarStyle = {
-    backgroundColor: '#4CAF50',
-    height: '100%',
-    borderRadius: '10px'
-};
-
-const navBarStyle = {
-    position: 'fixed',
-    bottom: 0,
-    left: 0,
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'space-around',
-    padding: '10px 0',
-    backgroundColor: '#f8f9fa',
-    borderTop: '1px solid #ddd'
-};
-
-const iconButtonStyle = {
-    background: 'none',
-    border: 'none',
-    fontSize: '24px',
-    cursor: 'pointer'
-};
 
 export default CompletedQuestsPage;

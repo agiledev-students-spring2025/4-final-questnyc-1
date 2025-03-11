@@ -1,0 +1,182 @@
+/* pages.css - Styles for specific page components */
+
+/* Quest Components */
+.quest-box {
+    background-color: var(--background-alt);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    margin-top: var(--spacing-sm);
+    border: 1px solid var(--border);
+  }
+  
+  .quest-route {
+    color: var(--text-primary);
+    word-wrap: break-word;
+  }
+  
+  .route-label {
+    font-size: var(--font-sm);
+    color: var(--text-secondary);
+    margin-top: var(--spacing-xs);
+  }
+  
+  /* Available Quests Section */
+  .available-quests-title {
+    font-size: var(--font-lg);
+    font-weight: var(--weight-bold);
+    margin-top: var(--spacing-xl);
+    color: var(--text-primary);
+    text-align: center;
+  }
+  
+  .quests-list {
+    display: grid;
+    gap: var(--spacing-lg);
+  }
+  
+  /* More Info Link */
+  .more-info {
+    color: var(--secondary);
+    font-size: var(--font-sm);
+    margin-top: var(--spacing-sm);
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .more-info:hover {
+    text-decoration: underline;
+  }
+  
+  /* Separator */
+  .separator {
+    margin: var(--spacing-sm) 0;
+    border-color: var(--border);
+  }
+
+  /* Achievement styles for pages.css */
+
+.achievements-container {
+  text-align: center;
+  margin: auto;
+  padding: var(--spacing-md);
+}
+
+.achievements-title {
+  font-size: var(--font-xxl);
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--spacing-sm);
+}
+
+.achievements-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
+}
+
+.achievement-name {
+  flex-grow: 2;
+  text-align: left;
+  font-size: var(--font-sm);
+  padding-left: var(--spacing-sm);
+  padding-right: var(--spacing-sm);
+}
+
+.progress-text {
+  flex-grow: 1;
+  text-align: right;
+  font-weight: var(--weight-bold);
+  padding-left: var(--spacing-sm);
+  padding-top: var(--spacing-sm);
+}
+
+.achievement-item {
+  display: flex;
+  align-items: center;
+  background-color: var(--background-alt);
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Leaderboard styles for pages.css */
+
+/* Top Player */
+.top-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.username-score {
+  font-size: var(--font-lg);
+  font-weight: var(--weight-bold);
+}
+
+/* Leaderboard List */
+.leaderboard-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.leaderboard-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-sm);
+  background-color: var(--background-alt);
+  margin: var(--spacing-xs) 0;
+  border-radius: var(--radius-sm);
+  width: 100%;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  gap: var(--spacing-sm);
+}
+
+.rank-section {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-shrink: 0;
+}
+
+.rank-circle {
+  width: 30px;
+  height: 30px;
+  background-color: var(--background-alt);
+  border: 2px solid var(--text-primary);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--weight-bold);
+}
+
+.profile-picture-small {
+  width: 30px;
+  height: 30px;
+  background-color: var(--text-secondary);
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.username-box {
+  text-align: center;
+  border-radius: var(--radius-md);
+  width: 40%;
+  font-size: var(--font-lg);
+  background-color: var(--border);
+}
+
+.score-box {
+  padding-right: var(--spacing-sm);
+  padding-left: var(--spacing-sm);
+  border-radius: var(--radius-md);
+  font-size: var(--font-md);
+  background-color: var(--border);
+}

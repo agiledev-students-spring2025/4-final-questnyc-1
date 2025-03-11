@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../styles/index.css';
 
 function CreateAccountPage() {
     const [username, setUsername] = useState('');
@@ -11,13 +12,16 @@ function CreateAccountPage() {
     };
 
     return (
-        <div style={{ margin: '50px' }}>
-            <div style={{ width: 150, height: 150, backgroundColor: '#ccc' }}>Logo</div>
-            <h2>Create An Account</h2>
+        <div className="container">
+            <div className="profile-pic mt-lg mb-md flex justify-center items-center">
+                Logo
+            </div>
+            
+            <h2 className="text-center mb-md">Create An Account</h2>
+            
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Username</label>
-                    <br />
                     <input
                         type="text"
                         value={username}
@@ -26,7 +30,6 @@ function CreateAccountPage() {
                 </div>
                 <div>
                     <label>Password</label>
-                    <br />
                     <input
                         type="password"
                         value={password}
@@ -35,17 +38,18 @@ function CreateAccountPage() {
                 </div>
                 <div>
                     <label>Re-enter Password</label>
-                    <br />
                     <input
                         type="password"
                         value={confirmPass}
                         onChange={(e) => setConfirmPass(e.target.value)}
                     />
                 </div>
-                <button type="submit">Create Account</button>
+                <button type="submit" className="btn btn-primary btn-block">Create Account</button>
             </form>
-            <p><a href="#">Privacy Policy</a></p>
-            <p>© 2025 QuestNYC Team</p>
+            <div className="text-center mt-lg">
+                <p className="mb-sm"><a href="#">Privacy Policy</a></p>
+                <p>© 2025 QuestNYC Team</p>
+            </div>
         </div>
     );
 }
