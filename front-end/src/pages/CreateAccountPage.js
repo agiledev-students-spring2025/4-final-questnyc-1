@@ -8,7 +8,6 @@ function CreateAccountPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle create account logic
         console.log('Creating account:', { username, password, confirmPass });
     };
 
@@ -47,7 +46,6 @@ function CreateAccountPage() {
                 </div>
                 <button type="submit" className="btn btn-primary btn-block">Create Account</button>
             </form>
-
             <div className="text-center mt-lg">
                 <p className="mb-sm"><a href="#">Privacy Policy</a></p>
                 <p>© 2025 QuestNYC Team</p>

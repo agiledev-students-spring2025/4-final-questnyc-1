@@ -9,9 +9,7 @@ function LoginPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle login logic here
         console.log('Logging in with:', { username, password });
-        // On success, navigate to home page
         navigate('/home-page');
     };
 
