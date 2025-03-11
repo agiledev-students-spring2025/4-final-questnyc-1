@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './LeaderboardPage.css';
+import '../styles/index.css';
 
 function LeaderboardPage() {
     const navigate = useNavigate();
@@ -18,10 +18,15 @@ function LeaderboardPage() {
     ];
 
     return (
-        <div className="leaderboard-container">
-            <h1 className="leaderboard-title">Leaderboard</h1>
+        <div className="container text-center">
+            <h1 className="section-header">Leaderboard</h1>
+            
             <div className="top-player">
-                <div className="profile-picture">#1 Profile Picture</div>
+                <div className="profile-pic">
+                    <div className="flex justify-center items-center" style={{ height: '100%' }}>
+                        #1 Profile Picture
+                    </div>
+                </div>
                 <div className="username-score">
                     <span className="username">{leaderboardData[0].username}</span>
                     <div></div>
@@ -29,8 +34,8 @@ function LeaderboardPage() {
                     <span>{" EXP"}</span>
                 </div>
             </div>
+            
             <ul className="leaderboard-list"> 
-                {/* create a list containing EXP, profile picture, and name of every player in the top 10 */}
                 {leaderboardData.slice(1).map((player) => (
                     <li key={player.rank} className="leaderboard-item">
                         <div className="rank-section">
@@ -42,32 +47,14 @@ function LeaderboardPage() {
                     </li>
                 ))}
             </ul>
-            <div style={navBarStyle}>
-                <button style={iconButtonStyle} onClick={() => navigate("/home-page")}>🏠</button>
-                <button style={iconButtonStyle} onClick={() => navigate("/profile-page")}>👤</button>
-                <button style={iconButtonStyle} onClick={() => navigate("/leaderboard")}>🏆</button>
+            
+            <div className="nav-bar">
+                <button className="nav-icon" onClick={() => navigate("/home-page")}>🏠</button>
+                <button className="nav-icon" onClick={() => navigate("/profile-page")}>👤</button>
+                <button className="nav-icon active" onClick={() => navigate("/leaderboard")}>🏆</button>
             </div>
         </div>
     );
 }
-
-const navBarStyle = {
-    position: 'fixed',
-    bottom: 0,
-    left: 0,
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'space-around',
-    padding: '10px 0',
-    backgroundColor: '#f8f9fa',
-    borderTop: '1px solid #ddd'
-};
-
-const iconButtonStyle = {
-    background: 'none',
-    border: 'none',
-    fontSize: '24px',
-    cursor: 'pointer'
-};
 
 export default LeaderboardPage;

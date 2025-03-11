@@ -100,3 +100,83 @@
   border-radius: var(--radius-sm);
   margin-bottom: var(--spacing-sm);
 }
+
+/* Leaderboard styles for pages.css */
+
+/* Top Player */
+.top-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.username-score {
+  font-size: var(--font-lg);
+  font-weight: var(--weight-bold);
+}
+
+/* Leaderboard List */
+.leaderboard-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.leaderboard-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-sm);
+  background-color: var(--background-alt);
+  margin: var(--spacing-xs) 0;
+  border-radius: var(--radius-sm);
+  width: 100%;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  gap: var(--spacing-sm);
+}
+
+.rank-section {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-shrink: 0;
+}
+
+.rank-circle {
+  width: 30px;
+  height: 30px;
+  background-color: var(--background-alt);
+  border: 2px solid var(--text-primary);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--weight-bold);
+}
+
+.profile-picture-small {
+  width: 30px;
+  height: 30px;
+  background-color: var(--text-secondary);
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.username-box {
+  text-align: center;
+  border-radius: var(--radius-md);
+  width: 40%;
+  font-size: var(--font-lg);
+  background-color: var(--border);
+}
+
+.score-box {
+  padding-right: var(--spacing-sm);
+  padding-left: var(--spacing-sm);
+  border-radius: var(--radius-md);
+  font-size: var(--font-md);
+  background-color: var(--border);
+}
