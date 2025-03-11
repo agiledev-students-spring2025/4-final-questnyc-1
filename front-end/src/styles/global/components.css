@@ -128,16 +128,6 @@
     margin-bottom: var(--spacing-xs);
   }
   
-  /* Achievements */
-  .achievement-item {
-    display: flex;
-    align-items: center;
-    background-color: var(--background-alt);
-    padding: var(--spacing-sm);
-    border-radius: var(--radius-sm);
-    margin-bottom: var(--spacing-sm);
-  }
-  
   /* Section headers */
   .section-header {
     font-size: var(--font-lg);

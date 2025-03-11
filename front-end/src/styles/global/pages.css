@@ -54,3 +54,49 @@
     margin: var(--spacing-sm) 0;
     border-color: var(--border);
   }
+
+  /* Achievement styles for pages.css */
+
+.achievements-container {
+  text-align: center;
+  margin: auto;
+  padding: var(--spacing-md);
+}
+
+.achievements-title {
+  font-size: var(--font-xxl);
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--spacing-sm);
+}
+
+.achievements-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
+}
+
+.achievement-name {
+  flex-grow: 2;
+  text-align: left;
+  font-size: var(--font-sm);
+  padding-left: var(--spacing-sm);
+  padding-right: var(--spacing-sm);
+}
+
+.progress-text {
+  flex-grow: 1;
+  text-align: right;
+  font-weight: var(--weight-bold);
+  padding-left: var(--spacing-sm);
+  padding-top: var(--spacing-sm);
+}
+
+.achievement-item {
+  display: flex;
+  align-items: center;
+  background-color: var(--background-alt);
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-sm);
+}
