@@ -1,0 +1,56 @@
+/* pages.css - Styles for specific page components */
+
+/* Quest Components */
+.quest-box {
+    background-color: var(--background-alt);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    margin-top: var(--spacing-sm);
+    border: 1px solid var(--border);
+  }
+  
+  .quest-route {
+    color: var(--text-primary);
+    word-wrap: break-word;
+  }
+  
+  .route-label {
+    font-size: var(--font-sm);
+    color: var(--text-secondary);
+    margin-top: var(--spacing-xs);
+  }
+  
+  /* Available Quests Section */
+  .available-quests-title {
+    font-size: var(--font-lg);
+    font-weight: var(--weight-bold);
+    margin-top: var(--spacing-xl);
+    color: var(--text-primary);
+    text-align: center;
+  }
+  
+  .quests-list {
+    display: grid;
+    gap: var(--spacing-lg);
+  }
+  
+  /* More Info Link */
+  .more-info {
+    color: var(--secondary);
+    font-size: var(--font-sm);
+    margin-top: var(--spacing-sm);
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .more-info:hover {
+    text-decoration: underline;
+  }
+  
+  /* Separator */
+  .separator {
+    margin: var(--spacing-sm) 0;
+    border-color: var(--border);
+  }

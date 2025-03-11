@@ -6,6 +6,9 @@
 /* Import component styles */
 @import './global/components.css';
 
+/* Import page-specific styles */
+@import './global/pages.css';
+
 /* Essential reset and base styles */
 *, *::before, *::after {
   box-sizing: border-box;
