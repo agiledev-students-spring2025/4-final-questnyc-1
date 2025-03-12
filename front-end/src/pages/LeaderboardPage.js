@@ -20,12 +20,14 @@ function LeaderboardPage() {
     return (
         <div className="container text-center">
             <h1 className="section-header">Leaderboard</h1>
-            
+
             <div className="top-player">
                 <div className="profile-pic">
-                    <div className="flex justify-center items-center" style={{ height: '100%' }}>
-                        #1 Profile Picture
-                    </div>
+                    <img
+                        // temporary profile picture for #1
+                        src={`https://picsum.photos/seed/${leaderboardData[0].username}/50`}
+                        alt="#1 Profile Picture"
+                    />
                 </div>
                 <div className="username-score">
                     <span className="username">{leaderboardData[0].username}</span>
@@ -34,12 +36,16 @@ function LeaderboardPage() {
                     <span>{" EXP"}</span>
                 </div>
             </div>
-            
-            <ul className="leaderboard-list"> 
+
+            <ul className="leaderboard-list">
                 {leaderboardData.slice(1).map((player) => (
                     <li key={player.rank} className="leaderboard-item">
                         <div className="rank-section">
-                            <div className="profile-picture-small"></div>
+                            {/* temporary profile pictures for positions 2-9 */}
+                            <img className="profile-picture-small"
+                                src={`https://picsum.photos/seed/${player.username}/50`}
+                                alt="#1 Profile Picture"
+                            />
                             <div className="rank-circle">{player.rank}</div>
                         </div>
                         <div className="username-box">{player.username}</div>
@@ -47,7 +53,7 @@ function LeaderboardPage() {
                     </li>
                 ))}
             </ul>
-            
+
             <div className="nav-bar">
                 <button className="nav-icon" onClick={() => navigate("/home-page")}>🏠</button>
                 <button className="nav-icon" onClick={() => navigate("/profile-page")}>👤</button>
