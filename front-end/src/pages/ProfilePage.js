@@ -6,7 +6,7 @@ function ProfilePage() {
     const navigate = useNavigate(); 
 
     const user = {
-        profilePic: 'https://via.placeholder.com/150', //replace with actual image URL
+        profilePic: 'https://picsum.photos/100', //replace with actual image URL
         username: 'John Smith',
         firstJoined: 'January 2024'
     };
