@@ -1,64 +1,40 @@
-# QuestNYC: The Ultimate Urban Exploration Game
+# Front-End Setup Instructions
 
-## About QuestNYC
+This repository contains the front-end code for our project.
 
-QuestNYC is a location-based game that transforms New York City into a real-world RPG. Players explore the city by completing quests, visiting key locations, and earning rewards and achievements.
+## Prerequisites
 
-The application encourages walking, exploration, and engagement with NYC's rich history and culture while making it fun and interactive. This app benefits tourists, new residents, and longtime locals looking to discover hidden gems throughout the city.
+- Node.js (latest LTS version recommended)
+- npm (comes with Node.js)
 
-## Key Features
+## Installation
 
-- **Location-Based Quests**: Complete challenges by physically visiting locations around NYC
-- **Achievement System**: Earn and track achievements as you explore
-- **Leaderboard**: Compete with other players for the highest score
-- **Social Features**: Add friends and track their progress
-- **Profile Management**: Customize your profile and track your journey
-
-## Technology Stack
-
-- **Frontend**: React, React Router DOM
-- **Styling**: Tailwind CSS
-- **Backend**: (TBD)
-- **Database**: (TBD)
-- **Location Services**: (TBD - likely Google Maps API)
-
-## Project Setup
-
-### Prerequisites
-
-- Node.js (v12+)
-- npm or yarn
-
-### Installation
-
-1. Clone the repository:
-   ```
-   git clone https://github.com/your-username/questnyc.git
-   cd questnyc
-   ```
-
-2. Install dependencies:
+1. Clone the repository
+2. Navigate to the project directory
+3. Install dependencies:
    ```
    npm install
    ```
 
-3. Start the development server:
-   ```
-   npm start
-   ```
+## Available Scripts
 
-### Tailwind CSS Setup
+- **Start development server:**
+  ```
+  npm start
+  ```
+  This will launch the app at [http://localhost:3000](http://localhost:3000)
 
-This project uses Tailwind CSS for styling. The setup includes:
+- **Build for production:**
+  ```
+  npm run build
+  ```
+  Creates an optimized production build in the `build` folder
 
-- Tailwind CSS configuration file (`tailwind.config.js`)
-- PostCSS configuration (`postcss.config.js`)
-- Custom theme extensions based on the project's design system
+## Technologies
 
-## Team Members
+- React 19
+- React Router 7.3
 
-- **[Tahsin Tawhid](https://github.com/tahsintawhid)**
-- **[Brian Tylo](https://github.com/brian105)**
-- **[James Whitten](https://github.com/jwhit0)**
-- **[Shiwen Zhu](https://github.com/shiwenz59)**
-- **[Isaac Tu](https://github.com/IsaacProgrammer0)**
+## Browser Support
+
+The application supports modern browsers as specified in the browserslist configuration.
