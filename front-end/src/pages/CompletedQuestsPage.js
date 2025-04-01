@@ -1,35 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/index.css';
 
 function CompletedQuestsPage() {
     const navigate = useNavigate();
-    const [completedQuests, setCompletedQuests] = useState([]);
-    const [loading, setLoading] = useState(true);
     
-    useEffect(() => {
-        // Fetch completed quests from the API
-        const fetchCompletedQuests = async () => {
-            try {
-                const response = await fetch('http://localhost:5000/api/completed-quests');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch completed quests');
-                }
-                const data = await response.json();
-                setCompletedQuests(data);
-            } catch (error) {
-                console.error('Error fetching completed quests:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        
-        fetchCompletedQuests();
-    }, []);
-    
-    if (loading) {
-        return <div className="container text-center">Loading completed quests...</div>;
-    }
+    // Sample completed quests data
+    const completedQuests = [
+        {
+            id: 1,
+            title: "Quest #1",
+            information: "[Quest Information]",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            progress: "5/5",
+            progressPercent: 100
+        },
+        {
+            id: 2,
+            title: "Quest #2",
+            information: "[Quest Information]",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            progress: "3/3",
+            progressPercent: 100
+        },
+        {
+            id: 3,
+            title: "Quest #3",
+            information: "[Quest Information]",
+            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            progress: "7/7",
+            progressPercent: 100
+        }
+    ];
     
     return (
         <div className="container">
@@ -39,28 +41,24 @@ function CompletedQuestsPage() {
             
             {/* Completed Quests List */}
             <div className="mb-lg">
-                {completedQuests.length === 0 ? (
-                    <p className="text-center">No completed quests yet!</p>
-                ) : (
-                    completedQuests.map((quest) => (
-                        <div key={quest.id} className="quest-item mb-md">
-                            <h2 className="quest-name mb-xs">{quest.title}</h2>
-                            <div className="text-center">
-                                <p className="mb-xs" style={{ fontWeight: 'var(--weight-bold)' }}>{quest.information}</p>
-                                <p className="mb-sm" style={{ fontSize: 'var(--font-sm)' }}>{quest.description}</p>
-                            </div>
-                            <div className="flex items-center">
-                                <div className="progress-container">
-                                    <div 
-                                        className="progress-fill completed"
-                                        style={{ width: `${quest.progressPercent}%` }}
-                                    ></div>
-                                </div>
-                                <span style={{ marginLeft: 'var(--spacing-sm)', fontWeight: 'var(--weight-bold)' }}>{quest.progress}</span>
-                            </div>
+                {completedQuests.map((quest) => (
+                    <div key={quest.id} className="quest-item mb-md">
+                        <h2 className="quest-name mb-xs">{quest.title}</h2>
+                        <div className="text-center">
+                            <p className="mb-xs" style={{ fontWeight: 'var(--weight-bold)' }}>{quest.information}</p>
+                            <p className="mb-sm" style={{ fontSize: 'var(--font-sm)' }}>{quest.description}</p>
                         </div>
-                    ))
-                )}
+                        <div className="flex items-center">
+                            <div className="progress-container">
+                                <div 
+                                    className="progress-fill completed"
+                                    style={{ width: `${quest.progressPercent}%` }}
+                                ></div>
+                            </div>
+                            <span style={{ marginLeft: 'var(--spacing-sm)', fontWeight: 'var(--weight-bold)' }}>{quest.progress}</span>
+                        </div>
+                    </div>
+                ))}
             </div>
             
             {/* Bottom Navigation Menu */}
