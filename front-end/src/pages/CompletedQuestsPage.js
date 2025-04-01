@@ -1,37 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/index.css';
 
 function CompletedQuestsPage() {
     const navigate = useNavigate();
+    const [completedQuests, setCompletedQuests] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     
-    // Sample completed quests data
-    const completedQuests = [
-        {
-            id: 1,
-            title: "Quest #1",
-            information: "[Quest Information]",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            progress: "5/5",
-            progressPercent: 100
-        },
-        {
-            id: 2,
-            title: "Quest #2",
-            information: "[Quest Information]",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            progress: "3/3",
-            progressPercent: 100
-        },
-        {
-            id: 3,
-            title: "Quest #3",
-            information: "[Quest Information]",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-            progress: "7/7",
-            progressPercent: 100
-        }
-    ];
+    // Fetch completed quests from the backend
+    useEffect(() => {
+        const fetchCompletedQuests = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/completed-quests');
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch completed quests');
+                }
+                
+                const data = await response.json();
+                setCompletedQuests(data);
+                setLoading(false);
+            } catch (err) {
+                setError(err.message);
+                setLoading(false);
+            }
+        };
+        
+        fetchCompletedQuests();
+    }, []);
+    
+    if (loading) return <div className="container text-center">Loading...</div>;
+    if (error) return <div className="container text-center">Error: {error}</div>;
     
     return (
         <div className="container">
