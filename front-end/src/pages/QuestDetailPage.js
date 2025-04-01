@@ -1,21 +1,60 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../styles/index.css';
 
 function QuestDetailPage() {
     const navigate = useNavigate();
+    const { questId } = useParams(); // Get the questId from the URL params
+    const [quest, setQuest] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     
-    // Sample quest data - this would typically come from props or context
-    const quest = {
-        name: "Brooklyn Bridge Walk",
-        points: [
-            "Point 1: City Hall",
-            "Point 2: Brooklyn Bridge Walkway",
-            "Point 3: DUMBO"
-        ],
-        expiration: "12:00 MM/DD/YY",
-        reward: "500 XP"
+    // Fetch quest details from the backend
+    useEffect(() => {
+        const fetchQuestDetails = async () => {
+            try {
+                const response = await fetch(`http://localhost:5000/api/quests/${questId}`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch quest details');
+                }
+                
+                const data = await response.json();
+                setQuest(data);
+                setLoading(false);
+            } catch (err) {
+                setError(err.message);
+                setLoading(false);
+            }
+        };
+        
+        fetchQuestDetails();
+    }, [questId]);
+    
+    const acceptQuest = async () => {
+        try {
+            const response = await fetch(`http://localhost:5000/api/quests/${questId}/accept`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to accept quest');
+            }
+            
+            // Navigate to home page after successfully accepting the quest
+            navigate("/home-page");
+            
+        } catch (err) {
+            setError(err.message);
+        }
     };
+    
+    if (loading) return <div className="container text-center">Loading...</div>;
+    if (error) return <div className="container text-center">Error: {error}</div>;
+    if (!quest) return <div className="container text-center">Quest not found</div>;
     
     return (
         <div className="container">
@@ -36,7 +75,7 @@ function QuestDetailPage() {
             
             {/* Quest Points */}
             <div className="mb-md">
-                {quest.points.map((point, index) => (
+                {quest.points && quest.points.map((point, index) => (
                     <p key={index} className="mb-sm">{point}</p>
                 ))}
             </div>
@@ -53,10 +92,7 @@ function QuestDetailPage() {
                 <button 
                     className="btn btn-primary"
                     style={{ width: '150px' }}
-                    onClick={() => {
-                        console.log('Quest accepted');
-                        navigate("/home-page");
-                    }}
+                    onClick={acceptQuest}
                 >
                     Accept Quest
                 </button>
