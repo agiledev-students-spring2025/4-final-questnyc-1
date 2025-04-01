@@ -5,7 +5,8 @@
   "main": "server.js",                         
   "scripts": {
     "start": "node server.js",               
-    "test": "mocha"
+    "test": "mocha",
+    "test:coverage": "c8 mocha"
   },
   "keywords": [],
   "author": "",
