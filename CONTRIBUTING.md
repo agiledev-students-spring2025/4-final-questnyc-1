@@ -30,3 +30,8 @@ Our team uses Planning Poker for estimating the effort required for tasks.
 - **Scrum Master**: Brian Tylo
 - **Product Owner**: Shiwen Zhu
 - **Developers**: All team members
+
+**Sprint 2 Roles:**
+- **Scrum Master**: James Whitten
+- **Product Owner**: Isaac Tu
+- **Developers**: All team members
