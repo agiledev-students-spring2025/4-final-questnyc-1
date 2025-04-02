@@ -40,19 +40,78 @@ app.get('/api/friends/:friendId/profile', (req, res) => {
     res.json(friendProfile)
 })
 
+
+function getRandomInt(min, max) { // function to generate a random int
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+function randomDate(start, end) { // given input beginning and end dates, returns a date between those two
+    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+}
+
+function getRandomItem(list) { // returns a random item from a given list
+    return list[Math.floor(Math.random() * list.length)];
+}
+
+function generateRandomQuest(id) {
+const questNames = ['Brooklyn Bridge Walk', 'Harlem Heritage Trail', 'Central Park Nature Quest',
+    'Times Square Photo Hunt', 'The High Line Adventure', 'Prospect Park Loop' // for mocking purposes
+]
+
+const pointPools = {
+    'Brooklyn Bridge Walk': ['City Hall', 'Brooklyn Bridge Walkway', 'DUMBO'],
+    'Harlem Heritage Trail': ['Apollo Theater', 'Sylvia’s Restaurant', 'Strivers’ Row'],
+    'Central Park Nature Quest': ['Bethesda Fountain', 'Strawberry Fields', 'Belvedere Castle'],
+    'Times Square Photo Hunt': ['Red Steps', 'TKTS Booth', '7th Ave Lights'],
+    'The High Line Adventure': ['Gansevoort Street Entrance', 'Chelsea Market', 'Hudson Yards'],
+    'Prospect Park Loop': ['Grand Army Plaza', 'Prospect Lake', 'Boathouse']
+}
+
+const rewardEXP = getRandomInt(100, 1000);
+
+const expirationDate = randomDate(new Date (2025, 4, 1), new Date(2026, 4, 1))
+.toLocaleString('en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: 'numeric',
+    minute: '2-digit',
+  });;
+
+const nameRandomized = getRandomItem(questNames);
+
+const points = pointPools[nameRandomized];
+
+return {
+    id,
+    name: getRandomItem(questNames),
+    points: points.map((p, i) => `Point ${i+1}: ${p}`),
+    expiration: expirationDate,
+    reward: rewardEXP
+}
+
+}
+
+const staticQuestList = Array.from({ length: 5 }, (_, i) => generateRandomQuest(`quest${i + 1}`)); // create list of 5 generated quests
+console.log(staticQuestList);
+
+
 /**
  * Quest Routes
  */
-app.get('/api/quests/:questId', (req, res) => {
+app.get('/api/quests/:questId', (req, res) => { // for now, quests are mocked within the backend
     const questId = req.params.questId
-    const quest = {
-        id: questId,
-        name: 'Brooklyn Bridge Walk',
-        points: ['Point 1: City Hall', 'Point 2: Brooklyn Bridge Walkway', 'Point 3: DUMBO'],
-        expiration: '12:00 MM/DD/YY',
-        reward: '500 XP'
-    }
-    res.json(quest)
+
+    // const quests = Array.from({ length: 5 }, (_, i) => generateRandomQuest(`quest${i + 1}`))
+    // res.json(generateRandomQuest(questId));
+    const randomNum = getRandomInt(0,4);
+    console.log('random number ' + randomNum);
+    res.json(staticQuestList[randomNum]);
+    // res.json(quest)
+
+
 })
 
 app.post('/api/quests/:questId/accept', (req, res) => {
@@ -171,17 +230,36 @@ app.post('/api/invite-friend', (req, res) => {
 /**
  * Home Data Route
  */
+// app.get('/api/home', (req, res) => {
+//     const currentQuest = {
+//         name: 'Explore Central Park',
+//         nextCheckpoint: 'Bethesda Fountain',
+//         progress: 40
+//     }
+//     const availableQuests = [
+//         { name: 'Brooklyn Bridge Walk', route: 'City Hall → Brooklyn Bridge → DUMBO' },
+//         { name: 'Grand Concourse Tour', route: 'Bronx Courthouse → Bronx Museum of Arts → Andrew Freedman Home' }
+//     ]
+//     res.json({ currentQuest, availableQuests })
+// })
+
 app.get('/api/home', (req, res) => {
+    const availableQuests = staticQuestList.map(q => ({
+        id: q.id,
+        name: q.name,
+        route: q.points.map(p => p.replace(/^Point \d+: /, '')).join(' → ')
+    }));
+
     const currentQuest = {
-        name: 'Explore Central Park',
-        nextCheckpoint: 'Bethesda Fountain',
-        progress: 40
-    }
-    const availableQuests = [
-        { name: 'Brooklyn Bridge Walk', route: 'City Hall → Brooklyn Bridge → DUMBO' },
-        { name: 'Grand Concourse Tour', route: 'Bronx Courthouse → Bronx Museum of Arts → Andrew Freedman Home' }
-    ]
-    res.json({ currentQuest, availableQuests })
-})
+        name: staticQuestList[0].name,
+        nextCheckpoint: staticQuestList[0].points[1]?.replace(/^Point \d+: /, '') || 'Checkpoint',
+        progress: 40 // Hardcoded or track via user session later
+    };
+
+    res.json({ currentQuest, availableQuests });
+});
+
+
+
 
 export default app
