@@ -10,7 +10,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_BASE}/api/home`)
+    fetch(`http://localhost:5000/api/home`)
       .then((res) => res.json())
       .then((data) => {
         setCurrentQuest(data.currentQuest);
