@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import axios from 'axios'
 
 
 const app = express()
@@ -107,7 +108,7 @@ function generateRandomQuest(id) {
 }
 
 const staticQuestList = Array.from({ length: 6 }, (_, i) => generateRandomQuest(`quest${i + 1}`)); // create list of 5 generated quests
-console.log(staticQuestList);
+// console.log(staticQuestList);
 
 
 /**
@@ -217,19 +218,25 @@ app.post('/api/password-reset-confirmation', (req, res) => {
 /**
  * Leaderboard Route
  */
-app.get('/api/leaderboard', (req, res) => {
-    const leaderboardData = [
-        { rank: 1, username: 'Player1', score: 5000 },
-        { rank: 2, username: 'Player2', score: 4500 },
-        { rank: 3, username: 'Player3', score: 4200 },
-        { rank: 4, username: 'Player4', score: 4000 },
-        { rank: 5, username: 'Player5', score: 3800 },
-        { rank: 6, username: 'Player6', score: 3500 },
-        { rank: 7, username: 'Player7', score: 3200 },
-        { rank: 8, username: 'Player8', score: 3000 },
-        { rank: 9, username: 'Player9', score: 2800 }
-    ]
-    res.json(leaderboardData)
+
+
+app.get('/api/leaderboard', (req, res, next) => {
+
+    axios
+        .get("https://my.api.mockaroo.com/mock_player_rankings.json?key=b65896f0") // fetch mock list of names with scores
+        .then(apiResponse => {
+            const sorted = apiResponse.data
+                .sort((a, b) => b.score - a.score)
+                .map((player, index) => ({
+                    rank: index + 1, // add rank to response, because mockaroo can't
+                    username: player.username,
+                    score: player.score
+                }));
+
+            res.json(sorted);
+        })
+        .catch(err => next(err));
+
 })
 
 /**
@@ -251,7 +258,7 @@ app.get('/api/home', (req, res) => {
     const currentQuest = {
         name: staticQuestList[0].name,
         nextCheckpoint: staticQuestList[0].points[1]?.replace(/^Point \d+: /, '') || 'Checkpoint',
-        progress: 40 // Hardcoded or track via user session later
+        progress: 40 // hardcoded or track via user session later
     };
 
     res.json({ currentQuest, availableQuests });
