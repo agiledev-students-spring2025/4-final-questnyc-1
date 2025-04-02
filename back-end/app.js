@@ -3,6 +3,7 @@ import cors from 'cors'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
+
 const app = express()
 
 app.use(cors())
@@ -45,7 +46,7 @@ function getRandomInt(min, max) { // function to generate a random int
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
+}
 
 function randomDate(start, end) { // given input beginning and end dates, returns a date between those two
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
@@ -56,45 +57,56 @@ function getRandomItem(list) { // returns a random item from a given list
 }
 
 function generateRandomQuest(id) {
-const questNames = ['Brooklyn Bridge Walk', 'Harlem Heritage Trail', 'Central Park Nature Quest',
-    'Times Square Photo Hunt', 'The High Line Adventure', 'Prospect Park Loop' // for mocking purposes
-]
+    const questNames = [
+        'Brooklyn Bridge Walk', 'Harlem Heritage Trail', 'Central Park Nature Quest',
+        'Times Square Photo Hunt', 'The High Line Adventure', 'Prospect Park Loop',
+        'Coney Island Discovery', 'Roosevelt Island Tram Trek', 'Museum Mile March',
+        'Flushing Meadows Quest', 'Battery Park Breeze', 'DUMBO Art Hunt'
+    ];
 
-const pointPools = {
-    'Brooklyn Bridge Walk': ['City Hall', 'Brooklyn Bridge Walkway', 'DUMBO'],
-    'Harlem Heritage Trail': ['Apollo Theater', 'Sylvia’s Restaurant', 'Strivers’ Row'],
-    'Central Park Nature Quest': ['Bethesda Fountain', 'Strawberry Fields', 'Belvedere Castle'],
-    'Times Square Photo Hunt': ['Red Steps', 'TKTS Booth', '7th Ave Lights'],
-    'The High Line Adventure': ['Gansevoort Street Entrance', 'Chelsea Market', 'Hudson Yards'],
-    'Prospect Park Loop': ['Grand Army Plaza', 'Prospect Lake', 'Boathouse']
+    const pointPools = {
+        'Brooklyn Bridge Walk': ['City Hall', 'Brooklyn Bridge Walkway', 'DUMBO'],
+        'Harlem Heritage Trail': ['Apollo Theater', 'Sylvia’s Restaurant', 'Strivers’ Row'],
+        'Central Park Nature Quest': ['Bethesda Fountain', 'Strawberry Fields', 'Belvedere Castle'],
+        'Times Square Photo Hunt': ['Red Steps', 'TKTS Booth', '7th Ave Lights'],
+        'The High Line Adventure': ['Gansevoort Street Entrance', 'Chelsea Market', 'Hudson Yards'],
+        'Prospect Park Loop': ['Grand Army Plaza', 'Prospect Lake', 'Boathouse'],
+
+        'Coney Island Discovery': ['Luna Park Entrance', 'Nathan’s Famous Hot Dogs', 'Coney Island Boardwalk'],
+        'Roosevelt Island Tram Trek': ['Tram Station Manhattan', 'Four Freedoms Park', 'Lighthouse Park'],
+        'Museum Mile March': ['Metropolitan Museum of Art', 'Guggenheim Museum', 'El Museo del Barrio'],
+        'Flushing Meadows Quest': ['Unisphere', 'Queens Museum', 'USTA Billie Jean King National Tennis Center'],
+        'Battery Park Breeze': ['Castle Clinton', 'Bosque Fountain', 'Statue of Liberty Viewpoint'],
+        'DUMBO Art Hunt': ['Pebble Beach', 'St. Ann’s Warehouse', 'Washington Street Photo Spot']
+    };
+
+
+    const rewardEXP = getRandomInt(100, 1000);
+
+    const expirationDate = randomDate(new Date(2025, 4, 1), new Date(2026, 4, 1))
+        .toLocaleString('en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: 'numeric',
+            minute: '2-digit',
+        });;
+
+    const nameRandomized = getRandomItem(questNames);
+
+    const points = pointPools[nameRandomized];
+
+    return {
+        id,
+        name: getRandomItem(questNames),
+        points: points.map((p, i) => `Point ${i + 1}: ${p}`),
+        expiration: expirationDate,
+        reward: rewardEXP
+    }
+
 }
 
-const rewardEXP = getRandomInt(100, 1000);
-
-const expirationDate = randomDate(new Date (2025, 4, 1), new Date(2026, 4, 1))
-.toLocaleString('en-US', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: 'numeric',
-    minute: '2-digit',
-  });;
-
-const nameRandomized = getRandomItem(questNames);
-
-const points = pointPools[nameRandomized];
-
-return {
-    id,
-    name: getRandomItem(questNames),
-    points: points.map((p, i) => `Point ${i+1}: ${p}`),
-    expiration: expirationDate,
-    reward: rewardEXP
-}
-
-}
-
-const staticQuestList = Array.from({ length: 5 }, (_, i) => generateRandomQuest(`quest${i + 1}`)); // create list of 5 generated quests
+const staticQuestList = Array.from({ length: 6 }, (_, i) => generateRandomQuest(`quest${i + 1}`)); // create list of 5 generated quests
 console.log(staticQuestList);
 
 
@@ -102,14 +114,15 @@ console.log(staticQuestList);
  * Quest Routes
  */
 app.get('/api/quests/:questId', (req, res) => { // for now, quests are mocked within the backend
-    const questId = req.params.questId
+    const questId = req.params.questId;
 
-    // const quests = Array.from({ length: 5 }, (_, i) => generateRandomQuest(`quest${i + 1}`))
-    // res.json(generateRandomQuest(questId));
-    const randomNum = getRandomInt(0,4);
-    console.log('random number ' + randomNum);
-    res.json(staticQuestList[randomNum]);
-    // res.json(quest)
+    const quest = staticQuestList.find(q => q.id === questId);
+
+    if (!quest) {
+        return res.status(404).json({ message: 'Quest not found' });
+    }
+
+    res.json(quest);
 
 
 })
@@ -227,21 +240,6 @@ app.post('/api/invite-friend', (req, res) => {
     res.json({ message: `Invitation sent to ${phoneNumber}` })
 })
 
-/**
- * Home Data Route
- */
-// app.get('/api/home', (req, res) => {
-//     const currentQuest = {
-//         name: 'Explore Central Park',
-//         nextCheckpoint: 'Bethesda Fountain',
-//         progress: 40
-//     }
-//     const availableQuests = [
-//         { name: 'Brooklyn Bridge Walk', route: 'City Hall → Brooklyn Bridge → DUMBO' },
-//         { name: 'Grand Concourse Tour', route: 'Bronx Courthouse → Bronx Museum of Arts → Andrew Freedman Home' }
-//     ]
-//     res.json({ currentQuest, availableQuests })
-// })
 
 app.get('/api/home', (req, res) => {
     const availableQuests = staticQuestList.map(q => ({

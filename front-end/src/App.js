@@ -16,8 +16,14 @@ import AchievementsPage from './pages/AchievementsPage.js'
 import QuestDetailPage from './pages/QuestDetailPage.js';
 import CompletedQuestsPage from './pages/CompletedQuestsPage.js';
 
+import { useLocation } from 'react-router-dom';
+
 
 function App() {
+    const location = useLocation();
+
+    console.log('Current Route:', location.pathname);
+
     return (
         <div>
             <Routes>
@@ -33,7 +39,7 @@ function App() {
                 <Route path="/invite-friend-page" element={<InviteFriendPage />} />
                 <Route path="/leaderboard" element={<LeaderboardPage />} />
                 <Route path="/achievements" element={<AchievementsPage />} />
-                <Route path="/quest-detail" element={<QuestDetailPage />} />
+                <Route path="/quest-detail/:questId" element={<QuestDetailPage />} />
                 <Route path="/completed-quests" element={<CompletedQuestsPage />} />
 
 
