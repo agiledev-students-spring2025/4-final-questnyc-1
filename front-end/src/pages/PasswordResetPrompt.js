@@ -4,10 +4,29 @@ function PasswordResetPrompt() {
     const [email, setEmail] = useState('');
     const [confirmEmail, setConfirmEmail] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Sending reset link to:', email, confirmEmail);
+    
+        try {
+            const res = await fetch('http://localhost:5000/api/password-reset-request', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, confirmEmail })
+            });
+    
+            const data = await res.json();
+    
+            if (res.ok) {
+                alert(data.message); // Success message from backend
+            } else {
+                alert(data.message || 'Reset request failed');
+            }
+        } catch (error) {
+            console.error('Reset request error:', error);
+            alert('Something went wrong. Please try again.');
+        }
     };
+    
 
     return (
         <div style={{ margin: '50px' }}>

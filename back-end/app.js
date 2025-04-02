@@ -14,9 +14,9 @@ app.use('/static', express.static('public'))
  */
 app.get('/api/profile', (req, res) => {
     const userProfile = {
-        profilePic: 'https://via.placeholder.com/150',
+        profilePic: 'https://picsum.photos/seed/selfie/100',
         username: 'John Smith',
-        firstJoined: 'January 2024'
+        firstJoined: 'Feburary 2024'
     }
     res.json(userProfile)
 })
@@ -29,16 +29,45 @@ app.put('/api/profile', (req, res) => {
 /**
  * Friend Profile Route
  */
-app.get('/api/friends/:friendId/profile', (req, res) => {
-    const friendId = req.params.friendId
-    const friendProfile = {
-        id: friendId,
-        profilePic: 'https://via.placeholder.com/150',
-        username: 'John Smith',
-        firstJoined: 'January 2024'
+const friends = {
+    1: {
+        profilePic: 'https://picsum.photos/seed/sarah/100',
+        username: 'Sarah',
+        firstJoined: 'February 2023'
+    },
+    2: {
+        profilePic: 'https://picsum.photos/seed/adam/100',
+        username: 'Adam',
+        firstJoined: 'March 2023'
+    },
+    3: {
+        profilePic: 'https://picsum.photos/seed/isaac/100',
+        username: 'Isaac',
+        firstJoined: 'April 2023'
+    },
+    4: {
+        profilePic: 'https://picsum.photos/seed/santa/100',
+        username: 'Santa',
+        firstJoined: 'December 2022'
+    },
+    5: {
+        profilePic: 'https://picsum.photos/seed/happy/100',
+        username: 'Happy',
+        firstJoined: 'May 2023'
     }
-    res.json(friendProfile)
-})
+};
+
+app.get('/api/friends/:friendId/profile', (req, res) => {
+    const friendId = req.params.friendId;
+    const friend = friends[friendId];
+
+    if (!friend) {
+        return res.status(404).json({ message: 'Friend not found' });
+    }
+
+    res.json({ id: friendId, ...friend });
+});
+
 
 /**
  * Quest Routes

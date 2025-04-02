@@ -28,7 +28,7 @@ function App() {
                 <Route path="/reset-password" element={<PasswordResetPrompt />} />
                 <Route path="/reset-password-confirmation" element={<PasswordResetConfirmation />} />
                 <Route path="/profile-page" element={<ProfilePage />} />
-                <Route path="/friend-profile-page" element={<FriendProfilePage />} />
+                <Route path="/friend-profile/:friendId" element={<FriendProfilePage />} />
                 <Route path="/friends-list-page" element={<FriendsListPage />} />
                 <Route path="/invite-friend-page" element={<InviteFriendPage />} />
                 <Route path="/leaderboard" element={<LeaderboardPage />} />

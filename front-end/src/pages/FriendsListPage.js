@@ -5,7 +5,14 @@ import '../styles/index.css';
 function FriendListPage() {
     const navigate = useNavigate(); 
 
-    const friends = ["Sarah", "Adam", "Isaac", "Santa", "Happy"]; 
+    // Add friend IDs for routing
+    const friends = [
+        { id: 1, name: "Sarah" },
+        { id: 2, name: "Adam" },
+        { id: 3, name: "Isaac" },
+        { id: 4, name: "Santa" },
+        { id: 5, name: "Happy" }
+    ];
 
     return (
         <div className="container text-center" style={{ position: 'relative' }}>
@@ -14,13 +21,13 @@ function FriendListPage() {
 
             {/* Friend Buttons */}
             <div className="mt-md">
-                {friends.map((friend, index) => (
+                {friends.map((friend) => (
                     <button 
-                        key={index} 
+                        key={friend.id} 
                         className="btn btn-primary btn-block" 
-                        onClick={() => navigate(`/friend-profile-page`)}
+                        onClick={() => navigate(`/friend-profile/${friend.id}`)}
                     >
-                        {friend}
+                        {friend.name}
                     </button>
                 ))}
             </div>
