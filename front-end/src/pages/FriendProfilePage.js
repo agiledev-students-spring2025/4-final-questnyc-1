@@ -1,19 +1,35 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom'; 
 import '../styles/index.css';
 
 function FriendProfilePage() {
     const navigate = useNavigate(); 
-
-    const user = {
-        profilePic: 'https://picsum.photos/100', //Replace with actual image URL
-        username: 'John Smith',
-        firstJoined: 'January 2024'
-    };
+    const { friendId } = useParams(); // 👈 Grab friendId from the URL
+    const [user, setUser] = useState(null); // 👈 Holds user data from backend
+    const [loading, setLoading] = useState(true);
 
     const handleEditProfile = () => {
         console.log('Edit Profile Clicked');
     };
+
+    useEffect(() => {
+        const fetchFriendProfile = async () => {
+            try {
+                const res = await fetch(`http://localhost:5000/api/friends/${friendId}/profile`);
+                const data = await res.json();
+                setUser(data);
+            } catch (error) {
+                console.error('Failed to fetch profile:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchFriendProfile();
+    }, [friendId]);
+
+    if (loading) return <p>Loading...</p>;
+    if (!user) return <p>Friend not found.</p>;
 
     return (
         <div className="container text-center" style={{ position: 'relative' }}>

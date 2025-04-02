@@ -7,10 +7,28 @@ function LoginPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Logging in with:', { username, password });
-        navigate('/home-page');
+
+        try {
+            const res = await fetch('http://localhost:5000/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                alert(data.message); // "Logged in successfully"
+                navigate('/home-page');
+            } else {
+                alert(data.message || 'Login failed');
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            alert('Something went wrong. Please try again.');
+        }
     };
 
     return (
@@ -18,9 +36,9 @@ function LoginPage() {
             <div className="profile-pic mt-lg mb-md flex justify-center items-center">
                 Logo
             </div>
-            
+
             <h2 className="text-center mb-md">Log In</h2>
-            
+
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Username</label>
@@ -42,17 +60,10 @@ function LoginPage() {
             </form>
 
             <div className="text-center mt-md">
-                <button 
-                    onClick={() => navigate('/create-account')}
-                    className="btn btn-block"
-                >
+                <button onClick={() => navigate('/create-account')} className="btn btn-block">
                     Create An Account
                 </button>
-                
-                <button 
-                    onClick={() => navigate('/reset-password')}
-                    className="btn btn-block"
-                >
+                <button onClick={() => navigate('/reset-password')} className="btn btn-block">
                     Forgot Password?
                 </button>
             </div>

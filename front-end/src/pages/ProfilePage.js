@@ -1,19 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import '../styles/index.css';
 
 function ProfilePage() {
     const navigate = useNavigate(); 
-
-    const user = {
-        profilePic: 'https://picsum.photos/100', //replace with actual image URL
-        username: 'John Smith',
-        firstJoined: 'January 2024'
-    };
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const handleEditProfile = () => {
         console.log('Edit Profile Clicked');
     };
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const res = await fetch('http://localhost:5000/api/profile');
+                const data = await res.json();
+                setUser(data);
+            } catch (error) {
+                console.error('Error fetching profile:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProfile();
+    }, []);
+
+    if (loading) return <p>Loading...</p>;
+    if (!user) return <p>Profile not found.</p>;
 
     return (
         <div className="container text-center" style={{ position: 'relative' }}>

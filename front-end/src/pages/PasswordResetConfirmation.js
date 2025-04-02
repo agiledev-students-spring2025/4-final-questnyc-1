@@ -1,12 +1,33 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function PasswordResetConfirmation() {
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
+    const navigate = useNavigate(); // Step 1: Get navigate function
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Resetting password to:', newPassword, confirmNewPassword);
+    
+        try {
+            const res = await fetch('http://localhost:5000/api/password-reset-confirmation', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ newPassword, confirmNewPassword })
+            });
+    
+            const data = await res.json();
+    
+            if (res.ok) {
+                alert(data.message);
+                navigate('/login'); // Step 3: Redirect to login
+            } else {
+                alert(data.message || 'Password reset failed');
+            }
+        } catch (error) {
+            console.error('Password reset error:', error);
+            alert('Something went wrong. Please try again.');
+        }
     };
 
     return (

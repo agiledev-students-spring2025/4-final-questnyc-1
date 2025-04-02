@@ -6,10 +6,27 @@ function InviteFriendPage() {
     const navigate = useNavigate(); 
     const [phoneNumber, setPhoneNumber] = useState('xxx-xxx-xxxx'); //default number
 
-    const handleInvite = () => {
-        console.log(`Inviting friend with phone number: ${phoneNumber}`);
-        //add logic to send an invite
+    const handleInvite = async () => {
+        try {
+            const res = await fetch('http://localhost:5000/api/invite-friend', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ phoneNumber })
+            });
+    
+            const data = await res.json();
+    
+            if (res.ok) {
+                alert(data.message); // e.g. "Invitation sent to 123-456-7890"
+            } else {
+                alert(data.message || 'Failed to send invite.');
+            }
+        } catch (error) {
+            console.error('Invite error:', error);
+            alert('Something went wrong. Please try again.');
+        }
     };
+    
 
     return (
         <div className="container text-center">
