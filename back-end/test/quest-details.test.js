@@ -1,42 +1,70 @@
-import { expect } from 'chai';
-import app from '../app.js';
+import { use, expect } from 'chai'
+import { default as chaiHttp, request } from 'chai-http'
+import app from '../app.js'
+
+use(chaiHttp)
 
 describe('Quest Details API', () => {
+  let testQuestId;
+
+  // Fetch a quest ID from the static quest list
+  before((done) => {
+    request.execute(app)
+      .get('/api/home')
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        const { availableQuests } = res.body;
+        expect(availableQuests).to.be.an('array');
+        testQuestId = availableQuests[0].id;
+        done();
+      });
+  });
+
   describe('GET /api/quests/:questId', () => {
-    it('should return quest details with the correct structure', () => {
-      // Unit test to verify the expected data structure for quest details
-      const questId = '1';
-      const questData = {
-        id: questId,
-        name: 'Brooklyn Bridge Walk',
-        points: ['Point 1: City Hall', 'Point 2: Brooklyn Bridge Walkway', 'Point 3: DUMBO'],
-        expiration: '12:00 MM/DD/YY',
-        reward: '500 XP'
-      };
-      
-      // Test the structure of the quest data
-      expect(questData).to.have.property('id');
-      expect(questData.id).to.equal(questId);
-      expect(questData).to.have.property('name');
-      expect(questData).to.have.property('points');
-      expect(Array.isArray(questData.points)).to.equal(true);
-      expect(questData).to.have.property('expiration');
-      expect(questData).to.have.property('reward');
+    it('should return quest details with correct structure', (done) => {
+      request.execute(app)
+        .get(`/api/quests/${testQuestId}`)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.include.all.keys('id', 'name', 'points', 'expiration', 'reward');
+          expect(res.body.id).to.equal(testQuestId);
+          expect(res.body.points).to.be.an('array');
+          done();
+        });
+    });
+
+    it('should return 404 if quest is not found', (done) => {
+      request.execute(app)
+        .get('/api/quests/nonexistent')
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          expect(res.body).to.have.property('message', 'Quest not found');
+          done();
+        });
     });
   });
-  
+
   describe('POST /api/quests/:questId/accept', () => {
-    it('should return a success message when accepting a quest', () => {
-      // Unit test to verify the expected response when accepting a quest
-      const questId = '1';
-      const acceptResponse = {
-        message: `Quest ${questId} accepted`
-      };
-      
-      // Test the response structure
-      expect(acceptResponse).to.have.property('message');
-      expect(acceptResponse.message).to.include(questId);
-      expect(acceptResponse.message).to.include('accepted');
+    it('should accept a quest and return success message', (done) => {
+      request.execute(app)
+        .post(`/api/quests/${testQuestId}/accept`)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.have.property('message').that.includes('accepted');
+          expect(res.body.quest).to.include.all.keys('id', 'name', 'points');
+          expect(res.body.quest.id).to.equal(testQuestId);
+          done();
+        });
+    });
+
+    it('should return 404 when accepting a nonexistent quest', (done) => {
+      request.execute(app)
+        .post('/api/quests/nonexistent/accept')
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          expect(res.body).to.have.property('message', 'Quest not found');
+          done();
+        });
     });
   });
 });
