@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import axios from 'axios';
 
 const app = express()
 
@@ -291,19 +292,24 @@ app.post('/api/password-reset-confirmation', (req, res) => {
 /**
  * Leaderboard Route
  */
-app.get('/api/leaderboard', (req, res) => {
-    const leaderboardData = [
-        { rank: 1, username: 'Player1', score: 5000 },
-        { rank: 2, username: 'Player2', score: 4500 },
-        { rank: 3, username: 'Player3', score: 4200 },
-        { rank: 4, username: 'Player4', score: 4000 },
-        { rank: 5, username: 'Player5', score: 3800 },
-        { rank: 6, username: 'Player6', score: 3500 },
-        { rank: 7, username: 'Player7', score: 3200 },
-        { rank: 8, username: 'Player8', score: 3000 },
-        { rank: 9, username: 'Player9', score: 2800 }
-    ]
-    res.json(leaderboardData)
+
+app.get('/api/leaderboard', (req, res, next) => {
+
+    axios
+        .get("https://my.api.mockaroo.com/mock_player_rankings.json?key=b65896f0") // fetch mock list of names with scores
+        .then(apiResponse => {
+            const sorted = apiResponse.data
+                .sort((a, b) => b.score - a.score)
+                .map((player, index) => ({
+                    rank: index + 1, // add rank to response, because mockaroo can't
+                    username: player.username,
+                    score: player.score
+                }));
+
+            res.json(sorted);
+        })
+        .catch(err => next(err));
+
 })
 
 /**
@@ -317,18 +323,6 @@ app.post('/api/invite-friend', (req, res) => {
 /**
  * Home Data Route
  */
-// app.get('/api/home', (req, res) => {
-//     const currentQuest = {
-//         name: 'Explore Central Park',
-//         nextCheckpoint: 'Bethesda Fountain',
-//         progress: 40
-//     }
-//     const availableQuests = [
-//         { name: 'Brooklyn Bridge Walk', route: 'City Hall → Brooklyn Bridge → DUMBO' },
-//         { name: 'Grand Concourse Tour', route: 'Bronx Courthouse → Bronx Museum of Arts → Andrew Freedman Home' }
-//     ]
-//     res.json({ currentQuest, availableQuests })
-// })
 
 app.get('/api/home', (req, res) => {
     const availableQuests = staticQuestList
