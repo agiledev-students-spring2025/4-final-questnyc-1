@@ -12,16 +12,20 @@ it('/api/home responds with correct structure', done => {
       expect(err).to.be.null
       expect(res).to.have.status(200)
       expect(res).to.be.json
-      expect(res.body).to.have.property('currentQuest')
+      expect(res.body).to.have.property('progressData')
       expect(res.body).to.have.property('availableQuests')
 
-      const { currentQuest, availableQuests } = res.body
-      expect(currentQuest).to.have.property('name')
-      expect(currentQuest).to.have.property('nextCheckpoint')
-      expect(currentQuest).to.have.property('progress')
+      const { progressData, availableQuests } = res.body
+      if (progressData != null) { // possible to have no current quest
+        expect(progressData).to.have.property('id')
+        expect(progressData).to.have.property('name')
+        expect(progressData).to.have.property('nextCheckpoint')
+        expect(progressData).to.have.property('progress')
+      }
+
 
       expect(Array.isArray(availableQuests)).to.be.true
-      expect(availableQuests.length).to.be.greaterThan(0)
+      expect(availableQuests[0]).to.have.property('id')
       expect(availableQuests[0]).to.have.property('name')
       expect(availableQuests[0]).to.have.property('route')
 

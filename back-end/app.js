@@ -72,22 +72,6 @@ app.get('/api/friends/:friendId/profile', (req, res) => {
 // /**
 //  * Quest Routes
 //  */
-// app.get('/api/quests/:questId', (req, res) => {
-//     const questId = req.params.questId
-//     const quest = {
-//         id: questId,
-//         name: 'Brooklyn Bridge Walk',
-//         points: ['Point 1: City Hall', 'Point 2: Brooklyn Bridge Walkway', 'Point 3: DUMBO'],
-//         expiration: '12:00 MM/DD/YY',
-//         reward: '500 XP'
-//     }
-//     res.json(quest)
-// })
-
-// app.post('/api/quests/:questId/accept', (req, res) => {
-//     const questId = req.params.questId
-//     res.json({ message: `Quest ${questId} accepted` })
-// })
 
 let currentQuest = null;
 
@@ -107,10 +91,10 @@ function getRandomItem(list) { // returns a random item from a given list
 
 function generateRandomQuest(id) {
     const questNames = [
-        'Brooklyn Bridge Walk', 'Harlem Heritage Trail', 'Central Park Nature Quest',
+        'Brooklyn Bridge Walk', 'Harlem Heritage Trail', 'Central Park Nature',
         'Times Square Photo Hunt', 'The High Line Adventure', 'Prospect Park Loop',
         'Coney Island Discovery', 'Roosevelt Island Tram Trek', 'Museum Mile March',
-        'Flushing Meadows Quest', 'Battery Park Breeze', 'DUMBO Art Hunt', 'Greenwich Village Ghost Tour',
+        'Flushing Meadows', 'Battery Park Breeze', 'DUMBO Art Hunt', 'Greenwich Village Ghost Tour',
         'Bronx Botanical Explorer',
         'Williamsburg Mural Walk',
         'Hudson Riverfront Hike',
@@ -123,7 +107,7 @@ function generateRandomQuest(id) {
     const pointPools = {
         'Brooklyn Bridge Walk': ['City Hall', 'Brooklyn Bridge Walkway', 'DUMBO'],
         'Harlem Heritage Trail': ['Apollo Theater', 'Sylvia’s Restaurant', 'Strivers’ Row'],
-        'Central Park Nature Quest': ['Bethesda Fountain', 'Strawberry Fields', 'Belvedere Castle'],
+        'Central Park Nature': ['Bethesda Fountain', 'Strawberry Fields', 'Belvedere Castle'],
         'Times Square Photo Hunt': ['Red Steps', 'TKTS Booth', '7th Ave Lights'],
         'The High Line Adventure': ['Gansevoort Street Entrance', 'Chelsea Market', 'Hudson Yards'],
         'Prospect Park Loop': ['Grand Army Plaza', 'Prospect Lake', 'Boathouse'],
@@ -131,7 +115,7 @@ function generateRandomQuest(id) {
         'Coney Island Discovery': ['Luna Park Entrance', 'Nathan’s Famous Hot Dogs', 'Coney Island Boardwalk'],
         'Roosevelt Island Tram Trek': ['Tram Station Manhattan', 'Four Freedoms Park', 'Lighthouse Park'],
         'Museum Mile March': ['Metropolitan Museum of Art', 'Guggenheim Museum', 'El Museo del Barrio'],
-        'Flushing Meadows Quest': ['Unisphere', 'Queens Museum', 'USTA Billie Jean King National Tennis Center'],
+        'Flushing Meadows': ['Unisphere', 'Queens Museum', 'USTA Billie Jean King National Tennis Center'],
         'Battery Park Breeze': ['Castle Clinton', 'Bosque Fountain', 'Statue of Liberty Viewpoint'],
         'DUMBO Art Hunt': ['Pebble Beach', 'St. Ann’s Warehouse', 'Washington Street Photo Spot'],
         'Greenwich Village Ghost Tour': ['Jefferson Market Library', 'Stonewall Inn', 'Washington Mews'],
@@ -141,7 +125,7 @@ function generateRandomQuest(id) {
         'Financial District History Dash': ['Wall Street Bull', 'Federal Hall', 'Trinity Church'],
         'SoHo Gallery Hop': ['The Drawing Center', 'Jeffrey Deitch Gallery', 'Team Gallery'],
         'LIC Skyline Stroll': ['Gantry Plaza State Park', 'Pepsi-Cola Sign', 'Hunters Point Library'],
-        'Chinatown Flavor Quest': ['Doyers Street', 'Nom Wah Tea Parlor', 'Columbus Park'],
+        'Chinatown Flavor': ['Doyers Street', 'Nom Wah Tea Parlor', 'Columbus Park'],
         'Uptown Jazz Crawl': ['Minton\'s Playhouse', 'National Jazz Museum', 'Marcus Garvey Park'],
         'Astoria Cultural Crawl': ['Museum of the Moving Image', 'Astoria Park', 'Bohemian Hall'],
         'Staten Island Shoreline Trek': ['Staten Island Ferry Terminal', 'Staten Island 9/11 Memorial', 'Empire Outlets'],
@@ -338,7 +322,7 @@ app.get('/api/home', (req, res) => {
             id: currentQuest.id,
             name: currentQuest.name,
             nextCheckpoint: currentQuest.points[1]?.replace(/^Point \d+: /, '') || 'Checkpoint',
-            progress: 40 // You could make this dynamic later
+            progress: 40 // stationary placeholder
         }
         : null;
     res.json({ progressData, availableQuests });
