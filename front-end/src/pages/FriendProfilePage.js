@@ -4,13 +4,9 @@ import '../styles/index.css';
 
 function FriendProfilePage() {
     const navigate = useNavigate(); 
-    const { friendId } = useParams(); // 👈 Grab friendId from the URL
-    const [user, setUser] = useState(null); // 👈 Holds user data from backend
+    const { friendId } = useParams(); 
+    const [user, setUser] = useState(null); 
     const [loading, setLoading] = useState(true);
-
-    const handleEditProfile = () => {
-        console.log('Edit Profile Clicked');
-    };
 
     useEffect(() => {
         const fetchFriendProfile = async () => {
@@ -32,21 +28,7 @@ function FriendProfilePage() {
     if (!user) return <p>Friend not found.</p>;
 
     return (
-        <div className="container text-center" style={{ position: 'relative' }}>
-            {/* Edit Profile Button */}
-            <button 
-                onClick={handleEditProfile}
-                className="btn btn-primary"
-                style={{ 
-                    position: 'absolute', 
-                    top: 0, 
-                    right: 0, 
-                    padding: 'var(--spacing-xs) var(--spacing-sm)'
-                }}
-            >
-                Edit Profile
-            </button>
-
+        <div className="container text-center">
             {/* Profile Picture */}
             <div className="profile-pic">
                 <img 
@@ -63,8 +45,8 @@ function FriendProfilePage() {
 
             {/* Action Buttons */}
             <div className="mt-md">
-                <button className="btn btn-primary btn-block">Achievements</button>
-                <button className="btn btn-primary btn-block">Completed Quests</button>
+                <button className="btn btn-primary btn-block" onClick={() => navigate('/achievements')}>Achievements</button>
+                <button className="btn btn-primary btn-block" onClick={() => navigate('/completed-quests')}>Completed Quests</button>
                 <button className="btn btn-primary btn-block" onClick={() => navigate('/friends-list-page')}>Friends List</button>
             </div>
 
