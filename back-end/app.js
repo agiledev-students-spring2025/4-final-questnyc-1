@@ -68,26 +68,143 @@ app.get('/api/friends/:friendId/profile', (req, res) => {
     res.json({ id: friendId, ...friend });
 });
 
+// /**
+//  * Quest Routes
+//  */
+// app.get('/api/quests/:questId', (req, res) => {
+//     const questId = req.params.questId
+//     const quest = {
+//         id: questId,
+//         name: 'Brooklyn Bridge Walk',
+//         points: ['Point 1: City Hall', 'Point 2: Brooklyn Bridge Walkway', 'Point 3: DUMBO'],
+//         expiration: '12:00 MM/DD/YY',
+//         reward: '500 XP'
+//     }
+//     res.json(quest)
+// })
+
+// app.post('/api/quests/:questId/accept', (req, res) => {
+//     const questId = req.params.questId
+//     res.json({ message: `Quest ${questId} accepted` })
+// })
+
+let currentQuest = null;
+
+function getRandomInt(min, max) { // function to generate a random int
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function randomDate(start, end) { // given input beginning and end dates, returns a date between those two
+    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+}
+
+function getRandomItem(list) { // returns a random item from a given list
+    return list[Math.floor(Math.random() * list.length)];
+}
+
+function generateRandomQuest(id) {
+    const questNames = [
+        'Brooklyn Bridge Walk', 'Harlem Heritage Trail', 'Central Park Nature Quest',
+        'Times Square Photo Hunt', 'The High Line Adventure', 'Prospect Park Loop',
+        'Coney Island Discovery', 'Roosevelt Island Tram Trek', 'Museum Mile March',
+        'Flushing Meadows Quest', 'Battery Park Breeze', 'DUMBO Art Hunt', 'Greenwich Village Ghost Tour',
+        'Bronx Botanical Explorer',
+        'Williamsburg Mural Walk',
+        'Hudson Riverfront Hike',
+        'Financial District History Dash',
+        'SoHo Gallery Hop',
+        'LIC Skyline Stroll',
+        'Chinatown Flavor'
+    ];
+
+    const pointPools = {
+        'Brooklyn Bridge Walk': ['City Hall', 'Brooklyn Bridge Walkway', 'DUMBO'],
+        'Harlem Heritage Trail': ['Apollo Theater', 'Sylvia’s Restaurant', 'Strivers’ Row'],
+        'Central Park Nature Quest': ['Bethesda Fountain', 'Strawberry Fields', 'Belvedere Castle'],
+        'Times Square Photo Hunt': ['Red Steps', 'TKTS Booth', '7th Ave Lights'],
+        'The High Line Adventure': ['Gansevoort Street Entrance', 'Chelsea Market', 'Hudson Yards'],
+        'Prospect Park Loop': ['Grand Army Plaza', 'Prospect Lake', 'Boathouse'],
+
+        'Coney Island Discovery': ['Luna Park Entrance', 'Nathan’s Famous Hot Dogs', 'Coney Island Boardwalk'],
+        'Roosevelt Island Tram Trek': ['Tram Station Manhattan', 'Four Freedoms Park', 'Lighthouse Park'],
+        'Museum Mile March': ['Metropolitan Museum of Art', 'Guggenheim Museum', 'El Museo del Barrio'],
+        'Flushing Meadows Quest': ['Unisphere', 'Queens Museum', 'USTA Billie Jean King National Tennis Center'],
+        'Battery Park Breeze': ['Castle Clinton', 'Bosque Fountain', 'Statue of Liberty Viewpoint'],
+        'DUMBO Art Hunt': ['Pebble Beach', 'St. Ann’s Warehouse', 'Washington Street Photo Spot'],
+        'Greenwich Village Ghost Tour': ['Jefferson Market Library', 'Stonewall Inn', 'Washington Mews'],
+        'Bronx Botanical Explorer': ['NY Botanical Garden Gate', 'Conservatory', 'Native Plant Garden'],
+        'Williamsburg Mural Walk': ['Bedford Ave', 'The Color Factory', 'Domino Park'],
+        'Hudson Riverfront Hike': ['Pier 57 Rooftop Park', 'Little Island', 'Pier 64'],
+        'Financial District History Dash': ['Wall Street Bull', 'Federal Hall', 'Trinity Church'],
+        'SoHo Gallery Hop': ['The Drawing Center', 'Jeffrey Deitch Gallery', 'Team Gallery'],
+        'LIC Skyline Stroll': ['Gantry Plaza State Park', 'Pepsi-Cola Sign', 'Hunters Point Library'],
+        'Chinatown Flavor Quest': ['Doyers Street', 'Nom Wah Tea Parlor', 'Columbus Park'],
+        'Uptown Jazz Crawl': ['Minton\'s Playhouse', 'National Jazz Museum', 'Marcus Garvey Park'],
+        'Astoria Cultural Crawl': ['Museum of the Moving Image', 'Astoria Park', 'Bohemian Hall'],
+        'Staten Island Shoreline Trek': ['Staten Island Ferry Terminal', 'Staten Island 9/11 Memorial', 'Empire Outlets'],
+        'Governors Island Escape': ['The Hills', 'Slide Hill', 'Castle Williams']
+    };
+
+
+    const rewardEXP = getRandomInt(100, 1000);
+
+    const expirationDate = randomDate(new Date(2025, 4, 1), new Date(2026, 4, 1))
+        .toLocaleString('en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: 'numeric',
+            minute: '2-digit',
+        });;
+
+    const nameRandomized = getRandomItem(questNames);
+
+    const points = pointPools[nameRandomized];
+
+    return {
+        id,
+        name: nameRandomized,
+        points: points.map((p, i) => `Point ${i + 1}: ${p}`),
+        expiration: expirationDate,
+        reward: rewardEXP
+    }
+
+}
+
+const staticQuestList = Array.from({ length: 6 }, (_, i) => generateRandomQuest(`quest${i + 1}`)); // create list of 5 generated quests
+// console.log(staticQuestList);
+
 
 /**
  * Quest Routes
  */
-app.get('/api/quests/:questId', (req, res) => {
-    const questId = req.params.questId
-    const quest = {
-        id: questId,
-        name: 'Brooklyn Bridge Walk',
-        points: ['Point 1: City Hall', 'Point 2: Brooklyn Bridge Walkway', 'Point 3: DUMBO'],
-        expiration: '12:00 MM/DD/YY',
-        reward: '500 XP'
+app.get('/api/quests/:questId', (req, res) => { // for now, quests are mocked within the backend
+    const questId = req.params.questId;
+
+    const quest = staticQuestList.find(q => q.id === questId);
+
+    if (!quest) {
+        return res.status(404).json({ message: 'Quest not found' });
     }
-    res.json(quest)
+
+    res.json(quest);
+
+
 })
 
 app.post('/api/quests/:questId/accept', (req, res) => {
-    const questId = req.params.questId
-    res.json({ message: `Quest ${questId} accepted` })
-})
+    const questId = req.params.questId;
+    const quest = staticQuestList.find(q => q.id === questId);
+
+    if (!quest) {
+        return res.status(404).json({ message: 'Quest not found' });
+    }
+
+    currentQuest = quest; // set as in-progress
+    res.json({ message: `Quest ${questId} accepted`, quest: currentQuest });
+});
 
 /**
  * Completed Quests Route
@@ -200,17 +317,37 @@ app.post('/api/invite-friend', (req, res) => {
 /**
  * Home Data Route
  */
+// app.get('/api/home', (req, res) => {
+//     const currentQuest = {
+//         name: 'Explore Central Park',
+//         nextCheckpoint: 'Bethesda Fountain',
+//         progress: 40
+//     }
+//     const availableQuests = [
+//         { name: 'Brooklyn Bridge Walk', route: 'City Hall → Brooklyn Bridge → DUMBO' },
+//         { name: 'Grand Concourse Tour', route: 'Bronx Courthouse → Bronx Museum of Arts → Andrew Freedman Home' }
+//     ]
+//     res.json({ currentQuest, availableQuests })
+// })
+
 app.get('/api/home', (req, res) => {
-    const currentQuest = {
-        name: 'Explore Central Park',
-        nextCheckpoint: 'Bethesda Fountain',
-        progress: 40
-    }
-    const availableQuests = [
-        { name: 'Brooklyn Bridge Walk', route: 'City Hall → Brooklyn Bridge → DUMBO' },
-        { name: 'Grand Concourse Tour', route: 'Bronx Courthouse → Bronx Museum of Arts → Andrew Freedman Home' }
-    ]
-    res.json({ currentQuest, availableQuests })
-})
+    const availableQuests = staticQuestList
+        .filter(q => !currentQuest || q.id !== currentQuest.id)
+        .map(q => ({
+            id: q.id,
+            name: q.name,
+            route: q.points.map(p => p.replace(/^Point \d+: /, '')).join(' → ')
+        }));
+
+    const progressData = currentQuest
+        ? {
+            id: currentQuest.id,
+            name: currentQuest.name,
+            nextCheckpoint: currentQuest.points[1]?.replace(/^Point \d+: /, '') || 'Checkpoint',
+            progress: 40 // You could make this dynamic later
+        }
+        : null;
+    res.json({ progressData, availableQuests });
+});
 
 export default app
