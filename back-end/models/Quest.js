@@ -100,7 +100,16 @@ const questSchema = new mongoose.Schema({
     enum: ['all-checkpoints', 'min-checkpoints', 'specific-checkpoint'],
     default: 'all-checkpoints'
   },
-  minCheckpointsRequired: Number
+  minCheckpointsRequired: Number,
+  isVerified: {
+    type: Boolean,
+    default: false
+  },
+  generatedBy: {
+    type: String,
+    enum: ['AI', 'admin', 'user'],
+    default: 'AI'
+  }
 }, { timestamps: true });
 
 // Add index for geospatial queries
