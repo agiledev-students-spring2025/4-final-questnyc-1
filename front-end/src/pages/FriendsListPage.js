@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import '../styles/index.css';
 
 function FriendListPage() {
     const navigate = useNavigate(); 
+    const [friends, setFriends] = useState([]);
 
-    // Add friend IDs for routing
-    const friends = [
-        { id: 1, name: "Sarah" },
-        { id: 2, name: "Adam" },
-        { id: 3, name: "Isaac" },
-        { id: 4, name: "Santa" },
-        { id: 5, name: "Happy" }
-    ];
+    // Fetch friends from backend on mount
+    useEffect(() => {
+        const fetchFriends = async () => {
+            try {
+                const res = await fetch('http://localhost:5000/api/friends');
+                const data = await res.json();
+                setFriends(data);
+            } catch (error) {
+                console.error('Failed to fetch friends:', error);
+            }
+        };
+        fetchFriends();
+    }, []);
 
     return (
         <div className="container text-center" style={{ position: 'relative' }}>
@@ -23,11 +29,11 @@ function FriendListPage() {
             <div className="mt-md">
                 {friends.map((friend) => (
                     <button 
-                        key={friend.id} 
+                        key={friend._id} 
                         className="btn btn-primary btn-block" 
-                        onClick={() => navigate(`/friend-profile/${friend.id}`)}
+                        onClick={() => navigate(`/friend-profile/${friend._id}`)}
                     >
-                        {friend.name}
+                        {friend.username}
                     </button>
                 ))}
             </div>
