@@ -7,12 +7,14 @@ import { fileURLToPath } from 'url'
 import axios from 'axios'
 import mongoose from 'mongoose'
 import Friend from './models/Friend.js'
+import questRoutes from './routes/questRoutes.js';
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
 app.use('/static', express.static('public'))
+app.use('/api/quests', questRoutes);
 
 // MongoDB connection
 mongoose.connect(process.env.MONGODB_URI)
@@ -132,22 +134,22 @@ function generateRandomQuest(id) {
   }
 }
 
-const staticQuestList = Array.from({ length: 6 }, (_, i) => generateRandomQuest(`quest${i + 1}`))
+// const staticQuestList = Array.from({ length: 6 }, (_, i) => generateRandomQuest(`quest${i + 1}`))
 
-app.get('/api/quests/:questId', (req, res) => {
-  const questId = req.params.questId
-  const quest = staticQuestList.find(q => q.id === questId)
-  if (!quest) return res.status(404).json({ message: 'Quest not found' })
-  res.json(quest)
-})
+// app.get('/api/quests/:questId', (req, res) => {
+//   const questId = req.params.questId
+//   const quest = staticQuestList.find(q => q.id === questId)
+//   if (!quest) return res.status(404).json({ message: 'Quest not found' })
+//   res.json(quest)
+// })
 
-app.post('/api/quests/:questId/accept', (req, res) => {
-  const questId = req.params.questId
-  const quest = staticQuestList.find(q => q.id === questId)
-  if (!quest) return res.status(404).json({ message: 'Quest not found' })
-  currentQuest = quest
-  res.json({ message: `Quest ${questId} accepted`, quest: currentQuest })
-})
+// app.post('/api/quests/:questId/accept', (req, res) => {
+//   const questId = req.params.questId
+//   const quest = staticQuestList.find(q => q.id === questId)
+//   if (!quest) return res.status(404).json({ message: 'Quest not found' })
+//   currentQuest = quest
+//   res.json({ message: `Quest ${questId} accepted`, quest: currentQuest })
+// })
 
 /**
  * Completed Quests Route
@@ -261,25 +263,26 @@ app.post('/api/invite-friend', (req, res) => {
 /**
  * Home Data Route
  */
-app.get('/api/home', (req, res) => {
-  const availableQuests = staticQuestList
-    .filter(q => !currentQuest || q.id !== currentQuest.id)
-    .map(q => ({
-      id: q.id,
-      name: q.name,
-      route: q.points.map(p => p.replace(/^Point \d+: /, '')).join(' → ')
-    }));
-
-  const progressData = currentQuest
-    ? {
-      id: currentQuest.id,
-      name: currentQuest.name,
-      nextCheckpoint: currentQuest.points[1]?.replace(/^Point \d+: /, '') || 'Checkpoint',
-      progress: 40
+app.get('/api/home', async (req, res) => {
+    try {
+      // Get available quests from MongoDB
+      const availableQuests = await Quest.find({ isActive: true })
+        .limit(6)  // Limit to 6 quests for home page
+        .select('name checkpoints'); // Only fetch the fields we need
+      
+      const formattedQuests = availableQuests.map(q => ({
+        id: q._id,
+        name: q.name,
+        route: q.checkpoints.map(c => c.name).join(' → ')
+      }));
+      
+      // For now, keep the progressData as null or implement logic to fetch current quest
+      const progressData = null;
+      
+      res.json({ progressData, availableQuests: formattedQuests });
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to fetch home data', error: error.message });
     }
-    : null;
-
-  res.json({ progressData, availableQuests });
-})
+  });
 
 export default app
