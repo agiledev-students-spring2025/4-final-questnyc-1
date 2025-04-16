@@ -197,6 +197,41 @@ app.get('/api/achievements', (req, res) => {
 })
 
 /**
+ * Authentication Routes
+ */
+app.post('/api/login', (req, res) => {
+  const { username, password } = req.body
+  res.json({ message: 'Logged in successfully', token: 'fake-jwt-token' })
+})
+
+app.post('/api/register', (req, res) => {
+  const { username, password, confirmPass } = req.body
+  if (password !== confirmPass) {
+    return res.status(400).json({ message: 'Passwords do not match' })
+  }
+  res.json({ message: 'Account created successfully' })
+})
+
+/**
+ * Password Reset Routes
+ */
+app.post('/api/password-reset-request', (req, res) => {
+  const { email, confirmEmail } = req.body
+  if (email !== confirmEmail) {
+    return res.status(400).json({ message: 'Emails do not match' })
+  }
+  res.json({ message: 'Password reset link has been sent to your email address' })
+})
+
+app.post('/api/password-reset-confirmation', (req, res) => {
+  const { newPassword, confirmNewPassword } = req.body
+  if (newPassword !== confirmNewPassword) {
+    return res.status(400).json({ message: 'Passwords do not match' })
+  }
+  res.json({ message: 'Password has been successfully reset' })
+})
+
+/**
  * Leaderboard Route
  */
 app.get('/api/leaderboard', (req, res, next) => {
