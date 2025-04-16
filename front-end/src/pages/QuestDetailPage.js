@@ -56,6 +56,17 @@ function QuestDetailPage() {
     if (error) return <div className="container text-center">Error: {error}</div>;
     if (!quest) return <div className="container text-center">Quest not found</div>;
     
+    // Calculate expiration date display or use "No expiration" if not set
+    const expirationDate = quest.expiresAt 
+        ? new Date(quest.expiresAt).toLocaleString('en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: 'numeric',
+            minute: '2-digit'
+          })
+        : "No expiration";
+    
     return (
         <div className="container">
             {/* Quest Title */}
@@ -73,18 +84,34 @@ function QuestDetailPage() {
                 Quest Map With Location Pins
             </div>
             
-            {/* Quest Points */}
+            {/* Quest Description */}
             <div className="mb-md">
-                {quest.points && quest.points.map((point, index) => (
-                    <p key={index} className="mb-sm">{point}</p>
+                <p className="mb-sm">{quest.description}</p>
+            </div>
+            
+            {/* Quest Checkpoints */}
+            <div className="mb-md">
+                <h3>Checkpoints:</h3>
+                {quest.checkpoints && quest.checkpoints.map((checkpoint, index) => (
+                    <div key={index} className="mb-sm">
+                        <p><strong>{index + 1}. {checkpoint.name}</strong></p>
+                        <p>{checkpoint.description}</p>
+                    </div>
                 ))}
             </div>
             
             {/* Quest Details */}
             <div className="text-center mb-md">
+                <p className="mb-xs">Theme: {quest.theme}</p>
+                <p className="mb-xs">Difficulty: {quest.difficulty}</p>
+                <p className="mb-xs">Estimated Time: {quest.estimatedTime} minutes</p>
+                <p className="mb-xs">Distance: {quest.distance} km</p>
                 <p className="mb-xs">Quest Expiration</p>
-                <p className="mb-xs" style={{ fontWeight: 'var(--weight-bold)' }}>{quest.expiration}</p>
-                <p className="mb-xs">Reward: {quest.reward}</p>
+                <p className="mb-xs" style={{ fontWeight: 'var(--weight-bold)' }}>{expirationDate}</p>
+                <p className="mb-xs">Reward: {quest.rewardXP} XP</p>
+                {quest.rewardItems && quest.rewardItems.length > 0 && (
+                    <p className="mb-xs">Items: {quest.rewardItems.join(', ')}</p>
+                )}
             </div>
             
             {/* Accept Button */}
@@ -100,7 +127,7 @@ function QuestDetailPage() {
             
             {/* Bottom Navigation Menu */}
             <div className="nav-bar">
-                <button className="nav-icon active" onClick={() => navigate("/home-page")}>🏠</button>
+                <button className="nav-icon" onClick={() => navigate("/home-page")}>🏠</button>
                 <button className="nav-icon" onClick={() => navigate("/profile-page")}>👤</button>
                 <button className="nav-icon" onClick={() => navigate("/leaderboard")}>🏆</button>
             </div>

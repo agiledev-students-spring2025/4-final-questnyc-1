@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/index.css';
@@ -14,14 +13,18 @@ const Home = () => {
         const response = await fetch('http://localhost:5000/api/home');
         const data = await response.json();
 
-        console.log("Fetched home data:", data); // debug
+        console.log("Fetched home data:", data);
 
         setCurrentQuest(data.progressData);
 
-        const filtered = data.availableQuests.filter(
-          q => !data.currentQuest || q.id !== data.currentQuest.id
-        );
-        setAvailableQuests(filtered);
+        if (data.progressData) {
+          const filtered = data.availableQuests.filter(
+            q => q.id !== data.progressData.id
+          );
+          setAvailableQuests(filtered);
+        } else {
+          setAvailableQuests(data.availableQuests);
+        }
       } catch (error) {
         console.error("Failed to fetch home data:", error);
       }
@@ -29,6 +32,10 @@ const Home = () => {
 
     fetchHomeData();
   }, []);
+
+  const handleQuestSelect = (questId) => {
+    navigate(`/quest-detail/${questId}`);
+  };
 
   return (
     <div className="container">
@@ -44,10 +51,11 @@ const Home = () => {
             <div
               className="progress-fill"
               style={{ width: `${currentQuest.progress}%` }}
-            ></div>
+            />
           </div>
+
           <a
-            onClick={() => navigate(`/quest-detail/${currentQuest.id}`)}
+            onClick={() => handleQuestSelect(currentQuest.id)}
             className="more-info"
           >
             More Information →
@@ -61,19 +69,24 @@ const Home = () => {
       <h2 className="available-quests-title">Available Quests</h2>
       <hr className="separator" />
       <div className="quests-list">
-        {availableQuests.map((quest) => (
-          <div key={quest.id} className="quest-item">
-            <h3 className="quest-name">{quest.name}</h3>
-            <p className="route-label">Route</p>
-            <p className="quest-route">{quest.route}</p>
-            <a
-              onClick={() => navigate(`/quest-detail/${quest.id}`)}
-              className="more-info"
-            >
-              More Information →
-            </a>
-          </div>
-        ))}
+        {availableQuests.length > 0 ? (
+          availableQuests.map((quest) => (
+            <div key={quest.id} className="quest-item">
+              <h3 className="quest-name">{quest.name}</h3>
+              <p className="route-label">Route</p>
+              <p className="quest-route">{quest.route}</p>
+
+              <a
+                onClick={() => handleQuestSelect(quest.id)}
+                className="more-info"
+              >
+                More Information →
+              </a>
+            </div>
+          ))
+        ) : (
+          <p className="text-center">No available quests at the moment.</p>
+        )}
       </div>
 
       {/* Bottom Navigation Menu */}
