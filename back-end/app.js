@@ -8,6 +8,7 @@ import axios from 'axios'
 import mongoose from 'mongoose'
 import Friend from './models/Friend.js'
 import questRoutes from './routes/questRoutes.js';
+import Quest from './models/Quest.js';
 
 const app = express()
 
