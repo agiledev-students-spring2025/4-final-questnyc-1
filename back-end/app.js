@@ -7,12 +7,14 @@ import { fileURLToPath } from 'url'
 import axios from 'axios'
 import mongoose from 'mongoose'
 import Friend from './models/Friend.js'
+import authRoutes from './routes/auth.js';
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
 app.use('/static', express.static('public'))
+app.use('/api', authRoutes);
 
 // MongoDB connection
 mongoose.connect(process.env.MONGODB_URI)
@@ -194,41 +196,6 @@ app.get('/api/achievements', (req, res) => {
     { name: 'Achievement #5', progress: 2, total: 2, completed: true }
   ]
   res.json(achievements)
-})
-
-/**
- * Authentication Routes
- */
-app.post('/api/login', (req, res) => {
-  const { username, password } = req.body
-  res.json({ message: 'Logged in successfully', token: 'fake-jwt-token' })
-})
-
-app.post('/api/register', (req, res) => {
-  const { username, password, confirmPass } = req.body
-  if (password !== confirmPass) {
-    return res.status(400).json({ message: 'Passwords do not match' })
-  }
-  res.json({ message: 'Account created successfully' })
-})
-
-/**
- * Password Reset Routes
- */
-app.post('/api/password-reset-request', (req, res) => {
-  const { email, confirmEmail } = req.body
-  if (email !== confirmEmail) {
-    return res.status(400).json({ message: 'Emails do not match' })
-  }
-  res.json({ message: 'Password reset link has been sent to your email address' })
-})
-
-app.post('/api/password-reset-confirmation', (req, res) => {
-  const { newPassword, confirmNewPassword } = req.body
-  if (newPassword !== confirmNewPassword) {
-    return res.status(400).json({ message: 'Passwords do not match' })
-  }
-  res.json({ message: 'Password has been successfully reset' })
 })
 
 /**
