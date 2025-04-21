@@ -1,5 +1,7 @@
 import express from 'express';
 import Quest from '../models/Quest.js';
+import User from '../models/User.js';
+import UserQuestProgress from '../models/UserQuestProgress.js';
 
 const router = express.Router();
 
@@ -29,17 +31,57 @@ router.get('/:questId', async (req, res) => {
 // Accept a quest (creates a progress record)
 router.post('/:questId/accept', async (req, res) => {
   try {
+    const { userId } = req.body; // Get from auth middleware
     const quest = await Quest.findById(req.params.questId);
-    if (!quest) {
-      return res.status(404).json({ message: 'Quest not found' });
-    }
     
-    // In a real implementation, you would also create a UserQuestProgress record here
-    // For now, we're just returning the quest
+    // Create UserQuestProgress record
+    const questProgress = new UserQuestProgress({
+      userId,
+      questId: quest._id,
+      checkpointProgress: quest.checkpoints.map(checkpoint => ({
+        checkpointId: checkpoint._id,
+        completed: false,
+        attempts: 0
+      }))
+    });
     
-    res.json({ message: `Quest ${req.params.questId} accepted`, quest });
+    await questProgress.save();
+    
+    // Update user's currentQuests
+    await User.findByIdAndUpdate(userId, {
+      $push: { currentQuests: questProgress._id }
+    });
+    
+    res.json({ message: 'Quest accepted', quest, progress: questProgress });
   } catch (error) {
     res.status(500).json({ message: 'Failed to accept quest', error: error.message });
+  }
+});
+
+router.post('/:questId/complete', async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const questProgress = await UserQuestProgress.findOne({ userId, questId: req.params.questId });
+    
+    if (!questProgress) {
+      return res.status(404).json({ message: 'Quest progress not found' });
+    }
+    
+    // Update progress
+    questProgress.isCompleted = true;
+    questProgress.completedAt = new Date();
+    await questProgress.save();
+    
+    // Update user record
+    await User.findByIdAndUpdate(userId, {
+      $pull: { currentQuests: questProgress._id },
+      $push: { completedQuests: questProgress._id },
+      $inc: { totalXP: questProgress.xpEarned }
+    });
+    
+    res.json({ message: 'Quest completed', progress: questProgress });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to complete quest', error: error.message });
   }
 });
 

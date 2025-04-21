@@ -108,4 +108,34 @@ router.get('/check-user/:username', async (req, res) => {
     }
   });
 
+// For all information related to this user
+router.get('/users/:userId/fullprofile', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId)
+            .select('-password')
+            .populate({
+                path: 'currentQuests',
+                populate: {
+                    path: 'questId',
+                    model: 'Quest'
+                }
+            })
+            .populate({
+                path: 'completedQuests',
+                populate: {
+                    path: 'questId',
+                    model: 'Quest'
+                }
+            });
+        
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to fetch user profile', error: error.message });
+    }
+});
+
 export default router;

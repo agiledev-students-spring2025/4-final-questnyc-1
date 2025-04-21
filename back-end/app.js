@@ -10,6 +10,7 @@ import Friend from './models/Friend.js'
 import questRoutes from './routes/questRoutes.js';
 import Quest from './models/Quest.js';
 import authRoutes from './routes/auth.js';
+import userQuestRoutes from './routes/userQuestRoutes.js';
 
 const app = express()
 
@@ -18,6 +19,7 @@ app.use(express.json())
 app.use('/static', express.static('public'))
 app.use('/api/quests', questRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api', userQuestRoutes);
 
 // MongoDB connection
 mongoose.connect(process.env.MONGODB_URI)
