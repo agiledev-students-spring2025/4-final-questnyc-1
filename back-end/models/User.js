@@ -7,8 +7,6 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     profilePic: { type: String, default: 'https://picsum.photos/seed/selfie/100' },
     firstJoined: { type: Date, default: Date.now },
-    
-    // Add quest-related fields
     totalXP: { type: Number, default: 0 },
     currentQuests: [{
         type: mongoose.Schema.Types.ObjectId,

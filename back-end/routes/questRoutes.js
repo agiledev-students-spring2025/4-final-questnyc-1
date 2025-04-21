@@ -31,8 +31,25 @@ router.get('/:questId', async (req, res) => {
 // Accept a quest (creates a progress record)
 router.post('/:questId/accept', async (req, res) => {
   try {
-    const { userId } = req.body; // Get from auth middleware
+    const { userId } = req.body;
     const quest = await Quest.findById(req.params.questId);
+    
+    if (!quest) {
+      return res.status(404).json({ message: 'Quest not found' });
+    }
+    
+    // Check if user already has an active quest
+    const activeQuest = await UserQuestProgress.findOne({
+      userId,
+      isCompleted: false
+    });
+    
+    if (activeQuest) {
+      return res.status(400).json({ 
+        message: 'You already have an active quest. Please complete or abandon it first.',
+        activeQuest
+      });
+    }
     
     // Create UserQuestProgress record
     const questProgress = new UserQuestProgress({
@@ -47,9 +64,9 @@ router.post('/:questId/accept', async (req, res) => {
     
     await questProgress.save();
     
-    // Update user's currentQuests
+    // Update user's currentQuests (should only have one)
     await User.findByIdAndUpdate(userId, {
-      $push: { currentQuests: questProgress._id }
+      $set: { currentQuests: [questProgress._id] }
     });
     
     res.json({ message: 'Quest accepted', quest, progress: questProgress });
@@ -82,6 +99,63 @@ router.post('/:questId/complete', async (req, res) => {
     res.json({ message: 'Quest completed', progress: questProgress });
   } catch (error) {
     res.status(500).json({ message: 'Failed to complete quest', error: error.message });
+  }
+});
+
+// To complete a checkpoint
+router.post('/:questId/checkpoint/:checkpointId/complete', async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const { questId, checkpointId } = req.params;
+    
+    const questProgress = await UserQuestProgress.findOne({ userId, questId });
+    
+    if (!questProgress) {
+      return res.status(404).json({ message: 'Quest progress not found' });
+    }
+    
+    // Find and update checkpoint
+    const checkpointIndex = questProgress.checkpointProgress.findIndex(
+      cp => cp.checkpointId.toString() === checkpointId
+    );
+    
+    if (checkpointIndex === -1) {
+      return res.status(404).json({ message: 'Checkpoint not found' });
+    }
+    
+    // Update checkpoint status
+    questProgress.checkpointProgress[checkpointIndex].completed = true;
+    questProgress.checkpointProgress[checkpointIndex].completedAt = new Date();
+    
+    // Check if all checkpoints are completed
+    const allCompleted = questProgress.checkpointProgress.every(cp => cp.completed);
+    
+    if (allCompleted) {
+      questProgress.isCompleted = true;
+      questProgress.completedAt = new Date();
+      
+      // Get quest details for rewards
+      const quest = await Quest.findById(questId);
+      questProgress.xpEarned = quest.rewardXP;
+      questProgress.itemsCollected = quest.rewardItems;
+      
+      // Update user record
+      await User.findByIdAndUpdate(userId, {
+        $set: { currentQuests: [] },
+        $push: { completedQuests: questProgress._id },
+        $inc: { totalXP: quest.rewardXP }
+      });
+    }
+    
+    await questProgress.save();
+    
+    res.json({ 
+      message: `Checkpoint ${checkpointIndex + 1} completed`,
+      allCompleted,
+      progress: questProgress 
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to complete checkpoint', error: error.message });
   }
 });
 
