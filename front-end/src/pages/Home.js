@@ -8,55 +8,89 @@ const Home = () => {
   const { user } = useAuth();
   const [currentQuest, setCurrentQuest] = useState(null);
   const [availableQuests, setAvailableQuests] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchHomeData = async () => {
+    try {
+      const userResponse = await fetch(`http://localhost:5000/api/user/${user._id}/quests/current`);
+      const currentQuests = await userResponse.json();
+      
+      const questsResponse = await fetch('http://localhost:5000/api/quests');
+      const availableQuestsData = await questsResponse.json();
+
+      if (currentQuests && currentQuests.length > 0) {
+        const activeQuest = currentQuests[0];
+        const questDetails = activeQuest.questId;
+        
+        const nextCheckpointIndex = activeQuest.checkpointProgress.findIndex(cp => !cp.completed);
+        const nextCheckpoint = nextCheckpointIndex !== -1 
+          ? questDetails.checkpoints[nextCheckpointIndex] 
+          : null;
+        
+        setCurrentQuest({
+          id: questDetails._id,
+          name: questDetails.name,
+          nextCheckpoint: nextCheckpoint ? nextCheckpoint.name : 'All checkpoints completed',
+          nextCheckpointId: nextCheckpoint ? nextCheckpoint._id : null,
+          progress: (activeQuest.checkpointProgress.filter(cp => cp.completed).length / questDetails.checkpoints.length) * 100
+        });
+
+        const filtered = availableQuestsData.filter(q => q._id !== questDetails._id);
+        setAvailableQuests(filtered.map(q => ({
+          id: q._id,
+          name: q.name,
+          route: q.checkpoints.map(c => c.name).join(' → ')
+        })));
+      } else {
+        setCurrentQuest(null);
+        setAvailableQuests(availableQuestsData.map(q => ({
+          id: q._id,
+          name: q.name,
+          route: q.checkpoints.map(c => c.name).join(' → ')
+        })));
+      }
+    } catch (error) {
+      console.error("Failed to fetch home data:", error);
+    }
+  };
 
   useEffect(() => {
     if (!user) {
       navigate('/login');
       return;
     }
-
-    const fetchHomeData = async () => {
-      try {
-        // Fetch user's current quest
-        const userResponse = await fetch(`http://localhost:5000/api/user/${user._id}/quests/current`);
-        const currentQuests = await userResponse.json();
-        
-        // Get available quests
-        const questsResponse = await fetch('http://localhost:5000/api/quests');
-        const availableQuestsData = await questsResponse.json();
-
-        if (currentQuests.length > 0) {
-          const activeQuest = currentQuests[0];
-          const questDetails = activeQuest.questId;
-          
-          setCurrentQuest({
-            id: questDetails._id,
-            name: questDetails.name,
-            nextCheckpoint: questDetails.checkpoints[0]?.name || 'First Checkpoint',
-            progress: (activeQuest.checkpointProgress.filter(cp => cp.completed).length / questDetails.checkpoints.length) * 100
-          });
-
-          // Filter out current quest from available quests
-          const filtered = availableQuestsData.filter(q => q._id !== questDetails._id);
-          setAvailableQuests(filtered.map(q => ({
-            id: q._id,
-            name: q.name,
-            route: q.checkpoints.map(c => c.name).join(' → ')
-          })));
-        } else {
-          setAvailableQuests(availableQuestsData.map(q => ({
-            id: q._id,
-            name: q.name,
-            route: q.checkpoints.map(c => c.name).join(' → ')
-          })));
-        }
-      } catch (error) {
-        console.error("Failed to fetch home data:", error);
-      }
-    };
-
     fetchHomeData();
   }, [user, navigate]);
+
+  const handleCompleteCheckpoint = async () => {
+    if (!currentQuest?.nextCheckpointId) return;
+    
+    setIsLoading(true);
+    try {
+      const response = await fetch(`http://localhost:5000/api/quests/${currentQuest.id}/checkpoint/${currentQuest.nextCheckpointId}/complete`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user._id })
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        if (data.allCompleted) {
+          alert('Quest completed!');
+          setCurrentQuest(null);
+        }
+        fetchHomeData();
+      } else {
+        alert(data.message || 'Failed to complete checkpoint');
+      }
+    } catch (error) {
+      console.error("Failed to complete checkpoint:", error);
+      alert('Failed to complete checkpoint');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleQuestSelect = (questId) => {
     navigate(`/quest-detail/${questId}`);
@@ -64,7 +98,6 @@ const Home = () => {
 
   return (
     <div className="container">
-      {/* Quest In Progress */}
       <h1 className="section-header text-center">Quest In Progress</h1>
       {currentQuest ? (
         <div className="quest-box">
@@ -79,6 +112,16 @@ const Home = () => {
             />
           </div>
 
+          {currentQuest.nextCheckpointId && (
+            <button 
+              className="btn btn-primary btn-block mt-md"
+              onClick={handleCompleteCheckpoint}
+              disabled={isLoading}
+            >
+              {isLoading ? 'Completing...' : 'Complete Checkpoint'}
+            </button>
+          )}
+
           <a
             onClick={() => handleQuestSelect(currentQuest.id)}
             className="more-info"
@@ -90,7 +133,6 @@ const Home = () => {
         <p className="text-center">No quest currently in progress.</p>
       )}
 
-      {/* Available Quests */}
       <h2 className="available-quests-title">Available Quests</h2>
       <hr className="separator" />
       <div className="quests-list">
@@ -114,7 +156,6 @@ const Home = () => {
         )}
       </div>
 
-      {/* Bottom Navigation Menu */}
       <div className="nav-bar">
         <button className="nav-icon active" onClick={() => navigate("/home-page")}>
           🏠
