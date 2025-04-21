@@ -94,4 +94,18 @@ router.get('/users', async (req, res) => {
     }
 });
 
+// To find user
+router.get('/check-user/:username', async (req, res) => {
+    try {
+      const user = await User.findOne({username: req.params.username}).select('-password');
+      if (user) {
+        res.json({exists: true, user});
+      } else {
+        res.json({exists: false});
+      }
+    } catch (err) {
+      res.status(500).json({message: err.message});
+    }
+  });
+
 export default router;
