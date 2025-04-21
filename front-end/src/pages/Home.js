@@ -1,29 +1,54 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext.js';
 import '../styles/index.css';
 
 const Home = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [currentQuest, setCurrentQuest] = useState(null);
   const [availableQuests, setAvailableQuests] = useState([]);
 
   useEffect(() => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+
     const fetchHomeData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/home');
-        const data = await response.json();
+        // Fetch user's current quest
+        const userResponse = await fetch(`http://localhost:5000/api/user/${user._id}/quests/current`);
+        const currentQuests = await userResponse.json();
+        
+        // Get available quests
+        const questsResponse = await fetch('http://localhost:5000/api/quests');
+        const availableQuestsData = await questsResponse.json();
 
-        console.log("Fetched home data:", data);
+        if (currentQuests.length > 0) {
+          const activeQuest = currentQuests[0];
+          const questDetails = activeQuest.questId;
+          
+          setCurrentQuest({
+            id: questDetails._id,
+            name: questDetails.name,
+            nextCheckpoint: questDetails.checkpoints[0]?.name || 'First Checkpoint',
+            progress: (activeQuest.checkpointProgress.filter(cp => cp.completed).length / questDetails.checkpoints.length) * 100
+          });
 
-        setCurrentQuest(data.progressData);
-
-        if (data.progressData) {
-          const filtered = data.availableQuests.filter(
-            q => q.id !== data.progressData.id
-          );
-          setAvailableQuests(filtered);
+          // Filter out current quest from available quests
+          const filtered = availableQuestsData.filter(q => q._id !== questDetails._id);
+          setAvailableQuests(filtered.map(q => ({
+            id: q._id,
+            name: q.name,
+            route: q.checkpoints.map(c => c.name).join(' → ')
+          })));
         } else {
-          setAvailableQuests(data.availableQuests);
+          setAvailableQuests(availableQuestsData.map(q => ({
+            id: q._id,
+            name: q.name,
+            route: q.checkpoints.map(c => c.name).join(' → ')
+          })));
         }
       } catch (error) {
         console.error("Failed to fetch home data:", error);
@@ -31,7 +56,7 @@ const Home = () => {
     };
 
     fetchHomeData();
-  }, []);
+  }, [user, navigate]);
 
   const handleQuestSelect = (questId) => {
     navigate(`/quest-detail/${questId}`);

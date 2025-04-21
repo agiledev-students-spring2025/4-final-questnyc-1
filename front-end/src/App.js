@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext.js';
 
 import SplashPage from './pages/SplashPage.js';
 import LoginPage from './pages/LoginPage.js';
@@ -17,14 +18,11 @@ import QuestDetailPage from './pages/QuestDetailPage.js';
 import CompletedQuestsPage from './pages/CompletedQuestsPage.js';
 
 // import { useLocation } from 'react-router-dom';
-
-
-
 function App() {
     return (
-        <div>
+        <AuthProvider>
             <Routes>
-                <Route path="/" element={<SplashPage />} />
+            <Route path="/" element={<SplashPage />} />
                 <Route path="/home-page" element={<Home />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/create-account" element={<CreateAccountPage />} />
@@ -39,11 +37,8 @@ function App() {
                 <Route path="/quest-detail" element={<QuestDetailPage />} />
                 <Route path="/completed-quests" element={<CompletedQuestsPage />} />
                 <Route path="/quest-detail/:questId" element={<QuestDetailPage />} />
-
-
-
             </Routes>
-        </div>
+        </AuthProvider>
     );
 }
 
