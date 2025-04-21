@@ -4,20 +4,29 @@ import '../styles/index.css';
 
 function CreateAccountPage() {
     const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
-    const navigate = useNavigate(); // 👈 Add this to enable navigation
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // If no email is provided, generate one from username
+        const userEmail = email || `${username}@example.com`;
+
         try {
-            const response = await fetch('http://localhost:5000/api/register', {
+            const response = await fetch('http://localhost:5000/api/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ username, password, confirmPass })
+                body: JSON.stringify({ 
+                    username, 
+                    email: userEmail,
+                    password, 
+                    confirmPass 
+                })
             });
 
             const data = await response.json();
@@ -25,9 +34,10 @@ function CreateAccountPage() {
             if (response.ok) {
                 alert(data.message);
                 setUsername('');
+                setEmail('');
                 setPassword('');
                 setConfirmPass('');
-                navigate('/login'); // 👈 Redirect to login page
+                navigate('/login');
             } else {
                 alert(data.message);
             }
@@ -52,6 +62,14 @@ function CreateAccountPage() {
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
+                    />
+                </div>
+                <div>
+                    <label>Email</label>
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
                 <div>

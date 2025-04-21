@@ -84,4 +84,28 @@ router.post('/password-reset-confirmation', async (req, res) => {
     }
 });
 
+// To access all users
+router.get('/users', async (req, res) => {
+    try {
+        const users = await User.find().select('-password'); // Exclude passwords
+        res.status(200).json(users);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// To find user
+router.get('/check-user/:username', async (req, res) => {
+    try {
+      const user = await User.findOne({username: req.params.username}).select('-password');
+      if (user) {
+        res.json({exists: true, user});
+      } else {
+        res.json({exists: false});
+      }
+    } catch (err) {
+      res.status(500).json({message: err.message});
+    }
+  });
+
 export default router;
