@@ -5,7 +5,8 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     profilePic: { type: String, default: 'https://picsum.photos/seed/selfie/100' },
-    firstJoined: { type: Date, default: Date.now }
+    firstJoined: { type: Date, default: Date.now },
+    exp: { type: Number, default: 0}
 });
 
 export default mongoose.model('User', userSchema);

@@ -37,10 +37,7 @@ function LeaderboardPage() {
             {leaderboardData.length > 0 && (
                 <div className="top-player">
                     <div className="profile-pic">
-                        <img
-                            src={`https://picsum.photos/seed/${leaderboardData[0].username}/50`}
-                            alt="#1 Profile Picture"
-                        />
+                    <img src={leaderboardData[0].profilePic || `https://picsum.photos/seed/${encodeURIComponent(leaderboardData[0].username)}/50`} />
                     </div>
                     <div className="username-score">
                         <span className="username">{leaderboardData[0].username}</span>
@@ -57,7 +54,7 @@ function LeaderboardPage() {
                         <div className="rank-section">
                             <img
                                 className="profile-picture-small"
-                                src={`https://picsum.photos/seed/${player.username}/50`}
+                                src={player.profilePic || `https://picsum.photos/seed/${encodeURIComponent(player.username)}/50`}
                                 alt={`#${player.rank} Profile Picture`}
                             />
                             <div className="rank-circle">{player.rank}</div>
