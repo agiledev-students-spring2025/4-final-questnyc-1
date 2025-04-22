@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { useAuth } from '../context/AuthContext.js';
+import 'leaflet/dist/leaflet.css';
 import '../styles/index.css';
+
+// Remove the problematic icon setup for now
 
 function QuestDetailPage() {
     const navigate = useNavigate();
-    const { questId } = useParams(); // Get the questId from the URL params
+    const { questId } = useParams();
+    const { user } = useAuth();
     const [quest, setQuest] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     
-    // Fetch quest details from the backend
     useEffect(() => {
         const fetchQuestDetails = async () => {
             try {
                 const response = await fetch(`http://localhost:5000/api/quests/${questId}`);
-                
-                if (!response.ok) {
-                    throw new Error('Failed to fetch quest details');
-                }
-                
+                if (!response.ok) throw new Error('Failed to fetch quest details');
                 const data = await response.json();
                 setQuest(data);
                 setLoading(false);
@@ -27,28 +28,33 @@ function QuestDetailPage() {
                 setLoading(false);
             }
         };
-        
         fetchQuestDetails();
     }, [questId]);
     
     const acceptQuest = async () => {
+        if (!user) {
+            navigate('/login');
+            return;
+        }
+        
         try {
             const response = await fetch(`http://localhost:5000/api/quests/${questId}/accept`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify({ userId: user._id })
             });
             
+            const data = await response.json();
+            
             if (!response.ok) {
-                throw new Error('Failed to accept quest');
+                throw new Error(data.message || 'Failed to accept quest');
             }
             
-            // Navigate to home page after successfully accepting the quest
             navigate("/home-page");
-            
         } catch (err) {
-            setError(err.message);
+            alert(err.message);
         }
     };
     
@@ -56,7 +62,6 @@ function QuestDetailPage() {
     if (error) return <div className="container text-center">Error: {error}</div>;
     if (!quest) return <div className="container text-center">Quest not found</div>;
     
-    // Calculate expiration date display or use "No expiration" if not set
     const expirationDate = quest.expiresAt 
         ? new Date(quest.expiresAt).toLocaleString('en-US', {
             year: 'numeric',
@@ -69,11 +74,27 @@ function QuestDetailPage() {
     
     return (
         <div className="container">
-            {/* Quest Title */}
+            {/* Back Arrow */}
+            <button 
+                className="back-button"
+                onClick={() => navigate(-1)}
+                style={{
+                    position: 'absolute',
+                    top: '20px',
+                    left: '20px',
+                    background: 'none',
+                    border: 'none',
+                    fontSize: '24px',
+                    cursor: 'pointer'
+                }}
+            >
+                ←
+            </button>
+            
             <h2 className="section-header text-center">[{quest.name}] Details</h2>
             <hr className="separator" />
             
-            {/* Map Container */}
+            {/* Map Container - temporarily simplified */}
             <div className="card mb-md" style={{ 
                 height: '250px', 
                 display: 'flex',
@@ -81,15 +102,13 @@ function QuestDetailPage() {
                 justifyContent: 'center',
                 backgroundColor: '#ddd'
             }}>
-                Quest Map With Location Pins
+                Quest Map Coming Soon
             </div>
             
-            {/* Quest Description */}
             <div className="mb-md">
                 <p className="mb-sm">{quest.description}</p>
             </div>
             
-            {/* Quest Checkpoints */}
             <div className="mb-md">
                 <h3>Checkpoints:</h3>
                 {quest.checkpoints && quest.checkpoints.map((checkpoint, index) => (
@@ -100,7 +119,6 @@ function QuestDetailPage() {
                 ))}
             </div>
             
-            {/* Quest Details */}
             <div className="text-center mb-md">
                 <p className="mb-xs">Theme: {quest.theme}</p>
                 <p className="mb-xs">Difficulty: {quest.difficulty}</p>
@@ -114,7 +132,6 @@ function QuestDetailPage() {
                 )}
             </div>
             
-            {/* Accept Button */}
             <div className="text-center mb-lg">
                 <button 
                     className="btn btn-primary"
@@ -125,7 +142,6 @@ function QuestDetailPage() {
                 </button>
             </div>
             
-            {/* Bottom Navigation Menu */}
             <div className="nav-bar">
                 <button className="nav-icon" onClick={() => navigate("/home-page")}>🏠</button>
                 <button className="nav-icon" onClick={() => navigate("/profile-page")}>👤</button>
