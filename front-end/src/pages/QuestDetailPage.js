@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { useAuth } from '../context/AuthContext.js';
-import 'leaflet/dist/leaflet.css';
 import '../styles/index.css';
-
-// Remove the problematic icon setup for now
 
 function QuestDetailPage() {
     const navigate = useNavigate();
@@ -72,6 +68,10 @@ function QuestDetailPage() {
           })
         : "No expiration";
     
+    // Create a simple static map URL using OpenStreetMap static image service
+    const [lng, lat] = quest.startLocation.coordinates;
+    const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${lng-0.01},${lat-0.01},${lng+0.01},${lat+0.01}&layer=mapnik&marker=${lat},${lng}`;
+    
     return (
         <div className="container">
             {/* Back Arrow */}
@@ -94,15 +94,19 @@ function QuestDetailPage() {
             <h2 className="section-header text-center">[{quest.name}] Details</h2>
             <hr className="separator" />
             
-            {/* Map Container - temporarily simplified */}
-            <div className="card mb-md" style={{ 
-                height: '250px', 
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: '#ddd'
-            }}>
-                Quest Map Coming Soon
+            {/* Static Map Container */}
+            <div className="card mb-md" style={{ height: '250px', overflow: 'hidden' }}>
+                <iframe
+                    width="100%"
+                    height="250"
+                    frameBorder="0"
+                    scrolling="no"
+                    marginHeight="0"
+                    marginWidth="0"
+                    src={mapUrl}
+                    style={{ border: 0 }}
+                    title="Quest Map"
+                />
             </div>
             
             <div className="mb-md">
