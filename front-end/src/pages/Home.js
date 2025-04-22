@@ -96,8 +96,11 @@ const Home = () => {
     navigate(`/quest-detail/${questId}`);
   };
 
-  return (
-    <div className="container">
+  // In Home.js, update the return statement:
+
+return (
+  <div className="container">
+    <div className="quest-in-progress-section">
       <h1 className="section-header text-center">Quest In Progress</h1>
       {currentQuest ? (
         <div className="quest-box">
@@ -111,7 +114,6 @@ const Home = () => {
               style={{ width: `${currentQuest.progress}%` }}
             />
           </div>
-
           {currentQuest.nextCheckpointId && (
             <button 
               className="btn btn-primary btn-block mt-md"
@@ -121,7 +123,6 @@ const Home = () => {
               {isLoading ? 'Completing...' : 'Complete Checkpoint'}
             </button>
           )}
-
           <a
             onClick={() => handleQuestSelect(currentQuest.id)}
             className="more-info"
@@ -132,7 +133,9 @@ const Home = () => {
       ) : (
         <p className="text-center">No quest currently in progress.</p>
       )}
+    </div>
 
+    <div className="scrollable-content">
       <h2 className="available-quests-title">Available Quests</h2>
       <hr className="separator" />
       <div className="quests-list">
@@ -142,7 +145,6 @@ const Home = () => {
               <h3 className="quest-name">{quest.name}</h3>
               <p className="route-label">Route</p>
               <p className="quest-route">{quest.route}</p>
-
               <a
                 onClick={() => handleQuestSelect(quest.id)}
                 className="more-info"
@@ -155,20 +157,21 @@ const Home = () => {
           <p className="text-center">No available quests at the moment.</p>
         )}
       </div>
-
-      <div className="nav-bar">
-        <button className="nav-icon active" onClick={() => navigate("/home-page")}>
-          🏠
-        </button>
-        <button className="nav-icon" onClick={() => navigate("/profile-page")}>
-          👤
-        </button>
-        <button className="nav-icon" onClick={() => navigate("/leaderboard")}>
-          🏆
-        </button>
-      </div>
     </div>
-  );
+
+    <div className="nav-bar">
+      <button className="nav-icon active" onClick={() => navigate("/home-page")}>
+        🏠
+      </button>
+      <button className="nav-icon" onClick={() => navigate("/profile-page")}>
+        👤
+      </button>
+      <button className="nav-icon" onClick={() => navigate("/leaderboard")}>
+        🏆
+      </button>
+    </div>
+  </div>
+);
 };
 
 export default Home;

@@ -96,3 +96,20 @@ input[type="submit"] {
 .items-center { align-items: center; }
 .justify-center { justify-content: center; }
 .justify-between { justify-content: space-between; }
+
+/* Update in your Home.css or index.css */
+.quest-in-progress-section {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 100;
+  padding: 20px;
+  margin: -20px -20px 20px -20px; /* Negative margin to compensate for container padding */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Scrollable container for the rest of the content */
+.scrollable-content {
+  height: calc(100vh - 200px); /* Adjust based on your fixed section height */
+  overflow-y: auto;
+}
