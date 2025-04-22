@@ -17,7 +17,13 @@ const Home = () => {
       
       const questsResponse = await fetch('http://localhost:5000/api/quests');
       const availableQuestsData = await questsResponse.json();
-
+      
+      // Get list of completed quests
+      const completedQuestsResponse = await fetch(`http://localhost:5000/api/auth/users/${user._id}/fullprofile`);
+      const userProfile = await completedQuestsResponse.json();
+      
+      const completedQuestIds = userProfile.completedQuests.map(q => q.questId._id);
+      
       if (currentQuests && currentQuests.length > 0) {
         const activeQuest = currentQuests[0];
         const questDetails = activeQuest.questId;
@@ -34,8 +40,11 @@ const Home = () => {
           nextCheckpointId: nextCheckpoint ? nextCheckpoint._id : null,
           progress: (activeQuest.checkpointProgress.filter(cp => cp.completed).length / questDetails.checkpoints.length) * 100
         });
-
-        const filtered = availableQuestsData.filter(q => q._id !== questDetails._id);
+  
+        // Filter out current quest AND completed quests
+        const filtered = availableQuestsData.filter(q => 
+          q._id !== questDetails._id && !completedQuestIds.includes(q._id)
+        );
         setAvailableQuests(filtered.map(q => ({
           id: q._id,
           name: q.name,
@@ -43,7 +52,9 @@ const Home = () => {
         })));
       } else {
         setCurrentQuest(null);
-        setAvailableQuests(availableQuestsData.map(q => ({
+        // Filter out completed quests only  
+        const filtered = availableQuestsData.filter(q => !completedQuestIds.includes(q._id));
+        setAvailableQuests(filtered.map(q => ({
           id: q._id,
           name: q.name,
           route: q.checkpoints.map(c => c.name).join(' → ')
