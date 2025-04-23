@@ -11,6 +11,8 @@ import questRoutes from './routes/questRoutes.js';
 import Quest from './models/Quest.js';
 import authRoutes from './routes/auth.js';
 import userQuestRoutes from './routes/userQuestRoutes.js';
+import User from './models/User.js'
+
 
 const app = express()
 
@@ -241,21 +243,40 @@ app.post('/api/password-reset-confirmation', (req, res) => {
 /**
  * Leaderboard Route
  */
-app.get('/api/leaderboard', (req, res, next) => {
-  axios
-    .get("https://my.api.mockaroo.com/mock_player_rankings.json?key=b65896f0")
-    .then(apiResponse => {
-      const sorted = apiResponse.data
-        .sort((a, b) => b.score - a.score)
-        .map((player, index) => ({
-          rank: index + 1,
-          username: player.username,
-          score: player.score
-        }));
-      res.json(sorted);
-    })
-    .catch(err => next(err));
-})
+// app.get('/api/leaderboard', (req, res, next) => {
+//   axios
+//     .get("https://my.api.mockaroo.com/mock_player_rankings.json?key=b65896f0")
+//     .then(apiResponse => {
+//       const sorted = apiResponse.data
+//         .sort((a, b) => b.score - a.score)
+//         .map((player, index) => ({
+//           rank: index + 1,
+//           username: player.username,
+//           score: player.score
+//         }));
+//       res.json(sorted);
+//     })
+//     .catch(err => next(err));
+// })
+
+app.get('/api/leaderboard', async (req, res) => {
+  try {
+    const users = await User.find()
+      .sort({ exp: -1 }) // sort descending
+      .limit(10);
+
+    const leaderboard = users.map((user, index) => ({
+      rank: index + 1,
+      username: user.username,
+      score: user.exp,
+      profilePic: user.profilePic
+    }));
+
+    res.json(leaderboard);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch leaderboard', error: error.message });
+  }
+});
 
 /**
  * Invite Friend Route
