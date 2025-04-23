@@ -31,14 +31,24 @@ mongoose.connect(process.env.MONGODB_URI)
 /**
  * Profile Routes
  */
-app.get('/api/profile', (req, res) => {
-  const userProfile = {
-    profilePic: 'https://picsum.photos/seed/selfie/100',
-    username: 'John Smith',
-    firstJoined: 'Feburary 2024'
+app.get('/api/profile', async (req, res) => {
+  try {
+    const userId = req.query.userId; // later can use auth token
+    if (!userId) return res.status(400).json({ message: 'Missing userId' });
+
+    const user = await User.findById(userId).select('-password');
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    res.json({
+      profilePic: user.profilePic,
+      username: user.username,
+      firstJoined: new Date(user.firstJoined).toLocaleDateString(),
+    });
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching profile', error: err.message });
   }
-  res.json(userProfile)
-})
+});
+
 
 app.put('/api/profile', (req, res) => {
   const updatedProfile = req.body
@@ -161,35 +171,35 @@ function generateRandomQuest(id) {
 /**
  * Completed Quests Route
  */
-app.get('/api/completed-quests', (req, res) => {
-  const completedQuests = [
-    {
-      id: 1,
-      title: 'Quest #1',
-      information: '[Quest Information]',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      progress: '5/5',
-      progressPercent: 100
-    },
-    {
-      id: 2,
-      title: 'Quest #2',
-      information: '[Quest Information]',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      progress: '3/3',
-      progressPercent: 100
-    },
-    {
-      id: 3,
-      title: 'Quest #3',
-      information: '[Quest Information]',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      progress: '7/7',
-      progressPercent: 100
-    }
-  ]
-  res.json(completedQuests)
-})
+// app.get('/api/completed-quests', (req, res) => {
+//   const completedQuests = [
+//     {
+//       id: 1,
+//       title: 'Quest #1',
+//       information: '[Quest Information]',
+//       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+//       progress: '5/5',
+//       progressPercent: 100
+//     },
+//     {
+//       id: 2,
+//       title: 'Quest #2',
+//       information: '[Quest Information]',
+//       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+//       progress: '3/3',
+//       progressPercent: 100
+//     },
+//     {
+//       id: 3,
+//       title: 'Quest #3',
+//       information: '[Quest Information]',
+//       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+//       progress: '7/7',
+//       progressPercent: 100
+//     }
+//   ]
+//   res.json(completedQuests)
+// })
 
 /**
  * Achievements Route
@@ -262,10 +272,11 @@ app.post('/api/password-reset-confirmation', (req, res) => {
 app.get('/api/leaderboard', async (req, res) => {
   try {
     const users = await User.find()
-      .sort({ totalXP: -1 }) // sort descending
+      .sort({ totalXP: -1 })
       .limit(10);
 
     const leaderboard = users.map((user, index) => ({
+      _id: user._id?.toString(), // <- safer way to serialize _id
       rank: index + 1,
       username: user.username,
       score: user.totalXP,
@@ -274,9 +285,11 @@ app.get('/api/leaderboard', async (req, res) => {
 
     res.json(leaderboard);
   } catch (error) {
+    console.error('Failed to fetch leaderboard:', error);
     res.status(500).json({ message: 'Failed to fetch leaderboard', error: error.message });
   }
 });
+
 
 /**
  * Invite Friend Route

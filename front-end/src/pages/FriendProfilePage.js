@@ -47,7 +47,6 @@ function FriendProfilePage() {
             <div className="mt-md">
                 <button className="btn btn-primary btn-block" onClick={() => navigate('/achievements')}>Achievements</button>
                 <button className="btn btn-primary btn-block" onClick={() => navigate('/completed-quests')}>Completed Quests</button>
-                <button className="btn btn-primary btn-block" onClick={() => navigate('/friends-list-page')}>Friends List</button>
             </div>
 
             {/* Bottom Navigation Menu */}
