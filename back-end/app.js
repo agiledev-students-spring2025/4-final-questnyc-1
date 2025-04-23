@@ -262,13 +262,13 @@ app.post('/api/password-reset-confirmation', (req, res) => {
 app.get('/api/leaderboard', async (req, res) => {
   try {
     const users = await User.find()
-      .sort({ exp: -1 }) // sort descending
+      .sort({ totalXP: -1 }) // sort descending
       .limit(10);
 
     const leaderboard = users.map((user, index) => ({
       rank: index + 1,
       username: user.username,
-      score: user.exp,
+      score: user.totalXP,
       profilePic: user.profilePic
     }));
 
