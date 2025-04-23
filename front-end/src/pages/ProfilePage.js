@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
+import { useAuth } from '../context/AuthContext.js';
 import '../styles/index.css';
 
 function ProfilePage() {
     const navigate = useNavigate(); 
+    const { user: authUser } = useAuth();  // 👈 use logged-in user from context
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-
-    const handleEditProfile = () => {
-        console.log('Edit Profile Clicked');
-    };
 
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const res = await fetch('http://localhost:5000/api/profile');
+                const res = await fetch(`http://localhost:5000/api/profile?userId=${authUser._id}`); // 👈 fetch real user
                 const data = await res.json();
                 setUser(data);
             } catch (error) {
@@ -25,27 +23,13 @@ function ProfilePage() {
         };
 
         fetchProfile();
-    }, []);
+    }, [authUser]);
 
     if (loading) return <p>Loading...</p>;
     if (!user) return <p>Profile not found.</p>;
 
     return (
         <div className="container text-center" style={{ position: 'relative' }}>
-            {/* Edit Profile Button */}
-            <button 
-                onClick={handleEditProfile}
-                className="btn btn-primary"
-                style={{ 
-                    position: 'absolute', 
-                    top: 0, 
-                    right: 0, 
-                    padding: 'var(--spacing-xs) var(--spacing-sm)'
-                }}
-            >
-                Edit Profile
-            </button>
-
             {/* Profile Picture */}
             <div className="profile-pic">
                 <img 
