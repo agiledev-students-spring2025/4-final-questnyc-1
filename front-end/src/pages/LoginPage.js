@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext.js';
 import '../styles/index.css';
 
 function LoginPage() {
     const navigate = useNavigate();
+    const { login } = useAuth();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -20,7 +22,7 @@ function LoginPage() {
             const data = await res.json();
 
             if (res.ok) {
-                alert(data.message); // "Logged in successfully"
+                login(data.user); // Save user to context
                 navigate('/home-page');
             } else {
                 alert(data.message || 'Login failed');

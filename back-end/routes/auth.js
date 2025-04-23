@@ -108,4 +108,49 @@ router.get('/check-user/:username', async (req, res) => {
     }
   });
 
+// For all information related to this user
+// In auth.js - update fullprofile endpoint
+router.get('/users/:userId/fullprofile', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId)
+            .select('-password')
+            .populate({
+                path: 'currentQuests',
+                populate: {
+                    path: 'questId',
+                    model: 'Quest'
+                }
+            })
+            .populate({
+                path: 'completedQuests',
+                populate: {
+                    path: 'questId',
+                    model: 'Quest'
+                }
+            })
+            .lean(); // Use lean() to get a plain JavaScript object
+        
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        
+        // Reorder the response to put currentQuests before completedQuests
+        const orderedUser = {
+            _id: user._id,
+            username: user.username,
+            email: user.email,
+            profilePic: user.profilePic,
+            firstJoined: user.firstJoined,
+            totalXP: user.totalXP,
+            currentQuests: user.currentQuests,
+            completedQuests: user.completedQuests,
+            __v: user.__v
+        };
+        
+        res.json(orderedUser);
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to fetch user profile', error: error.message });
+    }
+});
+
 export default router;
