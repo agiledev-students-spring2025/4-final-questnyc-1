@@ -48,6 +48,16 @@ function QuestDetailPage() {
                 throw new Error(data.message || 'Failed to accept quest');
             }
             
+            await fetch('http://localhost:5000/api/achievements/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    userId: user._id,
+                    name: 'Accepted Quests',  // match with your achievement seed
+                    increment: 1
+                })
+            });
+            
             navigate("/home-page");
         } catch (err) {
             alert(err.message);

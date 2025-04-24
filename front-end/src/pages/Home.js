@@ -87,7 +87,15 @@ const Home = () => {
       const data = await response.json();
       
       if (response.ok) {
-        if (data.allCompleted) {
+        if (data.allCompleted) { // trigger achievement completion
+          await fetch ('http://localhost:5000/api/completion/complete', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              userId: user._id,
+              questId: currentQuest.id
+            })
+          })
           alert('Quest completed!');
           setCurrentQuest(null);
         }
