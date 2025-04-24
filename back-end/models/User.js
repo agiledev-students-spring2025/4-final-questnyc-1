@@ -15,7 +15,9 @@ const userSchema = new mongoose.Schema({
     completedQuests: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'UserQuestProgress'
-    }]
+    }],
+    lastQuestDate: Date,
+    questStreak: {type: Number, default: 0}
 
 });
 

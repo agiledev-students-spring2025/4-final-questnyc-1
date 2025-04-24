@@ -71,8 +71,8 @@ router.post('/:questId/accept', async (req, res) => {
     });
 
     await updateAchievement(userId, 'First Quest Accepted');
-    await updateAchievement(userId, 'Accepted Quests', 1);
-    
+    await updateAchievement(userId, 'Accepted Quests');
+
     res.json({ message: 'Quest accepted', quest, progress: questProgress });
   } catch (error) {
     res.status(500).json({ message: 'Failed to accept quest', error: error.message });
