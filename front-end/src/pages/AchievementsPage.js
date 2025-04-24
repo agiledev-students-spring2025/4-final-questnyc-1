@@ -1,17 +1,22 @@
-import React from 'react';
+import { React, useState, useEffect }  from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/index.css';
 
 function AchievementsPage() {
     const navigate = useNavigate();
+    const [achievements, setAchievements] = useState([]);
 
-    const achievements = [ // placeholder achievements
-        { name: 'Achievement #1', progress: 2, total: 3, completed: false },
-        { name: 'Achievement #2', progress: 1, total: 4, completed: false },
-        { name: 'Achievement #3', progress: 0, total: 7, completed: false },
-        { name: 'Achievement #4', progress: 5, total: 5, completed: true },
-        { name: 'Achievement #5', progress: 2, total: 2, completed: true },
-    ];
+    useEffect(() => {
+        const fetchAchievements = async () => {
+            const userId = localStorage.getItem('userId'); // assuming you store this
+            const res = await fetch(`http://localhost:5000/api/achievements/${userId}`);
+            const data = await res.json();
+            console.log("api resp: ", data);
+            setAchievements(data);
+        };
+        fetchAchievements();
+    }, []);
+
 
     return (
         <div className="container achievements-container">

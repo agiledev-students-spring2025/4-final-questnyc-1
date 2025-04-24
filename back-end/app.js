@@ -12,6 +12,8 @@ import Quest from './models/Quest.js';
 import authRoutes from './routes/auth.js';
 import userQuestRoutes from './routes/userQuestRoutes.js';
 import User from './models/User.js'
+import achievementRoutes from './routes/achievementRoutes.js';
+
 
 
 const app = express()
@@ -22,6 +24,7 @@ app.use('/static', express.static('public'))
 app.use('/api/quests', questRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api', userQuestRoutes);
+app.use('/api/achievements', achievementRoutes);
 
 // MongoDB connection
 mongoose.connect(process.env.MONGODB_URI)

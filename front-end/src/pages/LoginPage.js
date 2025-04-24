@@ -23,6 +23,7 @@ function LoginPage() {
 
             if (res.ok) {
                 login(data.user); // Save user to context
+                localStorage.setItem('userId', data.user._id);
                 navigate('/home-page');
             } else {
                 alert(data.message || 'Login failed');
