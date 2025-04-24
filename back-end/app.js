@@ -13,6 +13,7 @@ import authRoutes from './routes/auth.js';
 import userQuestRoutes from './routes/userQuestRoutes.js';
 import User from './models/User.js'
 import achievementRoutes from './routes/achievementRoutes.js';
+import completionRoutes from './routes/completionRoutes.js'
 
 
 
@@ -25,6 +26,7 @@ app.use('/api/quests', questRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api', userQuestRoutes);
 app.use('/api/achievements', achievementRoutes);
+app.use('/api/completion', completionRoutes);
 
 // MongoDB connection
 mongoose.connect(process.env.MONGODB_URI)

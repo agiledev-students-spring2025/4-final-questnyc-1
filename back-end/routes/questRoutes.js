@@ -2,6 +2,7 @@ import express from 'express';
 import Quest from '../models/Quest.js';
 import User from '../models/User.js';
 import UserQuestProgress from '../models/UserQuestProgress.js';
+import { updateAchievement } from '../helpers/achievementUtils.js';
 
 const router = express.Router();
 
@@ -68,11 +69,16 @@ router.post('/:questId/accept', async (req, res) => {
     await User.findByIdAndUpdate(userId, {
       $set: { currentQuests: [questProgress._id] }
     });
+
+    await updateAchievement(userId, 'First Quest Accepted');
+    await updateAchievement(userId, 'Accepted Quests', 1);
     
     res.json({ message: 'Quest accepted', quest, progress: questProgress });
   } catch (error) {
     res.status(500).json({ message: 'Failed to accept quest', error: error.message });
   }
+
+
 });
 
 router.post('/:questId/complete', async (req, res) => {
