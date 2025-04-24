@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/index.css';
+import logo from '../assets/questnyclogo.png'; // ✅ import the logo
 
 function SplashPage() {
     const navigate = useNavigate();
@@ -10,7 +11,11 @@ function SplashPage() {
             <h1 className="mt-lg mb-md">Welcome to QuestNYC!</h1>
             
             <div className="profile-pic" style={{ width: 200, height: 200, margin: '0 auto' }}>
-                Logo
+                <img 
+                    src={logo} 
+                    alt="QuestNYC Logo" 
+                    style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
+                />
             </div>
             
             <div className="mt-lg">

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/index.css';
+import logo from '../assets/questnyclogo.png'; // ✅ Import the logo
 
 function CreateAccountPage() {
     const [username, setUsername] = useState('');
@@ -12,7 +13,6 @@ function CreateAccountPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // If no email is provided, generate one from username
         const userEmail = email || `${username}@example.com`;
 
         try {
@@ -49,8 +49,12 @@ function CreateAccountPage() {
 
     return (
         <div className="container">
-            <div className="profile-pic mt-lg mb-md flex justify-center items-center">
-                Logo
+            <div className="profile-pic mt-lg mb-md flex justify-center items-center" style={{ width: 200, height: 200, margin: '0 auto' }}>
+                <img 
+                    src={logo} 
+                    alt="QuestNYC Logo" 
+                    style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
+                />
             </div>
 
             <h2 className="text-center mb-md">Create An Account</h2>
