@@ -3,6 +3,8 @@ import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import User from '../models/User.js';
 import PasswordReset from '../models/PasswordReset.js';
+import { seedAchievementsNewUser } from '../helpers/seedAchievementsNewUser.js'; // adjust if needed
+
 
 const router = express.Router();
 
@@ -20,6 +22,7 @@ router.post('/register', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({ username, email, password: hashedPassword });
         await newUser.save();
+        await seedAchievementsNewUser(newUser._id); // add achievements for new user
 
         res.status(201).json({ message: 'User created successfully' });
     } catch (err) {

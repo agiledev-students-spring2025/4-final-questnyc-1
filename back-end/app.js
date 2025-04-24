@@ -14,6 +14,7 @@ import userQuestRoutes from './routes/userQuestRoutes.js';
 import User from './models/User.js'
 import achievementRoutes from './routes/achievementRoutes.js';
 import completionRoutes from './routes/completionRoutes.js'
+import { seedAchievementsNewUser } from './helpers/seedAchievementsNewUser.js';
 
 
 
@@ -258,21 +259,6 @@ app.post('/api/password-reset-confirmation', (req, res) => {
 /**
  * Leaderboard Route
  */
-// app.get('/api/leaderboard', (req, res, next) => {
-//   axios
-//     .get("https://my.api.mockaroo.com/mock_player_rankings.json?key=b65896f0")
-//     .then(apiResponse => {
-//       const sorted = apiResponse.data
-//         .sort((a, b) => b.score - a.score)
-//         .map((player, index) => ({
-//           rank: index + 1,
-//           username: player.username,
-//           score: player.score
-//         }));
-//       res.json(sorted);
-//     })
-//     .catch(err => next(err));
-// })
 
 app.get('/api/leaderboard', async (req, res) => {
   try {
