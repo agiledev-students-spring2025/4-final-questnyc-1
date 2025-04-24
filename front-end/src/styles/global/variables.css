@@ -1,55 +1,19 @@
-/* (colors, fonts, spacing) */
-
 :root {
-    /* Color Palette */
-    --primary: #3b82f6;         /* Blue from progress bars */
-    --secondary: #007bff;       /* Button color used in multiple components */
-    --background: #f9fafb;      /* Light background color */
-    --background-alt: #ffffff;  /* Card backgrounds */
-    --text-primary: #374151;    /* Main text color */
-    --text-secondary: #6b7280;  /* Secondary text */
-    --border: #e5e7eb;          /* Border color */
-    --success: #4CAF50;         /* Progress bar complete */
-    --error: #dc3545;           /* Error messages */
-    --warning: #ffc107;         /* Warning messages */
-    
-    /* Spacing */
-    --spacing-xs: 4px;
-    --spacing-sm: 8px;
-    --spacing-md: 16px;
-    --spacing-lg: 24px;
-    --spacing-xl: 32px;
-    
-    /* Border Radius */
-    --radius-sm: 5px;
-    --radius-md: 8px;
-    --radius-lg: 10px;
-    --radius-full: 50%;
-    
-    /* Font Sizes */
-    --font-xs: 12px;
-    --font-sm: 14px;
-    --font-md: 16px;
-    --font-lg: 18px;
-    --font-xl: 20px;
-    --font-xxl: 24px;
-    
-    /* Font Weights */
-    --weight-normal: 400;
-    --weight-medium: 500;
-    --weight-bold: 600;
-    --weight-extra-bold: 700;
-    
-    /* Shadows */
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-    
-    /* Layout */
-    --container-width: 400px;  /* Standard container width for mobile */
-    
-    /* Z-index layers */
-    --z-base: 1;
-    --z-overlay: 10;
-    --z-modal: 100;
-    --z-toast: 1000;
-  }
+  /* Updated NYC theme colors */
+  --background: #0e0e0e;             /* darker base */
+  --text-primary: #ffffff;           /* white text */
+  --text-on-dark: #ffffff;
+  --text-on-light: #000000;
+  --secondary: #ffd700;              /* subway/taxi yellow */
+  --accent: #007bff;                 /* city blue */
+  --danger: #ff4c4c;
+
+  --container-width: 960px;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 32px;
+
+  --weight-bold: 700;
+}

@@ -1,15 +1,11 @@
-/* (imports all global styles) */
+/* NYC THEME: GLOBAL STYLING */
 
-/* Import design tokens and variables */
+/* Import design tokens */
 @import './global/variables.css';
-
-/* Import component styles */
 @import './global/components.css';
-
-/* Import page-specific styles */
 @import './global/pages.css';
 
-/* Essential reset and base styles */
+/* Reset and base styles */
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -17,12 +13,18 @@
 html, body {
   margin: 0;
   padding: 0;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Urbanist', sans-serif;
   font-size: 16px;
   line-height: 1.5;
   color: var(--text-primary);
   background-color: var(--background);
+  background-image: url('./questnycbackground.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-attachment: fixed;
   -webkit-text-size-adjust: 100%;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7); /* contrast for text on image */
 }
 
 body {
@@ -45,10 +47,13 @@ p {
 a {
   color: var(--secondary);
   text-decoration: none;
+  text-shadow: 0 0 5px var(--secondary);
+  transition: all 0.3s ease;
 }
 
 a:hover {
   text-decoration: underline;
+  text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
 }
 
 img {
@@ -56,21 +61,47 @@ img {
   height: auto;
 }
 
-button, 
+/* Enhanced button styles */
+button,
 .btn,
 input[type="button"],
 input[type="submit"] {
-  min-height: 44px; /* Apple's recommended minimum touch target size */
+  min-height: 44px;
+  background-color: rgba(255, 215, 0, 0.85); /* taxi yellow */
+  color: #000;
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  font-weight: var(--weight-bold);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+  transition: all 0.3s ease;
 }
 
-/* Container for most pages */
+button:hover {
+  background-color: var(--accent);
+  color: #fff;
+  border-color: #fff;
+}
+
+/* Container with readable background */
 .container {
   max-width: var(--container-width);
   margin: 0 auto;
   padding: var(--spacing-md);
+  background-color: rgba(0, 0, 0, 0.6); /* translucent dark overlay */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
-/* Text styles */
+/* Utility readable box for any section */
+.readable-box {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: var(--spacing-md);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  color: var(--text-primary);
+}
+
+/* Utility text */
 .text-center { text-align: center; }
 .text-left { text-align: left; }
 .text-right { text-align: right; }
@@ -90,26 +121,50 @@ input[type="submit"] {
 /* Padding utilities */
 .p-md { padding: var(--spacing-md); }
 
-/* Added some flex utilities for layouts */
+/* Flex utilities */
 .flex { display: flex; }
 .flex-col { flex-direction: column; }
 .items-center { align-items: center; }
 .justify-center { justify-content: center; }
 .justify-between { justify-content: space-between; }
 
-/* Update in your Home.css or index.css */
+/* Sticky quest bar like a subway status */
 .quest-in-progress-section {
   position: sticky;
   top: 0;
-  background: #fff;
+  background: rgba(0, 0, 0, 0.9);
+  color: var(--secondary);
   z-index: 100;
   padding: 20px;
-  margin: -20px -20px 20px -20px; /* Negative margin to compensate for container padding */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin: -20px -20px 20px -20px;
+  box-shadow: 0 2px 4px rgba(255,255,255,0.1);
+  border-bottom: 2px solid var(--secondary);
 }
 
-/* Scrollable container for the rest of the content */
+/* Scrollable content area */
 .scrollable-content {
-  height: calc(100vh - 200px); /* Adjust based on your fixed section height */
+  height: calc(100vh - 200px);
   overflow-y: auto;
+}
+
+/* === Progress Bar Styling for Completed Quests === */
+.progress-container {
+  background-color: rgba(255, 255, 255, 0.2); /* subtle light background */
+  border-radius: 10px;
+  overflow: hidden;
+  height: 20px;
+  width: 100%;
+  margin-top: var(--spacing-sm);
+}
+
+.progress-fill {
+  background-color: #4caf50; /* ✅ green progress */
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.progress-fill.completed {
+  background-color: #4caf50; /* ✅ vibrant green for completed */
+  height: 100%;
+  transition: width 0.3s ease;
 }
