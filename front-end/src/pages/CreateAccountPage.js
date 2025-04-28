@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/index.css';
-import logo from '../assets/questnyclogo.png'; // ✅ Import the logo
+import logo from '../assets/questnyclogo.png';
 
 function CreateAccountPage() {
     const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
     const [selectedProfilePic, setSelectedProfilePic] = useState('https://picsum.photos/seed/selfie/100'); // Default pic
@@ -27,8 +26,6 @@ function CreateAccountPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const userEmail = email || `${username}@example.com`;
-
         try {
             const response = await fetch('http://localhost:5000/api/auth/register', {
                 method: 'POST',
@@ -37,10 +34,9 @@ function CreateAccountPage() {
                 },
                 body: JSON.stringify({ 
                     username, 
-                    email: userEmail,
                     password, 
                     confirmPass,
-                    profilePic: selectedProfilePic // 👈 include selected profile picture URL
+                    profilePic: selectedProfilePic
                 })
             });
 
@@ -49,7 +45,6 @@ function CreateAccountPage() {
             if (response.ok) {
                 alert(data.message);
                 setUsername('');
-                setEmail('');
                 setPassword('');
                 setConfirmPass('');
                 setSelectedProfilePic('https://picsum.photos/seed/selfie/100');
@@ -117,14 +112,6 @@ function CreateAccountPage() {
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
                 <div>
