@@ -11,27 +11,25 @@ const router = express.Router();
 // Registration Endpoint
 router.post('/register', async (req, res) => {
     try {
-        const { username, email, password, confirmPass, profilePic } = req.body; // 👈 added profilePic
+        const { username, password, confirmPass, profilePic } = req.body;
 
         if (password !== confirmPass) {
             return res.status(400).json({ message: 'Passwords do not match' });
         }
 
-        const existing = await User.findOne({ $or: [{ username }, { email }] });
+        const existing = await User.findOne({ username });
         if (existing) return res.status(400).json({ message: 'User already exists' });
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // 👇 Now include profilePic when creating the new User
         const newUser = new User({ 
             username, 
-            email, 
             password: hashedPassword, 
-            profilePic: profilePic || 'https://picsum.photos/seed/selfie/100' // fallback if user didn't select
+            profilePic: profilePic || 'https://picsum.photos/seed/selfie/100'
         });
 
         await newUser.save();
-        await seedAchievementsNewUser(newUser._id); // add achievements for new user
+        await seedAchievementsNewUser(newUser._id);
 
         res.status(201).json({ message: 'User created successfully' });
     } catch (err) {
@@ -59,18 +57,18 @@ router.post('/login', async (req, res) => {
 // Password Reset Request Endpoint
 router.post('/password-reset-request', async (req, res) => {
     try {
-        const { email, confirmEmail } = req.body;
-        if (email !== confirmEmail) {
-            return res.status(400).json({ message: 'Emails do not match' });
-        }
+        const { username } = req.body;
 
-        const user = await User.findOne({ email });
-        if (!user) return res.status(400).json({ message: 'Email not found' });
+        const user = await User.findOne({ username });
+        if (!user) return res.status(400).json({ message: 'Username not found' });
 
         const resetToken = crypto.randomBytes(32).toString('hex');
         await PasswordReset.create({ userId: user._id, resetToken });
 
-        res.status(200).json({ message: 'Password reset link has been sent to your email address', token: resetToken });
+        res.status(200).json({ 
+            message: 'Password reset token created', 
+            token: resetToken 
+        });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -141,17 +139,15 @@ router.get('/users/:userId/fullprofile', async (req, res) => {
                     model: 'Quest'
                 }
             })
-            .lean(); // Use lean() to get a plain JavaScript object
+            .lean();
         
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
         
-        // Reorder the response to put currentQuests before completedQuests
         const orderedUser = {
             _id: user._id,
             username: user.username,
-            email: user.email,
             profilePic: user.profilePic,
             firstJoined: user.firstJoined,
             totalXP: user.totalXP,
