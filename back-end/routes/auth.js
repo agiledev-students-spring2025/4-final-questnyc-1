@@ -11,7 +11,8 @@ const router = express.Router();
 // Registration Endpoint
 router.post('/register', async (req, res) => {
     try {
-        const { username, email, password, confirmPass } = req.body;
+        const { username, email, password, confirmPass, profilePic } = req.body; // 👈 added profilePic
+
         if (password !== confirmPass) {
             return res.status(400).json({ message: 'Passwords do not match' });
         }
@@ -20,7 +21,15 @@ router.post('/register', async (req, res) => {
         if (existing) return res.status(400).json({ message: 'User already exists' });
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ username, email, password: hashedPassword });
+
+        // 👇 Now include profilePic when creating the new User
+        const newUser = new User({ 
+            username, 
+            email, 
+            password: hashedPassword, 
+            profilePic: profilePic || 'https://picsum.photos/seed/selfie/100' // fallback if user didn't select
+        });
+
         await newUser.save();
         await seedAchievementsNewUser(newUser._id); // add achievements for new user
 
@@ -29,6 +38,7 @@ router.post('/register', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
+
 
 // Login Endpoint
 router.post('/login', async (req, res) => {
