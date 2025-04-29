@@ -1,26 +1,35 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function PasswordResetConfirmation() {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { username } = location.state || {};
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
-    const navigate = useNavigate(); // Step 1: Get navigate function
+
+    useEffect(() => {
+        if (!username) {
+            // If accessed directly, send back to prompt
+            navigate('/password-reset-prompt');
+        }
+    }, [username, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         try {
             const res = await fetch('http://localhost:5000/api/password-reset-confirmation', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ newPassword, confirmNewPassword })
+                body: JSON.stringify({ username, newPassword, confirmNewPassword })
             });
-    
+
             const data = await res.json();
-    
+
             if (res.ok) {
                 alert(data.message);
-                navigate('/login'); // Step 3: Redirect to login
+                navigate('/login');
             } else {
                 alert(data.message || 'Password reset failed');
             }
@@ -33,7 +42,7 @@ function PasswordResetConfirmation() {
     return (
         <div style={{ margin: '50px' }}>
             <div style={{ width: 150, height: 150, backgroundColor: '#ccc' }}>Logo</div>
-            <h2>Enter New Password</h2>
+            <h2>Reset Password for “{username}”</h2>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>New Password</label>
