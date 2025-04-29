@@ -1,6 +1,3 @@
-# Temporary Project Readme
-This Readme document will be updated once we start working on the Project Setup.
-
 # Quest NYC: The Ultimate Urban Exploration Game  
 
 ## What and Why  
