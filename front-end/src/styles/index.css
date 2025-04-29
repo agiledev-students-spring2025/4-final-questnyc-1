@@ -70,7 +70,7 @@ input[type="submit"] {
   min-height: 44px;
   background-color: rgba(255, 215, 0, 0.85); /* taxi yellow */
   color: #000;
-  border: 2px solid var(--accent);
+  border: 2px solid #000; /* Changed from var(--accent) to black */
   border-radius: 8px;
   font-weight: var(--weight-bold);
   box-shadow: 0 4px 8px rgba(0,0,0,0.4);
@@ -78,9 +78,18 @@ input[type="submit"] {
 }
 
 button:hover {
-  background-color: var(--accent);
-  color: #fff;
-  border-color: #fff;
+  background-color: rgba(255, 215, 0, 1); /* Brighter yellow on hover */
+  color: #000;
+  border-color: #000;
+}
+
+button:active,
+.btn:active,
+input[type="button"]:active,
+input[type="submit"]:active {
+  background-color: rgba(255, 215, 0, 0.85); /* Keep yellow when pressed */
+  color: #000;
+  border-color: #000;
 }
 
 /* Container with readable background */
