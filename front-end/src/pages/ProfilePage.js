@@ -50,7 +50,7 @@ function ProfilePage() {
                 <button className="btn btn-primary btn-block" onClick={() => navigate('/achievements')}>Achievements</button>
                 <button className="btn btn-primary btn-block" onClick={() => navigate('/completed-quests')}>Completed Quests</button>
                 <button className="btn btn-primary btn-block" onClick={() => navigate('/friends-list-page')}>Friends List</button> 
-                <button className="btn btn-primary btn-block">Change Password</button>
+                <button className="btn btn-primary btn-block" onClick={() => navigate('/reset-password')}>Change Password</button>
             </div>
 
             {/* Bottom Navigation Menu */}

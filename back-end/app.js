@@ -16,6 +16,7 @@ import achievementRoutes from './routes/achievementRoutes.js';
 import completionRoutes from './routes/completionRoutes.js'
 import { seedAchievementsNewUser } from './helpers/seedAchievementsNewUser.js';
 import friendRoutes from './routes/friendRoutes.js';
+import bcrypt from 'bcryptjs';
 
 
 

@@ -5,11 +5,11 @@ import User from './models/User.js'; // path to your User model
 dotenv.config();
 
 const users = [
-  { username: 'alice', email: 'alice@example.com', password: 'password1', exp: 3000 },
-  { username: 'bob', email: 'bob@example.com', password: 'password2', exp: 2500 },
-  { username: 'charlie', email: 'charlie@example.com', password: 'password3', exp: 3200 },
-  { username: 'dave', email: 'dave@example.com', password: 'password4', exp: 1800 },
-  { username: 'eve', email: 'eve@example.com', password: 'password5', exp: 3500 },
+  { username: 'alice', password: 'password1', exp: 3000 },
+  { username: 'bob', password: 'password2', exp: 2500 },
+  { username: 'charlie', password: 'password3', exp: 3200 },
+  { username: 'dave', password: 'password4', exp: 1800 },
+  { username: 'eve', password: 'password5', exp: 3500 },
 ];
 
 async function seed() {
