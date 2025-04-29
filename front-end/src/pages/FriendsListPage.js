@@ -10,7 +10,6 @@ function FriendListPage() {
     const [friends, setFriends] = useState([]);
     const [loading, setLoading] = useState(true);
     
-    // Fetch friends from backend on mount
     useEffect(() => {
         const fetchFriends = async () => {
             if (!authUser || !authUser._id) {
@@ -38,10 +37,8 @@ function FriendListPage() {
 
     return (
         <div className="friends-list-container">
-            {/* Heading */}
             <h1 className="friends-list-title">Friends List</h1>
 
-            {/* Friends List */}
             <div className="friends-list-section">
                 {loading ? (
                     <p>Loading friends...</p>
@@ -52,7 +49,6 @@ function FriendListPage() {
                             className="friend-item"
                             onClick={() => navigate(`/friend-profile/${friend.userId}`)}
                         >
-                            <div className="profile-picture-small"></div>
                             <span className="friend-name">{friend.username}</span>
                         </div>
                     ))
@@ -61,7 +57,6 @@ function FriendListPage() {
                 )}
             </div>
 
-            {/* Add Friend Button */}
             <button 
                 className="btn btn-primary add-friend-button" 
                 onClick={() => navigate('/add-friend')}
@@ -69,7 +64,6 @@ function FriendListPage() {
                 Add Friend
             </button>
 
-            {/* Bottom Navigation Menu */}
             <NavBar />
         </div>
     );

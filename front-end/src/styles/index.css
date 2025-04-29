@@ -418,3 +418,48 @@ button:hover {
   background-color: var(--danger);
   color: white;
 }
+
+/* Add to index.css */
+.password-reset-container {
+  text-align: center;
+  margin: auto;
+  padding: var(--spacing-md);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.password-reset-form {
+  width: 100%;
+  max-width: 500px;
+  background-color: rgba(14, 14, 14, 0.8);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--secondary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.logo-container {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto var(--spacing-lg);
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--secondary);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+.password-reset-title {
+  font-size: 28px;
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--spacing-lg);
+  color: var(--secondary);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.password-footer {
+  margin-top: var(--spacing-md);
+  color: var(--text-primary);
+}
