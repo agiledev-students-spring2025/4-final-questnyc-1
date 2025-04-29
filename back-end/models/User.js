@@ -1,9 +1,8 @@
-// models/User.js
+// models/User.js - Updated with friends array
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
-    email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     profilePic: { type: String, default: 'https://picsum.photos/seed/selfie/100' },
     firstJoined: { type: Date, default: Date.now },
@@ -17,8 +16,11 @@ const userSchema = new mongoose.Schema({
         ref: 'UserQuestProgress'
     }],
     lastQuestDate: Date,
-    questStreak: {type: Number, default: 0}
-
+    questStreak: {type: Number, default: 0},
+    friends: [{
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        username: { type: String }
+    }]
 });
 
 const User = mongoose.model('User', userSchema);

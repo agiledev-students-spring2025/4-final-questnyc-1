@@ -31,6 +31,7 @@ body {
   padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px));
   padding-left: env(safe-area-inset-left, 0px);
   padding-right: env(safe-area-inset-right, 0px);
+  overflow: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -86,10 +87,27 @@ button:hover {
 .container {
   max-width: var(--container-width);
   margin: 0 auto;
-  padding: var(--spacing-md);
-  background-color: rgba(0, 0, 0, 0.6); /* translucent dark overlay */
+  background-color: rgba(0, 0, 0, 0.6);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  overflow: hidden;
+}
+
+.home-container {
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Profile and other pages container */
+.profile-container, 
+.leaderboard-container, 
+.achievements-container {
+  padding: var(--spacing-md);
+  padding-top: 80px; /* Added top padding to push content down */
+  min-height: 100vh;
+  padding-bottom: 80px; /* Space for navbar */
 }
 
 /* Utility readable box for any section */
@@ -136,15 +154,17 @@ button:hover {
   color: var(--secondary);
   z-index: 100;
   padding: 20px;
-  margin: -20px -20px 20px -20px;
   box-shadow: 0 2px 4px rgba(255,255,255,0.1);
   border-bottom: 2px solid var(--secondary);
+  overflow: visible;
 }
 
 /* Scrollable content area */
 .scrollable-content {
-  height: calc(100vh - 200px);
+  flex: 1;
   overflow-y: auto;
+  padding: var(--spacing-md);
+  padding-top: 0;
 }
 
 /* === Progress Bar Styling for Completed Quests === */

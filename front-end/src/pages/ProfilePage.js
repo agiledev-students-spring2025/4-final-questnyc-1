@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { useAuth } from '../context/AuthContext.js';
+import NavBar from '../components/NavBar.js';
 import '../styles/index.css';
 
 function ProfilePage() {
@@ -29,7 +30,7 @@ function ProfilePage() {
     if (!user) return <p>Profile not found.</p>;
 
     return (
-        <div className="container text-center" style={{ position: 'relative' }}>
+        <div className="container profile-container text-center" style={{ position: 'relative' }}>
             {/* Profile Picture */}
             <div className="profile-pic">
                 <img 
@@ -53,11 +54,7 @@ function ProfilePage() {
             </div>
 
             {/* Bottom Navigation Menu */}
-            <div className="nav-bar">
-                <button className="nav-icon" onClick={() => navigate("/home-page")}>🏠</button>
-                <button className="nav-icon active" onClick={() => navigate("/profile-page")}>👤</button>
-                <button className="nav-icon" onClick={() => navigate("/leaderboard")}>🏆</button>
-            </div>
+            <NavBar />
         </div>
     );
 }

@@ -10,12 +10,12 @@ import PasswordResetConfirmation from './pages/PasswordResetConfirmation.js';
 import ProfilePage from './pages/ProfilePage.js'
 import FriendProfilePage from './pages/FriendProfilePage.js'
 import FriendsListPage from './pages/FriendsListPage.js'
-import InviteFriendPage from './pages/InviteFriendPage.js'
 import Home from './pages/Home.js'
 import LeaderboardPage from './pages/LeaderboardPage.js'
 import AchievementsPage from './pages/AchievementsPage.js'
 import QuestDetailPage from './pages/QuestDetailPage.js';
 import CompletedQuestsPage from './pages/CompletedQuestsPage.js';
+import AddFriendPage from './pages/AddFriendPage.js' // Add this import
 
 // import { useLocation } from 'react-router-dom';
 function App() {
@@ -31,7 +31,7 @@ function App() {
                 <Route path="/profile-page" element={<ProfilePage />} />
                 <Route path="/friend-profile/:friendId" element={<FriendProfilePage />} />
                 <Route path="/friends-list-page" element={<FriendsListPage />} />
-                <Route path="/invite-friend-page" element={<InviteFriendPage />} />
+                <Route path="/add-friend" element={<AddFriendPage />} /> {/* Add this route */}
                 <Route path="/leaderboard" element={<LeaderboardPage />} />
                 <Route path="/achievements" element={<AchievementsPage />} />
                 <Route path="/quest-detail" element={<QuestDetailPage />} />

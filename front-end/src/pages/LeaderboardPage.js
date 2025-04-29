@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import NavBar from '../components/NavBar.js';
 import '../styles/index.css';
 
 function LeaderboardPage() {
@@ -65,11 +66,7 @@ function LeaderboardPage() {
                 ))}
             </ul>
 
-            <div className="nav-bar">
-                <button className="nav-icon" onClick={() => navigate("/home-page")}>🏠</button>
-                <button className="nav-icon" onClick={() => navigate("/profile-page")}>👤</button>
-                <button className="nav-icon active" onClick={() => navigate("/leaderboard")}>🏆</button>
-            </div>
+            <NavBar />
         </div>
     );
 }

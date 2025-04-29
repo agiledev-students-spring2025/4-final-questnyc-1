@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.js';
 import '../styles/index.css';
+import NavBar from '../components/NavBar.js';
 
 function QuestDetailPage() {
     const navigate = useNavigate();
@@ -156,11 +157,7 @@ function QuestDetailPage() {
                 </button>
             </div>
             
-            <div className="nav-bar">
-                <button className="nav-icon" onClick={() => navigate("/home-page")}>🏠</button>
-                <button className="nav-icon" onClick={() => navigate("/profile-page")}>👤</button>
-                <button className="nav-icon" onClick={() => navigate("/leaderboard")}>🏆</button>
-            </div>
+            <NavBar />
         </div>
     );
 }
