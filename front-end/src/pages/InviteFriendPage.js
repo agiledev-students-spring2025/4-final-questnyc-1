@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import '../styles/index.css';
+import NavBar from '../components/NavBar.js';
 
 function InviteFriendPage() {
     const navigate = useNavigate(); 
@@ -47,11 +48,7 @@ function InviteFriendPage() {
             </button>
 
             {/* Bottom Navigation Menu */}
-            <div className="nav-bar">
-                <button className="nav-icon" onClick={() => navigate("/home-page")}>🏠</button>
-                <button className="nav-icon active" onClick={() => navigate("/profile-page")}>👤</button>
-                <button className="nav-icon" onClick={() => navigate("/leaderboard")}>🏆</button>
-            </div>
+            <NavBar />
         </div>
     );
 }

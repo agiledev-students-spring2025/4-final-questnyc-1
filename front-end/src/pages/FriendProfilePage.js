@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'; 
 import '../styles/index.css';
+import NavBar from '../components/NavBar.js';
 
 function FriendProfilePage() {
     const navigate = useNavigate(); 
@@ -50,11 +51,7 @@ function FriendProfilePage() {
             </div>
 
             {/* Bottom Navigation Menu */}
-            <div className="nav-bar">
-                <button className="nav-icon" onClick={() => navigate("/home-page")}>🏠</button>
-                <button className="nav-icon active" onClick={() => navigate("/profile-page")}>👤</button>
-                <button className="nav-icon" onClick={() => navigate("/leaderboard")}>🏆</button>
-            </div>
+            <NavBar />
         </div>
     );
 }
