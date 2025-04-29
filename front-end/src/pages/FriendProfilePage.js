@@ -14,7 +14,6 @@ function FriendProfilePage() {
     useEffect(() => {
         const fetchFriendProfile = async () => {
             try {
-                // Using the auth/check-user endpoint to get user info by ID
                 const res = await fetch(`http://localhost:5000/api/auth/users/${friendId}/fullprofile`);
                 
                 if (res.ok) {
@@ -33,7 +32,6 @@ function FriendProfilePage() {
         fetchFriendProfile();
     }, [friendId]);
 
-    // Handle removing a friend
     const handleRemoveFriend = async () => {
         if (!window.confirm('Are you sure you want to remove this friend?')) {
             return;
@@ -57,64 +55,59 @@ function FriendProfilePage() {
         }
     };
 
-    if (loading) return <div className="container text-center"><p>Loading...</p></div>;
-    if (!friend) return <div className="container text-center"><p>Friend not found.</p></div>;
+    if (loading) return <div className="friend-profile-container"><p>Loading...</p></div>;
+    if (!friend) return <div className="friend-profile-container"><p>Friend not found.</p></div>;
 
     return (
-        <div className="container text-center">
-            {/* Profile Picture */}
-            <div className="profile-pic">
-                <img 
-                    src={friend.profilePic} 
-                    alt="Profile" 
-                />
+        <div className="friend-profile-container">
+            <div className="friend-profile-header">
+                <div className="friend-profile-pic">
+                    <img src={friend.profilePic} alt="Profile" />
+                </div>
+                <h2 className="friend-username">{friend.username}</h2>
             </div>
 
-            {/* Username */}
-            <h2 className="mt-sm">{friend.username}</h2>
+            <div className="friend-stats">
+                <div className="stat-item">
+                    <span>First Joined:</span>
+                    <span>{new Date(friend.firstJoined).toLocaleDateString()}</span>
+                </div>
+                <div className="stat-item">
+                    <span>Total XP:</span>
+                    <span>{friend.totalXP || 0}</span>
+                </div>
+            </div>
 
-            {/* First Joined */}
-            <p style={{ color: 'var(--text-secondary)' }}>
-                First Joined: {new Date(friend.firstJoined).toLocaleDateString()}
-            </p>
-            
-            {/* XP Points */}
-            <p style={{ color: 'var(--text-secondary)' }}>
-                Total XP: {friend.totalXP || 0}
-            </p>
-
-            {/* Action Buttons */}
-            <div className="mt-md">
+            <div className="friend-actions">
                 <button 
-                    className="btn btn-primary btn-block" 
+                    className="btn btn-primary" 
                     onClick={() => navigate(`/achievements?userId=${friendId}`)}
                 >
                     View Achievements
                 </button>
                 
                 <button 
-                    className="btn btn-primary btn-block" 
+                    className="btn btn-primary" 
                     onClick={() => navigate(`/completed-quests?userId=${friendId}`)}
                 >
                     View Completed Quests
                 </button>
                 
                 <button 
-                    className="btn btn-danger btn-block"
+                    className="btn btn-danger"
                     onClick={handleRemoveFriend}
                 >
                     Remove Friend
                 </button>
+                
+                <button 
+                    className="btn btn-secondary"
+                    onClick={() => navigate('/friends-list-page')}
+                >
+                    Back to Friends List
+                </button>
             </div>
 
-            <button 
-                className="btn btn-secondary btn-block"
-                onClick={() => navigate('/friends-list-page')}
-            >
-                Back to Friends List
-            </button>
-
-            {/* Bottom Navigation Menu */}
             <NavBar />
         </div>
     );
