@@ -1,7 +1,9 @@
 // back-end/routes/auth.js
 import express from 'express';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 import User from '../models/User.js';
+import PasswordReset from '../models/PasswordReset.js';
 import { seedAchievementsNewUser } from '../helpers/seedAchievementsNewUser.js';
 
 const router = express.Router();
@@ -11,18 +13,28 @@ const router = express.Router();
 // ———————————————————————————
 router.post('/register', async (req, res) => {
     try {
-        const { username, email, password, confirmPass } = req.body;
+        // include email in the destructuring
+        const { username, email, password, confirmPass, profilePic } = req.body;
+
         if (password !== confirmPass) {
             return res.status(400).json({ message: 'Passwords do not match' });
         }
 
+        // check both username and email for duplicates
         const existing = await User.findOne({ $or: [{ username }, { email }] });
         if (existing) {
             return res.status(400).json({ message: 'User already exists' });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ username, email, password: hashedPassword });
+
+        const newUser = new User({
+            username,
+            email,
+            password: hashedPassword,
+            profilePic: profilePic || 'https://picsum.photos/seed/selfie/100'
+        });
+
         await newUser.save();
         await seedAchievementsNewUser(newUser._id);
 
@@ -59,18 +71,20 @@ router.post('/login', async (req, res) => {
 // ———————————————————————————
 router.post('/password-reset-request', async (req, res) => {
     try {
-        const { username, confirmUsername } = req.body;
-        if (username !== confirmUsername) {
-            return res.status(400).json({ message: 'Usernames do not match' });
-        }
-
+        const { username } = req.body;
         const user = await User.findOne({ username });
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        // No token sent—just confirm they can reset
-        res.status(200).json({ message: 'Username confirmed. Proceed to reset your password.' });
+        // generate and store a reset token
+        const resetToken = crypto.randomBytes(32).toString('hex');
+        await PasswordReset.create({ userId: user._id, resetToken });
+
+        res.status(200).json({
+            message: 'Password reset token created',
+            token: resetToken
+        });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -145,11 +159,10 @@ router.get('/users/:userId/fullprofile', async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        // Maintain order: currentQuests first
-        const ordered = {
+        // maintain the desired ordering
+        const orderedUser = {
             _id: user._id,
             username: user.username,
-            email: user.email,
             profilePic: user.profilePic,
             firstJoined: user.firstJoined,
             totalXP: user.totalXP,
@@ -158,7 +171,7 @@ router.get('/users/:userId/fullprofile', async (req, res) => {
             __v: user.__v
         };
 
-        res.json(ordered);
+        res.json(orderedUser);
     } catch (err) {
         res.status(500).json({ message: 'Failed to fetch user profile', error: err.message });
     }
