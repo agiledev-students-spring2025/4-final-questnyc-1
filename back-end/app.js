@@ -240,21 +240,43 @@ app.post('/api/register', (req, res) => {
 /**
  * Password Reset Routes
  */
+
+// Step 1: Password Reset Request
 app.post('/api/password-reset-request', (req, res) => {
-  const { email, confirmEmail } = req.body
-  if (email !== confirmEmail) {
-    return res.status(400).json({ message: 'Emails do not match' })
+  const { username, confirmUsername } = req.body
+
+  if (username !== confirmUsername) {
+    return res.status(400).json({ message: 'Usernames do not match' })
   }
-  res.json({ message: 'Password reset link has been sent to your email address' })
+
+  res.json({ message: 'Password reset request confirmed. Proceed to reset your password.' })
 })
 
-app.post('/api/password-reset-confirmation', (req, res) => {
-  const { newPassword, confirmNewPassword } = req.body
+// Step 2: Password Reset Confirmation
+app.post('/api/password-reset-confirmation', async (req, res) => {
+  const { username, newPassword, confirmNewPassword } = req.body
+
   if (newPassword !== confirmNewPassword) {
     return res.status(400).json({ message: 'Passwords do not match' })
   }
-  res.json({ message: 'Password has been successfully reset' })
+
+  try {
+    const user = await User.findOne({ username })
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' })
+    }
+
+    const saltRounds = 10
+    user.password = await bcrypt.hash(newPassword, saltRounds)
+    await user.save()
+
+    res.json({ message: 'Password has been successfully reset' })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ message: 'Server error' })
+  }
 })
+
 
 /**
  * Leaderboard Route
@@ -294,25 +316,25 @@ app.post('/api/invite-friend', (req, res) => {
  * Home Data Route
  */
 app.get('/api/home', async (req, res) => {
-    try {
-      // Get available quests from MongoDB
-      const availableQuests = await Quest.find({ isActive: true })
-        .limit(6)  // Limit to 6 quests for home page
-        .select('name checkpoints'); // Only fetch the fields we need
-      
-      const formattedQuests = availableQuests.map(q => ({
-        id: q._id,
-        name: q.name,
-        route: q.checkpoints.map(c => c.name).join(' → ')
-      }));
-      
-      // For now, keep the progressData as null or implement logic to fetch current quest
-      const progressData = null;
-      
-      res.json({ progressData, availableQuests: formattedQuests });
-    } catch (error) {
-      res.status(500).json({ message: 'Failed to fetch home data', error: error.message });
-    }
-  });
+  try {
+    // Get available quests from MongoDB
+    const availableQuests = await Quest.find({ isActive: true })
+      .limit(6)  // Limit to 6 quests for home page
+      .select('name checkpoints'); // Only fetch the fields we need
+
+    const formattedQuests = availableQuests.map(q => ({
+      id: q._id,
+      name: q.name,
+      route: q.checkpoints.map(c => c.name).join(' → ')
+    }));
+
+    // For now, keep the progressData as null or implement logic to fetch current quest
+    const progressData = null;
+
+    res.json({ progressData, availableQuests: formattedQuests });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch home data', error: error.message });
+  }
+});
 
 export default app
