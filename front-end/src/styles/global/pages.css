@@ -306,3 +306,59 @@
   color: var(--secondary);
   text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
+
+/* Add this specific style for CompletedQuestsPage */
+.completed-quests-container {
+  text-align: center;
+  margin: auto;
+  padding: var(--spacing-md);
+  padding-top: 80px;
+  padding-bottom: 80px;
+  height: 100vh;
+  overflow-y: auto !important;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.completed-quests-title {
+  font-size: 30px;
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--spacing-lg);
+  color: var(--secondary);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.completed-quests-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.completed-quest-item {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(14, 14, 14, 0.8);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-md);
+  border-left: 3px solid var(--secondary);
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 90px;
+}
+
+.completed-quest-item:hover {
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+/* Fix for background image */
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
