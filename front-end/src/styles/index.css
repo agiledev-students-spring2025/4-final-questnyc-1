@@ -249,3 +249,18 @@ button:hover {
 .splash-footer {
   margin-top: var(--spacing-lg);
 }
+
+/* Add this to your index.css file */
+.login-container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--spacing-md);
+}
