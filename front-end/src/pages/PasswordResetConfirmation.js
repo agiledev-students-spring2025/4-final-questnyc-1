@@ -9,6 +9,7 @@ function PasswordResetConfirmation() {
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
     useEffect(() => {
+        console.log("username passed: " + username);
         if (!username) {
             // If accessed directly, send back to prompt
             navigate('/password-reset-prompt');

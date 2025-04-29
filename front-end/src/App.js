@@ -15,7 +15,8 @@ import LeaderboardPage from './pages/LeaderboardPage.js'
 import AchievementsPage from './pages/AchievementsPage.js'
 import QuestDetailPage from './pages/QuestDetailPage.js';
 import CompletedQuestsPage from './pages/CompletedQuestsPage.js';
-import AddFriendPage from './pages/AddFriendPage.js' // Add this import
+import AddFriendPage from './pages/AddFriendPage.js'
+
 
 // import { useLocation } from 'react-router-dom';
 function App() {
@@ -27,7 +28,7 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/create-account" element={<CreateAccountPage />} />
                 <Route path="/reset-password" element={<PasswordResetPrompt />} />
-                <Route path="/reset-password-confirmation" element={<PasswordResetConfirmation />} />
+                <Route path="/password-reset-confirmation" element={<PasswordResetConfirmation />} />
                 <Route path="/profile-page" element={<ProfilePage />} />
                 <Route path="/friend-profile/:friendId" element={<FriendProfilePage />} />
                 <Route path="/friends-list-page" element={<FriendsListPage />} />

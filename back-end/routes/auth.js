@@ -77,6 +77,7 @@ router.post('/password-reset-request', async (req, res) => {
 // Password Reset Confirmation Endpoint
 router.post('/password-reset-confirmation', async (req, res) => {
     try {
+        console.log("resetting password...");
         const { token, newPassword, confirmNewPassword } = req.body;
         if (newPassword !== confirmNewPassword) {
             return res.status(400).json({ message: 'Passwords do not match' });
@@ -148,7 +149,6 @@ router.get('/users/:userId/fullprofile', async (req, res) => {
         const orderedUser = {
             _id: user._id,
             username: user.username,
-            email: user.email,
             profilePic: user.profilePic,
             firstJoined: user.firstJoined,
             totalXP: user.totalXP,
