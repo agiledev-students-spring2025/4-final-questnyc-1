@@ -78,10 +78,12 @@ function AchievementsPage() {
                     achievements.filter(a => a.completed).map((a, index) => (
                         <div key={index} className="achievement-item">
                             <span className="achievement-name">{a.name}</span>
-                            <div className="progress-container">
-                                <div className="progress-fill completed" style={{ width: '100%' }}></div>
+                            <div className="progress-bar-row">
+                                <div className="progress-container">
+                                    <div className="progress-fill" style={{ width: `${(a.progress / a.total) * 100}%` }}></div>
+                                </div>
+                                <span className="progress-text">{a.progress}/{a.total}</span>
                             </div>
-                            <span className="progress-text">{a.progress}/{a.total}</span>
                         </div>
                     ))
                 ) : (
