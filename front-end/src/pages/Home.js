@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.js';
+import NavBar from '../components/NavBar.js';
 import '../styles/index.css';
 
 const Home = () => {
@@ -178,17 +179,7 @@ return (
       </div>
     </div>
 
-    <div className="nav-bar">
-      <button className="nav-icon active" onClick={() => navigate("/home-page")}>
-        🏠
-      </button>
-      <button className="nav-icon" onClick={() => navigate("/profile-page")}>
-        👤
-      </button>
-      <button className="nav-icon" onClick={() => navigate("/leaderboard")}>
-        🏆
-      </button>
-    </div>
+    <NavBar />
   </div>
 );
 };

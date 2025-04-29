@@ -53,37 +53,49 @@
     background-color: var(--success);
   }
   
-  /* Navigation Bar */
-  .nav-bar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    padding: var(--spacing-sm) 0;
-    padding-bottom: calc(var(--spacing-sm) + env(safe-area-inset-bottom, 0px));
-    background-color: var(--background-alt);
-    border-top: 1px solid var(--border);
-    z-index: 10;
-  }
-  
-  .nav-icon {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    padding: var(--spacing-sm);
-    min-width: 44px;
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .nav-icon.active {
-    color: var(--secondary);
-  }
+/* Updated Navigation Bar Styles */
+.nav-bar-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  border-top: 2px solid var(--secondary);
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: space-around;
+  padding: var(--spacing-sm) 0;
+  padding-bottom: calc(var(--spacing-sm) + env(safe-area-inset-bottom, 0px));
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 10;
+}
+
+.nav-icon {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: var(--spacing-sm);
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: var(--text-primary);
+}
+
+.nav-icon.active {
+  color: var(--secondary);
+  transform: scale(1.2);
+  text-shadow: 0 0 10px var(--secondary);
+}
+
+.nav-icon:hover {
+  color: var(--secondary);
+}
   
   /* Form Elements */
   input, 
