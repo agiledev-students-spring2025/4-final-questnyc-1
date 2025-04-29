@@ -3,6 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/index.css';
 import logo from '../assets/questnyclogo.png';
 
+import pp1 from '../assets/astronaut.png';
+import pp2 from '../assets/bear.png';
+import pp3 from '../assets/cool.png';
+import pp4 from '../assets/dog.png';
+import pp5 from '../assets/gorilla.png';
+import pp6 from '../assets/hacker.png';
+import pp7 from '../assets/knight.png';
+import pp8 from '../assets/man.png';
+import pp9 from '../assets/meerkat.png';
+import pp10 from '../assets/panda.png';
+import pp11 from '../assets/rabbit.png';
+import pp12 from '../assets/tiger.png';
+
+
+
 function CreateAccountPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -11,16 +26,18 @@ function CreateAccountPage() {
     const navigate = useNavigate();
 
     const profilePicOptions = [
-        'https://picsum.photos/seed/profilepic1/100',
-        'https://picsum.photos/seed/profilepic2/100',
-        'https://picsum.photos/seed/profilepic3/100',
-        'https://picsum.photos/seed/profilepic4/100',
-        'https://picsum.photos/seed/profilepic5/100',
-        'https://picsum.photos/seed/profilepic6/100',
-        'https://picsum.photos/seed/profilepic7/100',
-        'https://picsum.photos/seed/profilepic8/100',
-        'https://picsum.photos/seed/profilepic9/100',
-        'https://picsum.photos/seed/profilepic10/100',
+        pp1,
+        pp2,
+        pp3,
+        pp4,
+        pp5,
+        pp6,
+        pp7,
+        pp8,
+        pp9,
+        pp10,
+        pp11,
+        pp12,
     ];
 
     const handleSubmit = async (e) => {
