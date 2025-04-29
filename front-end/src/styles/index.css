@@ -98,6 +98,7 @@ button:hover {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow: hidden; /* Ensure content doesn't overflow the container */
 }
 
 /* Profile and other pages container */
@@ -165,6 +166,7 @@ button:hover {
   overflow-y: auto;
   padding: var(--spacing-md);
   padding-top: 0;
+  padding-bottom: 80px; /* Add bottom padding to account for the navigation bar */
 }
 
 /* === Progress Bar Styling for Completed Quests === */

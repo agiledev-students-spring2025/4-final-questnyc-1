@@ -25,14 +25,14 @@
   .available-quests-title {
     font-size: var(--font-lg);
     font-weight: var(--weight-bold);
-    margin-top: var(--spacing-xl);
+    margin-top: 30px; /* Increase from var(--spacing-xl) to a fixed 40px */
     color: var(--text-primary);
     text-align: center;
   }
   
   .quests-list {
     display: grid;
-    gap: var(--spacing-lg);
+    gap: 1px; /* Reduce from var(--spacing-lg) to just enough for the border line */
   }
   
   /* More Info Link */
