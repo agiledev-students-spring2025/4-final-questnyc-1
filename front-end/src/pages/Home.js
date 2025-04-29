@@ -119,7 +119,7 @@ const Home = () => {
   // In Home.js, update the return statement:
 
 return (
-  <div className="container">
+  <div className="container home-container">
     <div className="quest-in-progress-section">
       <h1 className="section-header text-center">Quest In Progress</h1>
       {currentQuest ? (

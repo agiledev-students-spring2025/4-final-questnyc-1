@@ -30,7 +30,7 @@ function ProfilePage() {
     if (!user) return <p>Profile not found.</p>;
 
     return (
-        <div className="container text-center" style={{ position: 'relative' }}>
+        <div className="container profile-container text-center" style={{ position: 'relative' }}>
             {/* Profile Picture */}
             <div className="profile-pic">
                 <img 

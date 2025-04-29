@@ -87,14 +87,27 @@ button:hover {
 .container {
   max-width: var(--container-width);
   margin: 0 auto;
-  padding: 0;
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-  height: 100vh;
   overflow: hidden;
+}
+
+.home-container {
+  padding: 0;
+  height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+/* Profile and other pages container */
+.profile-container, 
+.leaderboard-container, 
+.achievements-container {
+  padding: var(--spacing-md);
+  padding-top: 80px; /* Added top padding to push content down */
+  min-height: 100vh;
+  padding-bottom: 80px; /* Space for navbar */
 }
 
 /* Utility readable box for any section */
