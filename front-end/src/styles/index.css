@@ -154,7 +154,7 @@ button:hover {
   background: rgba(0, 0, 0, 0.9);
   color: var(--secondary);
   z-index: 100;
-  padding: 20px;
+  padding: 10px 15px;
   box-shadow: 0 2px 4px rgba(255,255,255,0.1);
   border-bottom: 2px solid var(--secondary);
   overflow: visible;
@@ -313,4 +313,33 @@ button:hover {
 .back-button:hover {
   transform: scale(1.1);
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+}
+
+/* Add more compact styling for quest in progress content */
+.quest-in-progress-section h1 {
+  margin: 5px; /* Reduced margin both top and bottom */
+  font-size: 1.5rem; /* Slightly smaller font size */
+}
+
+.quest-in-progress-section .quest-box {
+  padding: var(--spacing-md); /* Reduced from var(--spacing-lg) */
+  margin-top: 5px; /* Reduced from var(--spacing-sm) */
+}
+
+.quest-in-progress-section .quest-checkpoint {
+  margin-bottom: 15px; /* Compact margin */
+}
+
+.quest-in-progress-section .progress-container {
+  margin-top: 8px; /* Reduced margin */
+  margin-bottom: 10px; /* Add bottom margin */
+}
+
+.quest-in-progress-section .btn {
+  margin-top: 20px; /* Reduced from var(--spacing-md) */
+  margin-bottom: 10px;
+}
+
+.quest-in-progress-section .more-info {
+  margin-top: 5px; /* Reduced from var(--spacing-sm) */
 }
