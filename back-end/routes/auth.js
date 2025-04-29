@@ -22,9 +22,9 @@ router.post('/register', async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const newUser = new User({ 
-            username, 
-            password: hashedPassword, 
+        const newUser = new User({
+            username,
+            password: hashedPassword,
             profilePic: profilePic || 'https://picsum.photos/seed/selfie/100'
         });
 
@@ -65,9 +65,9 @@ router.post('/password-reset-request', async (req, res) => {
         const resetToken = crypto.randomBytes(32).toString('hex');
         await PasswordReset.create({ userId: user._id, resetToken });
 
-        res.status(200).json({ 
-            message: 'Password reset token created', 
-            token: resetToken 
+        res.status(200).json({
+            message: 'Password reset token created',
+            token: resetToken
         });
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -108,16 +108,16 @@ router.get('/users', async (req, res) => {
 // To find user
 router.get('/check-user/:username', async (req, res) => {
     try {
-      const user = await User.findOne({username: req.params.username}).select('-password');
-      if (user) {
-        res.json({exists: true, user});
-      } else {
-        res.json({exists: false});
-      }
+        const user = await User.findOne({ username: req.params.username }).select('-password');
+        if (user) {
+            res.json({ exists: true, user });
+        } else {
+            res.json({ exists: false });
+        }
     } catch (err) {
-      res.status(500).json({message: err.message});
+        res.status(500).json({ message: err.message });
     }
-  });
+});
 
 // For all information related to this user
 // In auth.js - update fullprofile endpoint
@@ -140,14 +140,15 @@ router.get('/users/:userId/fullprofile', async (req, res) => {
                 }
             })
             .lean();
-        
+
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-        
+
         const orderedUser = {
             _id: user._id,
             username: user.username,
+            email: user.email,
             profilePic: user.profilePic,
             firstJoined: user.firstJoined,
             totalXP: user.totalXP,
@@ -155,7 +156,7 @@ router.get('/users/:userId/fullprofile', async (req, res) => {
             completedQuests: user.completedQuests,
             __v: user.__v
         };
-        
+
         res.json(orderedUser);
     } catch (error) {
         res.status(500).json({ message: 'Failed to fetch user profile', error: error.message });
