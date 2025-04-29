@@ -87,14 +87,14 @@ button:hover {
 .container {
   max-width: var(--container-width);
   margin: 0 auto;
-  padding: var(--spacing-md);
+  padding: 0;
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-  height: 100vh; /* Fill the viewport height */
-  overflow: hidden; /* Prevent container from scrolling */
+  height: 100vh;
+  overflow: hidden;
   display: flex;
-  flex-direction: column; /* Stack children vertically */
+  flex-direction: column;
 }
 
 /* Utility readable box for any section */
@@ -141,17 +141,17 @@ button:hover {
   color: var(--secondary);
   z-index: 100;
   padding: 20px;
-  margin: -20px -20px 20px -20px;
   box-shadow: 0 2px 4px rgba(255,255,255,0.1);
   border-bottom: 2px solid var(--secondary);
-  max-height: 180px; /* Adjust as needed */
-  overflow: hidden;
+  overflow: visible;
 }
 
 /* Scrollable content area */
 .scrollable-content {
-  height: calc(100vh - 200px);
+  flex: 1;
   overflow-y: auto;
+  padding: var(--spacing-md);
+  padding-top: 0;
 }
 
 /* === Progress Bar Styling for Completed Quests === */
