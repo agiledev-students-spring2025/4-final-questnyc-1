@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.js';
 import '../styles/index.css';
-import logo from '../assets/questnyclogo.png';
+import logo from '../assets/questnyclogo.png'; // ✅ Import logo
 
 function LoginPage() {
     const navigate = useNavigate();
@@ -23,7 +23,7 @@ function LoginPage() {
             const data = await res.json();
 
             if (res.ok) {
-                login(data.user);
+                login(data.user); // Save user to context
                 localStorage.setItem('userId', data.user._id);
                 navigate('/home-page');
             } else {
@@ -36,27 +36,28 @@ function LoginPage() {
     };
 
     return (
-        <div className="login-container">
-            <div className="login-logo">
+        <div className="container">
+            <div className="profile-pic mt-lg mb-md flex justify-center items-center" style={{ width: 200, height: 200, margin: '0 auto' }}>
                 <img 
                     src={logo} 
                     alt="QuestNYC Logo" 
+                    style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
                 />
             </div>
 
             <h2 className="text-center mb-md">Log In</h2>
 
-            <form onSubmit={handleSubmit} className="login-form">
-                <div className="login-input-container">
-                    <label className="login-label">Username</label>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>Username</label>
                     <input
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
                 </div>
-                <div className="login-input-container">
-                    <label className="login-label">Password</label>
+                <div>
+                    <label>Password</label>
                     <input
                         type="password"
                         value={password}
@@ -75,7 +76,7 @@ function LoginPage() {
                 </button>
             </div>
 
-            <div className="login-footer">
+            <div className="text-center mt-lg">
                 <p className="mb-sm"><a href="#">Privacy Policy</a></p>
                 <p>© 2025 QuestNYC Team</p>
             </div>
