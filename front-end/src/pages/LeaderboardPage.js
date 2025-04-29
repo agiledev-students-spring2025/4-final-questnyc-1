@@ -28,37 +28,36 @@ function LeaderboardPage() {
         fetchLeaderboard();
     }, []);
 
-    if (loading) return <div className="container text-center">Loading...</div>;
-    if (error) return <div className="container text-center">Error: {error}</div>;
+    if (loading) return <div className="container text-center p-md">Loading...</div>;
+    if (error) return <div className="container text-center p-md">Error: {error}</div>;
 
     return (
-        <div className="container text-center">
-            <h1 className="section-header">Leaderboard</h1>
+        <div className="container leaderboard-container">
+            <h1 className="leaderboard-title">Leaderboard</h1>
 
             {leaderboardData.length > 0 && (
                 <div className="top-player">
                     <div className="profile-pic">
-                        <img src={leaderboardData[0].profilePic || `https://picsum.photos/seed/${encodeURIComponent(leaderboardData[0].username)}/50`} />
+                        <img src={leaderboardData[0].profilePic || `https://picsum.photos/seed/${encodeURIComponent(leaderboardData[0].username)}/120`} alt="Top Player" />
                     </div>
                     <div className="username-score">
                         <span className="username">{leaderboardData[0].username}</span>
-                        <div></div>
-                        <span className="score">{leaderboardData[0].score}</span>
-                        <span>{" EXP"}</span>
+                        <span className="score">{leaderboardData[0].score} EXP</span>
                     </div>
                 </div>
             )}
 
             <ul className="leaderboard-list">
-                {leaderboardData.slice(1).map((player) => (
+                {/* Only show players 2-6 */}
+                {leaderboardData.slice(1, 6).map((player) => (
                     <li key={player.rank} className="leaderboard-item">
                         <div className="rank-section">
+                            <div className="rank-circle">{player.rank}</div>
                             <img
                                 className="profile-picture-small"
                                 src={player.profilePic || `https://picsum.photos/seed/${encodeURIComponent(player.username)}/50`}
-                                alt={`#${player.rank} Profile Picture`}
+                                alt={`Player ${player.rank}`}
                             />
-                            <div className="rank-circle">{player.rank}</div>
                         </div>
                         <div className="username-box">{player.username}</div>
                         <div className="score-box">{player.score}</div>

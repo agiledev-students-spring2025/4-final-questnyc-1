@@ -180,3 +180,124 @@
   font-size: var(--font-md);
   background-color: var(--border);
 }
+
+/* Add these to pages.css */
+
+/* Improved Leaderboard Container */
+.leaderboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--spacing-lg);
+  padding-bottom: 80px;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow-x: hidden;
+  /* transform: translateY(-10%); */
+}
+
+/* Enhanced Top Player */
+.top-player {
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 2px solid var(--secondary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin: var(--spacing-md) 0 var(--spacing-lg) 0;
+  width: 100%;
+  max-width: 300px;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.top-player .profile-pic {
+  border: 3px solid var(--secondary);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  margin-bottom: var(--spacing-sm);
+}
+
+.username-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-sm);
+}
+
+.username-score .username {
+  font-size: var(--font-lg);
+  font-weight: var(--weight-bold);
+  color: var(--secondary);
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+}
+
+.username-score .score {
+  font-size: var(--font-lg);
+  font-weight: var(--weight-bold);
+}
+
+/* Improved Leaderboard List */
+.leaderboard-list {
+  width: 100%;
+  max-width: 500px;
+  padding: 0; /* Remove default padding */
+}
+
+.leaderboard-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(14, 14, 14, 0.8);
+  border-left: 3px solid var(--secondary);
+  margin: var(--spacing-sm) 0;
+  padding: var(--spacing-sm);
+  width: 100%; /* Ensure full width */
+}
+
+.leaderboard-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.rank-section {
+  display: flex;
+  align-items: center;
+  width: 80px; /* Fixed width for consistent alignment */
+  justify-content: flex-start;
+}
+
+.rank-circle {
+  border-color: var(--secondary);
+  color: var(--secondary);
+  font-weight: var(--weight-bold);
+}
+
+.profile-picture-small {
+  border: 2px solid var(--secondary);
+}
+
+.username-box {
+  background-color: transparent;
+  color: var(--text-primary);
+  font-weight: var(--weight-bold);
+  text-align: left;
+  padding-left: var(--spacing-sm);
+}
+
+.score-box {
+  background-color: rgba(255, 215, 0, 0.2);
+  color: var(--secondary);
+  font-weight: var(--weight-bold);
+  border-radius: var(--radius-sm);
+}
+
+/* Section header styling */
+.leaderboard-title {
+  font-size: 30px;
+  font-weight: var(--weight-bold);
+  margin-top: -20px; /* Negative margin to pull it up */
+  margin-bottom: var(--spacing-md);
+  color: var(--secondary);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
