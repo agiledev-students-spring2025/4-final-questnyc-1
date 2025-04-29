@@ -37,23 +37,24 @@ function FriendListPage() {
     }, [authUser]);
 
     return (
-        <div className="container text-center" style={{ position: 'relative' }}>
+        <div className="friends-list-container">
             {/* Heading */}
-            <h2 className="section-header">Friends List</h2>
+            <h1 className="friends-list-title">Friends List</h1>
 
-            {/* Friend Buttons */}
-            <div className="mt-md">
+            {/* Friends List */}
+            <div className="friends-list-section">
                 {loading ? (
                     <p>Loading friends...</p>
                 ) : friends.length > 0 ? (
                     friends.map((friend) => (
-                        <button 
+                        <div 
                             key={friend.userId} 
-                            className="btn btn-primary btn-block" 
+                            className="friend-item"
                             onClick={() => navigate(`/friend-profile/${friend.userId}`)}
                         >
-                            {friend.username}
-                        </button>
+                            <div className="profile-picture-small"></div>
+                            <span className="friend-name">{friend.username}</span>
+                        </div>
                     ))
                 ) : (
                     <p>No friends yet. Add some friends to get started!</p>
@@ -62,7 +63,7 @@ function FriendListPage() {
 
             {/* Add Friend Button */}
             <button 
-                className="btn btn-primary btn-block" 
+                className="btn btn-primary add-friend-button" 
                 onClick={() => navigate('/add-friend')}
             >
                 Add Friend

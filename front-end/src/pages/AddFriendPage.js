@@ -35,9 +35,7 @@ function AddFriendPage() {
             if (res.ok) {
                 setIsError(false);
                 setMessage(data.message || 'Friend added successfully!');
-                // Clear input
                 setUsername('');
-                // Redirect after short delay
                 setTimeout(() => navigate('/friends-list-page'), 2000);
             } else {
                 setIsError(true);
@@ -51,47 +49,43 @@ function AddFriendPage() {
     };
 
     return (
-        <div className="container text-center">
-            {/* Heading */}
-            <h2 className="section-header">Add Friend</h2>
+        <div className="add-friend-container">
+            <h1 className="add-friend-title">Add Friend</h1>
 
-            <form onSubmit={handleAddFriend}>
-                {/* Username Input */}
+            <form onSubmit={handleAddFriend} className="add-friend-form">
                 <div className="form-group">
-                    <label htmlFor="username">Friend's Username</label>
+                    <label htmlFor="username" style={{color: 'var(--secondary)', marginBottom: 'var(--spacing-sm)', display: 'block'}}>
+                        Friend's Username
+                    </label>
                     <input 
                         type="text"
                         id="username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        className="form-control text-center"
                         placeholder="Enter username"
                     />
                 </div>
 
-                {/* Status Message */}
                 {message && (
                     <div className={`alert ${isError ? 'alert-danger' : 'alert-success'}`}>
                         {message}
                     </div>
                 )}
 
-                {/* Add Button */}
                 <button type="submit" className="btn btn-primary btn-block">
                     Add Friend
                 </button>
 
-                {/* Back Button */}
                 <button 
                     type="button" 
                     className="btn btn-secondary btn-block"
                     onClick={() => navigate('/friends-list-page')}
+                    style={{marginTop: 'var(--spacing-md)'}}
                 >
                     Back to Friends List
                 </button>
             </form>
 
-            {/* Bottom Navigation Menu */}
             <NavBar />
         </div>
     );
