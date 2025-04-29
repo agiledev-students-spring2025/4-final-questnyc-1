@@ -53,20 +53,19 @@ function CompletedQuestsPage() {
         fetchData();
     }, [userId, queryParams]);
 
-    if (loading) return <div className="container text-center">Loading...</div>;
-    if (error) return <div className="container text-center">Error: {error}</div>;
+    if (loading) return <div className="completed-quests-container text-center">Loading...</div>;
+    if (error) return <div className="completed-quests-container text-center">Error: {error}</div>;
 
     return (
-        <div className="container">
-            <h1 className="section-header text-center">
+        <div className="completed-quests-container">
+            <h1 className="completed-quests-title">
                 {username ? `${username}'s Completed Quests` : 'Completed Quests'}
             </h1>
-            <hr className="separator" />
-
-            <div className="mb-lg">
+            
+            <div className="completed-quests-section">
                 {completedQuests.length > 0 ? (
                     completedQuests.map((quest) => (
-                        <div key={quest._id} className="quest-item mb-md">
+                        <div key={quest._id} className="completed-quest-item">
                             <h2 className="quest-name mb-xs">{quest.questId?.name || 'Unnamed Quest'}</h2>
                             <div className="text-center">
                                 <p className="mb-xs" style={{ fontWeight: 'var(--weight-bold)' }}>
@@ -76,14 +75,14 @@ function CompletedQuestsPage() {
                                     Completed: {new Date(quest.completedAt).toLocaleDateString()}
                                 </p>
                             </div>
-                            <div className="flex items-center">
+                            <div className="progress-bar-row">
                                 <div className="progress-container">
                                     <div
                                         className="progress-fill completed"
                                         style={{ width: `100%` }}
                                     ></div>
                                 </div>
-                                <span style={{ marginLeft: 'var(--spacing-sm)', fontWeight: 'var(--weight-bold)' }}>
+                                <span className="progress-text">
                                     Completed
                                 </span>
                             </div>
@@ -96,7 +95,7 @@ function CompletedQuestsPage() {
 
             {queryParams.get('userId') && (
                 <button 
-                    className="btn btn-secondary btn-block"
+                    className="btn btn-primary btn-block"
                     onClick={() => navigate(`/friend-profile/${userId}`)}
                 >
                     Back to Profile

@@ -2,116 +2,201 @@
 
 /* Quest Components */
 .quest-box {
-    background-color: var(--background-alt);
-    padding: var(--spacing-lg);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-    margin-top: var(--spacing-sm);
-    border: 1px solid var(--border);
-  }
-  
-  .quest-route {
-    color: var(--text-primary);
-    word-wrap: break-word;
-  }
-  
-  .route-label {
-    font-size: var(--font-sm);
-    color: var(--text-secondary);
-    margin-top: var(--spacing-xs);
-  }
-  
-  /* Available Quests Section */
-  .available-quests-title {
-    font-size: var(--font-lg);
-    font-weight: var(--weight-bold);
-    margin-top: var(--spacing-xl);
-    color: var(--text-primary);
-    text-align: center;
-  }
-  
-  .quests-list {
-    display: grid;
-    gap: var(--spacing-lg);
-  }
-  
-  /* More Info Link */
-  .more-info {
-    color: var(--secondary);
-    font-size: var(--font-sm);
-    margin-top: var(--spacing-sm);
-    display: inline-block;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  
-  .more-info:hover {
-    text-decoration: underline;
-  }
-  
-  /* Separator */
-  .separator {
-    margin: var(--spacing-sm) 0;
-    border-color: var(--border);
-  }
+  background-color: var(--background-alt);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  margin-top: var(--spacing-sm);
+  border: 1px solid var(--border);
+}
 
-  /* Achievement styles for pages.css */
+.quest-route {
+  color: var(--text-primary);
+  word-wrap: break-word;
+}
 
+.route-label {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+/* Available Quests Section */
+.available-quests-title {
+  font-size: var(--font-lg);
+  font-weight: var(--weight-bold);
+  margin-top: 30px;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.quests-list {
+  display: grid;
+  gap: 1px;
+}
+
+/* More Info Link */
+.more-info {
+  color: var(--secondary);
+  font-size: var(--font-sm);
+  margin-top: var(--spacing-sm);
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.more-info:hover {
+  text-decoration: underline;
+}
+
+/* Separator */
+.separator {
+  margin: var(--spacing-sm) 0;
+  border-color: var(--border);
+}
+
+/* Achievement styles with two-line layout */
 .achievements-container {
   text-align: center;
   margin: auto;
   padding: var(--spacing-md);
+  padding-top: 80px;
+  padding-bottom: 80px;
+  height: 100vh;
+  overflow-y: auto !important;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .achievements-title {
-  font-size: var(--font-xxl);
+  font-size: 30px;
   font-weight: var(--weight-bold);
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+  color: var(--secondary);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
 
 .achievements-section {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
-  margin-top: var(--spacing-sm);
-}
-
-.achievement-name {
-  flex-grow: 2;
-  text-align: left;
-  font-size: var(--font-sm);
-  padding-left: var(--spacing-sm);
-  padding-right: var(--spacing-sm);
-}
-
-.progress-text {
-  flex-grow: 1;
-  text-align: right;
-  font-weight: var(--weight-bold);
-  padding-left: var(--spacing-sm);
-  padding-top: var(--spacing-sm);
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .achievement-item {
   display: flex;
-  align-items: center;
-  background-color: var(--background-alt);
-  padding: var(--spacing-sm);
+  flex-direction: column;
+  background-color: rgba(14, 14, 14, 0.8);
+  padding: var(--spacing-md);
   border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-md);
+  border-left: 3px solid var(--secondary);
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 90px;
+}
+
+.achievement-item:hover {
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.achievement-name {
+  width: 100%;
+  text-align: left;
+  font-size: var(--font-md);
+  font-weight: var(--weight-bold);
   margin-bottom: var(--spacing-sm);
+  color: var(--secondary);
+}
+
+.progress-container {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  height: 16px;
+  margin-bottom: var(--spacing-xs);
+}
+
+.progress-bar-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.progress-fill {
+  background-color: var(--secondary);
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.progress-fill.completed {
+  background-color: #4caf50;
+}
+
+.progress-text {
+  font-weight: var(--weight-bold);
+  margin-left: auto;
+  color: var(--text-primary);
+}
+
+.section-header {
+  color: var(--secondary);
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+  width: 100%;
+  max-width: 500px;
+  text-align: left;
+  margin: var(--spacing-lg) auto var(--spacing-sm);
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 1px solid var(--border);
+  font-size: var(--font-lg);
 }
 
 /* Leaderboard styles for pages.css */
-
 /* Top Player */
 .top-player {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: var(--spacing-lg);
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 2px solid var(--secondary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin: var(--spacing-md) 0 var(--spacing-lg) 0;
+  width: 100%;
+  max-width: 300px;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.top-player .profile-pic {
+  border: 3px solid var(--secondary);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  margin-bottom: var(--spacing-sm);
 }
 
 .username-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-lg);
+  font-weight: var(--weight-bold);
+}
+
+.username-score .username {
+  font-size: var(--font-lg);
+  font-weight: var(--weight-bold);
+  color: var(--secondary);
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+}
+
+.username-score .score {
   font-size: var(--font-lg);
   font-weight: var(--weight-bold);
 }
@@ -121,16 +206,18 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  width: 100%;
+  max-width: 500px;
 }
 
 .leaderboard-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: rgba(14, 14, 14, 0.8);
+  border-left: 3px solid var(--secondary);
+  margin: var(--spacing-sm) 0;
   padding: var(--spacing-sm);
-  background-color: var(--background-alt);
-  margin: var(--spacing-xs) 0;
-  border-radius: var(--radius-sm);
   width: 100%;
   max-width: 400px;
   margin-left: auto;
@@ -138,9 +225,15 @@
   gap: var(--spacing-sm);
 }
 
+.leaderboard-item:hover {
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
 .rank-section {
   display: flex;
   align-items: center;
+  width: 80px;
+  justify-content: flex-start;
   gap: var(--spacing-sm);
   flex-shrink: 0;
 }
@@ -149,12 +242,13 @@
   width: 30px;
   height: 30px;
   background-color: var(--background-alt);
-  border: 2px solid var(--text-primary);
+  border: 2px solid var(--secondary);
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: var(--weight-bold);
+  color: var(--secondary);
 }
 
 .profile-picture-small {
@@ -163,20 +257,223 @@
   background-color: var(--text-secondary);
   border-radius: var(--radius-full);
   flex-shrink: 0;
+  border: 2px solid var(--secondary);
 }
 
 .username-box {
-  text-align: center;
+  background-color: transparent;
+  color: var(--text-primary);
+  font-weight: var(--weight-bold);
+  text-align: left;
+  padding-left: var(--spacing-sm);
   border-radius: var(--radius-md);
   width: 40%;
   font-size: var(--font-lg);
-  background-color: var(--border);
 }
 
 .score-box {
+  background-color: rgba(255, 215, 0, 0.2);
+  color: var(--secondary);
+  font-weight: var(--weight-bold);
+  border-radius: var(--radius-sm);
   padding-right: var(--spacing-sm);
   padding-left: var(--spacing-sm);
-  border-radius: var(--radius-md);
   font-size: var(--font-md);
-  background-color: var(--border);
+}
+
+/* Improved Leaderboard Container */
+.leaderboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--spacing-lg);
+  padding-bottom: 80px;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow-x: hidden;
+  /* transform: translateY(-10%); */
+}
+
+/* Section header styling */
+.leaderboard-title {
+  font-size: 30px;
+  font-weight: var(--weight-bold);
+  margin-top: -20px;
+  margin-bottom: var(--spacing-md);
+  color: var(--secondary);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+/* Add this specific style for CompletedQuestsPage */
+.completed-quests-container {
+  text-align: center;
+  margin: auto;
+  padding: var(--spacing-md);
+  padding-top: 80px;
+  padding-bottom: 80px;
+  height: 100vh;
+  overflow-y: auto !important;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.completed-quests-title {
+  font-size: 30px;
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--spacing-lg);
+  color: var(--secondary);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.completed-quests-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.completed-quest-item {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(14, 14, 14, 0.8);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-md);
+  border-left: 3px solid var(--secondary);
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 90px;
+}
+
+.completed-quest-item:hover {
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+/* Fix for background image */
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Add this to index.css */
+.friends-list-container {
+  text-align: center;
+  margin: auto;
+  padding: var(--spacing-md);
+  padding-top: 80px;
+  padding-bottom: 80px;
+  height: 100vh;
+  overflow-y: auto !important;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.friends-list-title {
+  font-size: 30px;
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--spacing-lg);
+  color: var(--secondary);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.friends-list-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.friend-item {
+  display: flex;
+  align-items: center;
+  background-color: rgba(14, 14, 14, 0.8);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-md);
+  border-left: 3px solid var(--secondary);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.friend-item:hover {
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.friend-name {
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  margin-left: var(--spacing-md);
+}
+
+.add-friend-button {
+  margin-top: var(--spacing-lg);
+  width: 80%;
+  max-width: 500px;
+}
+
+/* Add this to index.css */
+.add-friend-container {
+  text-align: center;
+  margin: auto;
+  padding: var(--spacing-md);
+  padding-top: 80px;
+  padding-bottom: 80px;
+  height: 100vh;
+  overflow-y: auto !important;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-friend-title {
+  font-size: 30px;
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--spacing-lg);
+  color: var(--secondary);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.add-friend-form {
+  width: 100%;
+  max-width: 500px;
+  background-color: rgba(14, 14, 14, 0.8);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--secondary);
+}
+
+.form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.alert {
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  border-radius: var(--radius-sm);
+}
+
+.alert-success {
+  background-color: rgba(76, 175, 80, 0.2);
+  border: 1px solid #4caf50;
+  color: #4caf50;
+}
+
+.alert-danger {
+  background-color: rgba(255, 76, 76, 0.2);
+  border: 1px solid var(--danger);
+  color: var(--danger);
 }

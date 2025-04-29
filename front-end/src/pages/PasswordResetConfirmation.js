@@ -1,5 +1,7 @@
+// PasswordResetConfirmation.js 
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import logo from '../assets/questnyclogo.png'; // Import the logo
 
 function PasswordResetConfirmation() {
     const location = useLocation();
@@ -9,9 +11,7 @@ function PasswordResetConfirmation() {
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
     useEffect(() => {
-        console.log("username passed: " + username);
         if (!username) {
-            // If accessed directly, send back to prompt
             navigate('/password-reset-prompt');
         }
     }, [username, navigate]);
@@ -41,32 +41,49 @@ function PasswordResetConfirmation() {
     };
 
     return (
-        <div style={{ margin: '50px' }}>
-            <div style={{ width: 150, height: 150, backgroundColor: '#ccc' }}>Logo</div>
-            <h2>Reset Password for “{username}”</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>New Password</label>
-                    <br />
-                    <input
-                        type="password"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label>Re-enter New Password</label>
-                    <br />
-                    <input
-                        type="password"
-                        value={confirmNewPassword}
-                        onChange={(e) => setConfirmNewPassword(e.target.value)}
-                    />
-                </div>
-                <button type="submit">Reset Password</button>
-            </form>
-            <p><a href="#">Privacy Policy</a></p>
-            <p>© 2025 QuestNYC Team</p>
+        <div className="password-reset-container">
+            <div className="logo-circle mt-lg mb-lg" style={{ marginBottom: "25px" }}>
+                <img src={logo} alt="QuestNYC Logo" />
+            </div>
+            
+            <div className="password-reset-form">
+                <h2 className="password-reset-title">Reset Password for "{username}"</h2>
+                
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="newPassword" style={{color: 'var(--secondary)', marginBottom: 'var(--spacing-sm)', display: 'block'}}>
+                            New Password
+                        </label>
+                        <input
+                            id="newPassword"
+                            type="password"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                        />
+                    </div>
+                    
+                    <div className="form-group">
+                        <label htmlFor="confirmNewPassword" style={{color: 'var(--secondary)', marginBottom: 'var(--spacing-sm)', display: 'block'}}>
+                            Re-enter New Password
+                        </label>
+                        <input
+                            id="confirmNewPassword"
+                            type="password"
+                            value={confirmNewPassword}
+                            onChange={(e) => setConfirmNewPassword(e.target.value)}
+                        />
+                    </div>
+                    
+                    <button type="submit" className="btn btn-primary btn-block">
+                        Reset Password
+                    </button>
+                </form>
+            </div>
+            
+            <div className="password-footer">
+                <p><a href="#">Privacy Policy</a></p>
+                <p>© 2025 QuestNYC Team</p>
+            </div>
         </div>
     );
 }

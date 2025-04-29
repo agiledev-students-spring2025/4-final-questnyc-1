@@ -10,7 +10,6 @@ function FriendListPage() {
     const [friends, setFriends] = useState([]);
     const [loading, setLoading] = useState(true);
     
-    // Fetch friends from backend on mount
     useEffect(() => {
         const fetchFriends = async () => {
             if (!authUser || !authUser._id) {
@@ -37,38 +36,34 @@ function FriendListPage() {
     }, [authUser]);
 
     return (
-        <div className="container text-center" style={{ position: 'relative' }}>
-            {/* Heading */}
-            <h2 className="section-header">Friends List</h2>
+        <div className="friends-list-container">
+            <h1 className="friends-list-title">Friends List</h1>
 
-            {/* Friend Buttons */}
-            <div className="mt-md">
+            <div className="friends-list-section">
                 {loading ? (
                     <p>Loading friends...</p>
                 ) : friends.length > 0 ? (
                     friends.map((friend) => (
-                        <button 
+                        <div 
                             key={friend.userId} 
-                            className="btn btn-primary btn-block" 
+                            className="friend-item"
                             onClick={() => navigate(`/friend-profile/${friend.userId}`)}
                         >
-                            {friend.username}
-                        </button>
+                            <span className="friend-name">{friend.username}</span>
+                        </div>
                     ))
                 ) : (
                     <p>No friends yet. Add some friends to get started!</p>
                 )}
             </div>
 
-            {/* Add Friend Button */}
             <button 
-                className="btn btn-primary btn-block" 
+                className="btn btn-primary add-friend-button" 
                 onClick={() => navigate('/add-friend')}
             >
                 Add Friend
             </button>
 
-            {/* Bottom Navigation Menu */}
             <NavBar />
         </div>
     );

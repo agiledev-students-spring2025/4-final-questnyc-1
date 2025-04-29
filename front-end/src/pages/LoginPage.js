@@ -36,12 +36,11 @@ function LoginPage() {
     };
 
     return (
-        <div className="container">
-            <div className="profile-pic mt-lg mb-md flex justify-center items-center" style={{ width: 200, height: 200, margin: '0 auto' }}>
+        <div className="login-container">
+            <div className="logo-circle mt-lg mb-lg" style={{ marginBottom: "25px" }}>
                 <img 
                     src={logo} 
                     alt="QuestNYC Logo" 
-                    style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
                 />
             </div>
 

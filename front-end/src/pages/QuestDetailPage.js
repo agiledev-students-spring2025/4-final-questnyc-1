@@ -84,57 +84,61 @@ function QuestDetailPage() {
     const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${lng-0.01},${lat-0.01},${lng+0.01},${lat+0.01}&layer=mapnik&marker=${lat},${lng}`;
     
     return (
-        <div className="container">
-            {/* Back Arrow */}
-            <button 
-                className="back-button"
-                onClick={() => navigate(-1)}
-                style={{
-                    position: 'absolute',
-                    top: '20px',
-                    left: '20px',
-                    background: 'none',
-                    border: 'none',
-                    fontSize: '24px',
-                    cursor: 'pointer'
-                }}
-            >
-                ←
-            </button>
+        <div className="quest-detail-container">
+            {/* Back Arrow with improved styling */}
+            <div className="back-button-container">
+                <button 
+                    className="back-button"
+                    onClick={() => navigate(-1)}
+                >
+                    ←
+                </button>
+            </div>
             
             <h2 className="section-header text-center">[{quest.name}] Details</h2>
             <hr className="separator" />
             
             {/* Static Map Container */}
-            <div className="card mb-md" style={{ height: '250px', overflow: 'hidden' }}>
+            <div className="card mb-md" style={{ 
+                height: '250px', 
+                overflow: 'hidden',
+                width: '100%',
+                maxWidth: '100%',
+                borderRadius: 'var(--radius-md)'
+                // Removed the border: '2px solid var(--secondary)'
+            }}>
                 <iframe
                     width="100%"
-                    height="250"
+                    height="100%"
                     frameBorder="0"
                     scrolling="no"
                     marginHeight="0"
                     marginWidth="0"
                     src={mapUrl}
-                    style={{ border: 0 }}
+                    style={{ 
+                        border: 0,
+                        display: 'block'
+                    }}
                     title="Quest Map"
+                    allowFullScreen
                 />
             </div>
             
-            <div className="mb-md">
-                <p className="mb-sm">{quest.description}</p>
+            <div className="mb-md text-center" style={{ margin: '0 auto', maxWidth: '600px' }}>
+            <p className="mb-sm">{quest.description}</p>
             </div>
             
-            <div className="mb-md">
-                <h3>Checkpoints:</h3>
-                {quest.checkpoints && quest.checkpoints.map((checkpoint, index) => (
-                    <div key={index} className="mb-sm">
-                        <p><strong>{index + 1}. {checkpoint.name}</strong></p>
-                        <p>{checkpoint.description}</p>
-                    </div>
-                ))}
+            <div className="mb-md text-center" style={{ margin: '0 auto', maxWidth: '600px' }}>
+            <h3>Checkpoints:</h3>
+            {quest.checkpoints && quest.checkpoints.map((checkpoint, index) => (
+                <div key={index} className="mb-sm">
+                <p><strong>{index + 1}. {checkpoint.name}</strong></p>
+                <p>{checkpoint.description}</p>
+                </div>
+            ))}
             </div>
             
-            <div className="text-center mb-md">
+            <div className="text-center mb-md" style={{ margin: '0 auto', maxWidth: '600px' }}>
                 <p className="mb-xs">Theme: {quest.theme}</p>
                 <p className="mb-xs">Difficulty: {quest.difficulty}</p>
                 <p className="mb-xs">Estimated Time: {quest.estimatedTime} minutes</p>
@@ -147,7 +151,7 @@ function QuestDetailPage() {
                 )}
             </div>
             
-            <div className="text-center mb-lg">
+            <div className="text-center" style={{ margin: '40px' }}>
                 <button 
                     className="btn btn-primary"
                     style={{ width: '150px' }}

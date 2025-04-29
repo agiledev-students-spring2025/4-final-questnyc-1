@@ -76,17 +76,9 @@ function CreateAccountPage() {
     };
 
     return (
-        <div className="container">
-            {/* Logo at the top */}
-            <div className="profile-pic mt-lg mb-md flex justify-center items-center" style={{ width: 200, height: 200, margin: '0 auto' }}>
-                <img 
-                    src={logo} 
-                    alt="QuestNYC Logo" 
-                    style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
-                />
-            </div>
+        <div className="login-container">
 
-            <h2 className="text-center mb-md">Create An Account</h2>
+            <h2 className="text-center mb-lg">Create An Account</h2>
 
             {/* Profile Picture Selection (scrolling horizontally) */}
             <div className="text-center mb-md">

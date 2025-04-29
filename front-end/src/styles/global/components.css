@@ -15,7 +15,13 @@
   
   .btn-primary {
     background-color: var(--secondary);
-    color: white;
+    color: black; /* Changed to black for better contrast with yellow */
+    border-color: #000;
+  }
+  
+  .btn-primary:active {
+    background-color: var(--secondary);
+    color: black;
   }
   
   .btn-block {
@@ -133,6 +139,8 @@
     border-radius: var(--radius-md);
     margin-bottom: var(--spacing-md);
     box-shadow: var(--shadow-sm);
+    border-bottom: 1px solid var(--secondary); /* Add a yellow border line at the bottom */
+    position: relative; /* For proper positioning of the border */
   }
   
   .quest-name {

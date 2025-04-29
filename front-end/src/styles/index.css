@@ -70,7 +70,7 @@ input[type="submit"] {
   min-height: 44px;
   background-color: rgba(255, 215, 0, 0.85); /* taxi yellow */
   color: #000;
-  border: 2px solid var(--accent);
+  border: 2px solid #000; /* Changed from var(--accent) to black */
   border-radius: 8px;
   font-weight: var(--weight-bold);
   box-shadow: 0 4px 8px rgba(0,0,0,0.4);
@@ -78,9 +78,18 @@ input[type="submit"] {
 }
 
 button:hover {
-  background-color: var(--accent);
-  color: #fff;
-  border-color: #fff;
+  background-color: rgba(255, 215, 0, 1); /* Brighter yellow on hover */
+  color: #000;
+  border-color: #000;
+}
+
+button:active,
+.btn:active,
+input[type="button"]:active,
+input[type="submit"]:active {
+  background-color: rgba(255, 215, 0, 0.85); /* Keep yellow when pressed */
+  color: #000;
+  border-color: #000;
 }
 
 /* Container with readable background */
@@ -98,6 +107,7 @@ button:hover {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow: hidden; /* Ensure content doesn't overflow the container */
 }
 
 /* Profile and other pages container */
@@ -153,7 +163,7 @@ button:hover {
   background: rgba(0, 0, 0, 0.9);
   color: var(--secondary);
   z-index: 100;
-  padding: 20px;
+  padding: 10px 15px;
   box-shadow: 0 2px 4px rgba(255,255,255,0.1);
   border-bottom: 2px solid var(--secondary);
   overflow: visible;
@@ -165,6 +175,7 @@ button:hover {
   overflow-y: auto;
   padding: var(--spacing-md);
   padding-top: 0;
+  padding-bottom: 80px; /* Add bottom padding to account for the navigation bar */
 }
 
 /* === Progress Bar Styling for Completed Quests === */
@@ -187,4 +198,277 @@ button:hover {
   background-color: #4caf50; /* ✅ vibrant green for completed */
   height: 100%;
   transition: width 0.3s ease;
+}
+
+/* Add this to index.css - Specific styles for the splash page */
+.splash-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: var(--spacing-lg);
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 0;
+  box-shadow: none;
+  max-width: 100%;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.splash-content {
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  padding: var(--spacing-lg);
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* Logo circle styles - with cropping */
+.logo-circle {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--secondary);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+  position: relative;
+}
+
+.logo-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This will crop the image to fill the container */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Adjust button spacing for better mobile display */
+.splash-buttons {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.splash-footer {
+  margin-top: var(--spacing-lg);
+}
+
+/* Add this to your index.css file */
+.login-container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--spacing-md);
+}
+
+/* Add this to your index.css file */
+.quest-detail-container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  min-height: 100vh; /* Use min-height instead of height */
+  max-height: 100vh; /* Add max-height */
+  overflow-y: scroll; /* Change from auto to scroll to force scrollbar */
+  padding: var(--spacing-md);
+  padding-top: 60px;
+  padding-bottom: 80px;
+  position: relative;
+}
+
+/* Add this for the back button */
+.back-button-container {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.back-button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 2px solid var(--secondary);
+  color: var(--secondary);
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+}
+
+/* Add more compact styling for quest in progress content */
+.quest-in-progress-section h1 {
+  margin: 5px; /* Reduced margin both top and bottom */
+  font-size: 1.5rem; /* Slightly smaller font size */
+}
+
+.quest-in-progress-section .quest-box {
+  padding: var(--spacing-md); /* Reduced from var(--spacing-lg) */
+  margin-top: 5px; /* Reduced from var(--spacing-sm) */
+}
+
+.quest-in-progress-section .quest-checkpoint {
+  margin-bottom: 15px; /* Compact margin */
+}
+
+.quest-in-progress-section .progress-container {
+  margin-top: 8px; /* Reduced margin */
+  margin-bottom: 10px; /* Add bottom margin */
+}
+
+.quest-in-progress-section .btn {
+  margin-top: 20px; /* Reduced from var(--spacing-md) */
+  margin-bottom: 10px;
+}
+
+.quest-in-progress-section .more-info {
+  margin-top: 5px; /* Reduced from var(--spacing-sm) */
+}
+
+/* Add to index.css */
+.friend-profile-container {
+  text-align: center;
+  margin: auto;
+  padding: var(--spacing-md);
+  padding-top: 80px;
+  padding-bottom: 80px;
+  height: 100vh;
+  overflow-y: auto !important;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.friend-profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.friend-profile-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  border: 3px solid var(--secondary);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+  margin-bottom: var(--spacing-md);
+}
+
+.friend-profile-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.friend-username {
+  font-size: 28px;
+  font-weight: var(--weight-bold);
+  color: var(--secondary);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  margin: var(--spacing-sm) 0;
+}
+
+.friend-stats {
+  background-color: rgba(14, 14, 14, 0.8);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--secondary);
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: var(--spacing-lg);
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-sm);
+}
+
+.friend-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+  max-width: 500px;
+}
+
+.btn-danger {
+  background-color: var(--danger);
+  color: white;
+}
+
+/* Add to index.css */
+.password-reset-container {
+  text-align: center;
+  margin: auto;
+  padding: var(--spacing-md);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.password-reset-form {
+  width: 100%;
+  max-width: 500px;
+  background-color: rgba(14, 14, 14, 0.8);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--secondary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.logo-container {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto var(--spacing-lg);
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--secondary);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+.password-reset-title {
+  font-size: 28px;
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--spacing-lg);
+  color: var(--secondary);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.password-footer {
+  margin-top: var(--spacing-md);
+  color: var(--text-primary);
 }
