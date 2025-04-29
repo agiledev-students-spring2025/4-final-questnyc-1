@@ -266,3 +266,51 @@ button:hover {
   justify-content: center;
   padding: var(--spacing-md);
 }
+
+/* Add this to your index.css file */
+.quest-detail-container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  min-height: 100vh; /* Use min-height instead of height */
+  max-height: 100vh; /* Add max-height */
+  overflow-y: scroll; /* Change from auto to scroll to force scrollbar */
+  padding: var(--spacing-md);
+  padding-top: 60px;
+  padding-bottom: 80px;
+  position: relative;
+}
+
+/* Add this for the back button */
+.back-button-container {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.back-button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 2px solid var(--secondary);
+  color: var(--secondary);
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+}
