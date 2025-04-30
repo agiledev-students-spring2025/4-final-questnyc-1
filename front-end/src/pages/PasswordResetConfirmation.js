@@ -20,7 +20,7 @@ function PasswordResetConfirmation() {
         e.preventDefault();
 
         try {
-            const res = await fetch('http://localhost:5000/api/password-reset-confirmation', {
+            const res = await fetch('/api/password-reset-confirmation', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, newPassword, confirmNewPassword })

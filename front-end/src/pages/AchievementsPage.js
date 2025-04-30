@@ -21,13 +21,13 @@ function AchievementsPage() {
         const fetchAchievements = async () => {
             try {
                 // Fetch the achievements
-                const achievementsRes = await fetch(`http://localhost:5000/api/achievements/${userId}`);
+                const achievementsRes = await fetch(`/api/achievements/${userId}`);
                 const achievementsData = await achievementsRes.json();
                 setAchievements(achievementsData);
                 
                 // If this is a friend's profile, fetch their username
                 if (queryParams.get('userId')) {
-                    const userRes = await fetch(`http://localhost:5000/api/auth/users/${userId}/fullprofile`);
+                    const userRes = await fetch(`/api/auth/users/${userId}/fullprofile`);
                     if (userRes.ok) {
                         const userData = await userRes.json();
                         setUsername(userData.username);

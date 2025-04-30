@@ -14,7 +14,7 @@ function FriendProfilePage() {
     useEffect(() => {
         const fetchFriendProfile = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/auth/users/${friendId}/fullprofile`);
+                const res = await fetch(`/api/auth/users/${friendId}/fullprofile`);
                 
                 if (res.ok) {
                     const data = await res.json();
@@ -38,7 +38,7 @@ function FriendProfilePage() {
         }
         
         try {
-            const res = await fetch(`http://localhost:5000/api/friends/${authUser._id}/remove/${friendId}`, {
+            const res = await fetch(`/api/friends/${authUser._id}/remove/${friendId}`, {
                 method: 'DELETE'
             });
             

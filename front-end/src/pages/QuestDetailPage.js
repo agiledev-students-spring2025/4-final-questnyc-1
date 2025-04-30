@@ -15,7 +15,7 @@ function QuestDetailPage() {
     useEffect(() => {
         const fetchQuestDetails = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/api/quests/${questId}`);
+                const response = await fetch(`/api/quests/${questId}`);
                 if (!response.ok) throw new Error('Failed to fetch quest details');
                 const data = await response.json();
                 setQuest(data);
@@ -35,7 +35,7 @@ function QuestDetailPage() {
         }
         
         try {
-            const response = await fetch(`http://localhost:5000/api/quests/${questId}/accept`, {
+            const response = await fetch(`/api/quests/${questId}/accept`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -49,7 +49,7 @@ function QuestDetailPage() {
                 throw new Error(data.message || 'Failed to accept quest');
             }
             
-            await fetch('http://localhost:5000/api/achievements/update', {
+            await fetch('/api/achievements/update', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 

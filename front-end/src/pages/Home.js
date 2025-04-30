@@ -13,14 +13,14 @@ const Home = () => {
 
   const fetchHomeData = async () => {
     try {
-      const userResponse = await fetch(`http://localhost:5000/api/user/${user._id}/quests/current`);
+      const userResponse = await fetch(`/api/user/${user._id}/quests/current`);
       const currentQuests = await userResponse.json();
       
-      const questsResponse = await fetch('http://localhost:5000/api/quests');
+      const questsResponse = await fetch('/api/quests');
       const availableQuestsData = await questsResponse.json();
       
       // Get list of completed quests
-      const completedQuestsResponse = await fetch(`http://localhost:5000/api/auth/users/${user._id}/fullprofile`);
+      const completedQuestsResponse = await fetch(`/api/auth/users/${user._id}/fullprofile`);
       const userProfile = await completedQuestsResponse.json();
       
       const completedQuestIds = userProfile.completedQuests.map(q => q.questId._id);
@@ -79,7 +79,7 @@ const Home = () => {
     
     setIsLoading(true);
     try {
-      const response = await fetch(`http://localhost:5000/api/quests/${currentQuest.id}/checkpoint/${currentQuest.nextCheckpointId}/complete`, {
+      const response = await fetch(`/api/quests/${currentQuest.id}/checkpoint/${currentQuest.nextCheckpointId}/complete`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: user._id })
@@ -89,7 +89,7 @@ const Home = () => {
       
       if (response.ok) {
         if (data.allCompleted) { // trigger achievement completion
-          await fetch ('http://localhost:5000/api/completion/complete', {
+          await fetch ('/api/completion/complete', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify({
