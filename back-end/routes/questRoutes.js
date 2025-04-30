@@ -2,7 +2,7 @@ import express from 'express';
 import Quest from '../models/Quest.js';
 import User from '../models/User.js';
 import UserQuestProgress from '../models/UserQuestProgress.js';
-import { updateAchievement } from '../helpers/achievementUtils.js';
+import { updateAchievement } from '../helpers/checkAndUpdateAchievements.js';
 
 const router = express.Router();
 
@@ -34,25 +34,23 @@ router.post('/:questId/accept', async (req, res) => {
   try {
     const { userId } = req.body;
     const quest = await Quest.findById(req.params.questId);
-    
+
     if (!quest) {
       return res.status(404).json({ message: 'Quest not found' });
     }
-    
-    // Check if user already has an active quest
+
     const activeQuest = await UserQuestProgress.findOne({
       userId,
       isCompleted: false
     });
-    
+
     if (activeQuest) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         message: 'You already have an active quest. Please complete or abandon it first.',
         activeQuest
       });
     }
-    
-    // Create UserQuestProgress record
+
     const questProgress = new UserQuestProgress({
       userId,
       questId: quest._id,
@@ -62,14 +60,14 @@ router.post('/:questId/accept', async (req, res) => {
         attempts: 0
       }))
     });
-    
+
     await questProgress.save();
-    
-    // Update user's currentQuests (should only have one)
+
     await User.findByIdAndUpdate(userId, {
       $set: { currentQuests: [questProgress._id] }
     });
 
+    // ✅ Track accept-based achievements
     await updateAchievement(userId, 'First Quest Accepted');
     await updateAchievement(userId, 'Accepted Quests');
 
@@ -77,9 +75,8 @@ router.post('/:questId/accept', async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Failed to accept quest', error: error.message });
   }
-
-
 });
+
 
 router.post('/:questId/complete', async (req, res) => {
   try {

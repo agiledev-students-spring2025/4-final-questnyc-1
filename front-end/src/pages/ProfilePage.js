@@ -39,8 +39,11 @@ function ProfilePage() {
                 />
             </div>
 
-            {/* Username */}
+            {/* Username and XP*/}
             <h2 className="mt-sm">{user.username}</h2>
+            <p style={{ fontWeight: 'bold', fontSize: '1.2em' }}>
+                Total XP: {user.totalXP ?? 0}
+            </p>
 
             {/* First Joined */}
             <p style={{ color: 'var(--text-secondary)' }}>First Joined: {user.firstJoined}</p>
