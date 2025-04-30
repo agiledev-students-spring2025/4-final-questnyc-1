@@ -17,6 +17,9 @@ Quest NYC transforms New York City into a real-world RPG where players embark on
 - **Database:** MongoDB for storing persistent quest, user progress, and leaderboard data
 - **Authentication:** JWT for secure user sessions
 
+## DigitalOcean Link
+http://134.122.5.224/
+
 ## Setup Instructions
 
 1. **Clone the repository**
