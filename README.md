@@ -1,21 +1,20 @@
 # Quest NYC: The Ultimate Urban Exploration Game
 
-Quest NYC transforms New York City into a real-world RPG where players complete quests, solve puzzles, and collect virtual rewards by exploring key locations. The app encourages walking, exploration, and engagement with the city's rich history and culture.
+Quest NYC transforms New York City into a real-world RPG where players embark on quests across the 5 boroughs, track their progress, and earn achievements through the exploration of key locations. The app encourages walking, exploration, and engagement with the city's rich history and culture.
 
 ## Features
 - Location-based quests and challenges across NYC
 - Themed adventures (Historic NYC, Hidden Art, Foodie Hunt, Ghost Stories)
 - Interactive maps with real-time quest progress
-- Trivia challenges and location-based puzzles
-- XP and collectible reward system
-- Leaderboards for friendly competition
+- XP reward system through Quest Completion and Achievements
+- Leaderboard for friendly competition
 - User profiles and progress tracking
 - Personalized quest recommendations
 
 ## Technologies
 - **Frontend:** React/Next.js for SSR and performance optimization
 - **Backend:** Node.js, Express
-- **Database:** MongoDB for storing quests, user progress, and leaderboards
+- **Database:** MongoDB for storing persistent quest, user progress, and leaderboard data
 - **Authentication:** JWT for secure user sessions
 
 ## Setup Instructions
@@ -32,10 +31,10 @@ Quest NYC transforms New York City into a real-world RPG where players complete 
    npm install
    ```
 
-3. **Add .env file with credentials**
+3. **Add .env file with MongoDB credentials**
    Create a `.env` file in the back-end directory with:
    ```
-   MONGODB_URI=mongodb+srv://sz3991:sz3991@cluster0.g4rtz2l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+   MONGODB_URI=your_mongodb_connection_string
    ```
 
 4. **Start the backend server**
@@ -54,7 +53,7 @@ Quest NYC transforms New York City into a real-world RPG where players complete 
 6. **Access the application**
    - The webpage will automatically open in your browser
    - Alternatively, visit: http://localhost:3000
-   - The interface is optimized for mobile devices - use browser inspect tools and select a mobile phone dimension (iPhone 12 Pro recommended)
+   - The interface is optimized for mobile devices - on desktops, use browser inspect tools and select a mobile phone dimension (iPhone 12 Pro recommended)
 
 ## Team Members
 
