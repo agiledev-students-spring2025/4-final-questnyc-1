@@ -61,11 +61,16 @@ function AchievementsPage() {
                     achievements.filter(a => !a.completed).map((a, index) => (
                         <div key={index} className="achievement-item">
                             <span className="achievement-name">{a.name}</span>
+                            <div>Goal: </div>
+                            {a.description && (
+                                <p className="achievement-subtext">{a.description}</p>
+                            )}
                             <div className="progress-container">
                                 <div className="progress-fill" style={{ width: `${(a.progress / a.total) * 100}%` }}></div>
                             </div>
                             <span className="progress-text">{a.progress}/{a.total}</span>
                         </div>
+                        
                     ))
                 ) : (
                     <p className="text-center">No achievements in progress</p>
