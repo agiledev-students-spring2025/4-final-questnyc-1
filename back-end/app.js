@@ -52,6 +52,7 @@ app.get('/api/profile', async (req, res) => {
       profilePic: user.profilePic,
       username: user.username,
       firstJoined: new Date(user.firstJoined).toLocaleDateString(),
+      totalXP: user.totalXP
     });
   } catch (err) {
     res.status(500).json({ message: 'Error fetching profile', error: err.message });
@@ -159,56 +160,6 @@ function generateRandomQuest(id) {
     reward: rewardEXP
   }
 }
-
-// const staticQuestList = Array.from({ length: 6 }, (_, i) => generateRandomQuest(`quest${i + 1}`))
-
-// app.get('/api/quests/:questId', (req, res) => {
-//   const questId = req.params.questId
-//   const quest = staticQuestList.find(q => q.id === questId)
-//   if (!quest) return res.status(404).json({ message: 'Quest not found' })
-//   res.json(quest)
-// })
-
-// app.post('/api/quests/:questId/accept', (req, res) => {
-//   const questId = req.params.questId
-//   const quest = staticQuestList.find(q => q.id === questId)
-//   if (!quest) return res.status(404).json({ message: 'Quest not found' })
-//   currentQuest = quest
-//   res.json({ message: `Quest ${questId} accepted`, quest: currentQuest })
-// })
-
-/**
- * Completed Quests Route
- */
-// app.get('/api/completed-quests', (req, res) => {
-//   const completedQuests = [
-//     {
-//       id: 1,
-//       title: 'Quest #1',
-//       information: '[Quest Information]',
-//       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-//       progress: '5/5',
-//       progressPercent: 100
-//     },
-//     {
-//       id: 2,
-//       title: 'Quest #2',
-//       information: '[Quest Information]',
-//       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-//       progress: '3/3',
-//       progressPercent: 100
-//     },
-//     {
-//       id: 3,
-//       title: 'Quest #3',
-//       information: '[Quest Information]',
-//       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-//       progress: '7/7',
-//       progressPercent: 100
-//     }
-//   ]
-//   res.json(completedQuests)
-// })
 
 /**
  * Achievements Route
