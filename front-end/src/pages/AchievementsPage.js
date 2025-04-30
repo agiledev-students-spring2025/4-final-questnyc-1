@@ -1,4 +1,3 @@
-// AchievementsPage.js
 import { React, useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/index.css';
@@ -12,7 +11,7 @@ function AchievementsPage() {
     const [achievements, setAchievements] = useState([]);
     const [loading, setLoading] = useState(true);
     const [username, setUsername] = useState('');
-    
+
     // Get userId from query params or use current user
     const queryParams = new URLSearchParams(location.search);
     const userId = queryParams.get('userId') || (authUser ? authUser._id : localStorage.getItem('userId'));
@@ -24,7 +23,7 @@ function AchievementsPage() {
                 const achievementsRes = await fetch(`/api/achievements/${userId}`);
                 const achievementsData = await achievementsRes.json();
                 setAchievements(achievementsData);
-                
+
                 // If this is a friend's profile, fetch their username
                 if (queryParams.get('userId')) {
                     const userRes = await fetch(`/api/auth/users/${userId}/fullprofile`);
@@ -39,7 +38,7 @@ function AchievementsPage() {
                 setLoading(false);
             }
         };
-        
+
         if (userId) {
             fetchAchievements();
         } else {
@@ -54,7 +53,7 @@ function AchievementsPage() {
             <h1 className="achievements-title">
                 {username ? `${username}'s Achievements` : 'Achievements'}
             </h1>
-            
+
             <h2 className="section-header">In Progress</h2>
             <div className="achievements-section">
                 {achievements.filter(a => !a.completed).length > 0 ? (
@@ -76,7 +75,7 @@ function AchievementsPage() {
                     <p className="text-center">No achievements in progress</p>
                 )}
             </div>
-            
+
             <h2 className="section-header">Completed</h2>
             <div className="achievements-section">
                 {achievements.filter(a => a.completed).length > 0 ? (
@@ -95,16 +94,16 @@ function AchievementsPage() {
                     <p className="text-center">No completed achievements</p>
                 )}
             </div>
-            
+
             {queryParams.get('userId') && (
-                <button 
+                <button
                     className="btn btn-secondary btn-block"
                     onClick={() => navigate(`/friend-profile/${userId}`)}
                 >
                     Back to Profile
                 </button>
             )}
-            
+
             <NavBar />
         </div>
     );

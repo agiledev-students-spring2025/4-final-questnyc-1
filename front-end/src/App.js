@@ -18,12 +18,11 @@ import CompletedQuestsPage from './pages/CompletedQuestsPage.js';
 import AddFriendPage from './pages/AddFriendPage.js'
 
 
-// import { useLocation } from 'react-router-dom';
 function App() {
     return (
         <AuthProvider>
             <Routes>
-            <Route path="/" element={<SplashPage />} />
+                <Route path="/" element={<SplashPage />} />
                 <Route path="/home-page" element={<Home />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/create-account" element={<CreateAccountPage />} />
@@ -32,7 +31,7 @@ function App() {
                 <Route path="/profile-page" element={<ProfilePage />} />
                 <Route path="/friend-profile/:friendId" element={<FriendProfilePage />} />
                 <Route path="/friends-list-page" element={<FriendsListPage />} />
-                <Route path="/add-friend" element={<AddFriendPage />} /> {/* Add this route */}
+                <Route path="/add-friend" element={<AddFriendPage />} />
                 <Route path="/leaderboard" element={<LeaderboardPage />} />
                 <Route path="/achievements" element={<AchievementsPage />} />
                 <Route path="/quest-detail" element={<QuestDetailPage />} />

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.js';
 import '../styles/index.css';
-import logo from '../assets/questnyclogo.png'; // ✅ Import logo
+import logo from '../assets/questnyclogo.png';
 
 function LoginPage() {
     const navigate = useNavigate();
@@ -23,7 +23,7 @@ function LoginPage() {
             const data = await res.json();
 
             if (res.ok) {
-                login(data.user); // Save user to context
+                login(data.user);
                 localStorage.setItem('userId', data.user._id);
                 navigate('/home-page');
             } else {
@@ -38,9 +38,9 @@ function LoginPage() {
     return (
         <div className="login-container">
             <div className="logo-circle mt-lg mb-lg" style={{ marginBottom: "25px" }}>
-                <img 
-                    src={logo} 
-                    alt="QuestNYC Logo" 
+                <img
+                    src={logo}
+                    alt="QuestNYC Logo"
                 />
             </div>
 

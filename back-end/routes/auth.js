@@ -3,8 +3,7 @@ import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import User from '../models/User.js';
 import PasswordReset from '../models/PasswordReset.js';
-import { seedAchievementsNewUser } from '../helpers/seedAchievementsNewUser.js'; // adjust if needed
-
+import { seedAchievementsNewUser } from '../helpers/seedAchievementsNewUser.js';
 
 const router = express.Router();
 

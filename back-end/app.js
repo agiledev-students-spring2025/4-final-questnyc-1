@@ -42,7 +42,7 @@ mongoose.connect(process.env.MONGODB_URI)
  */
 app.get('/api/profile', async (req, res) => {
   try {
-    const userId = req.query.userId; // later can use auth token
+    const userId = req.query.userId;
     if (!userId) return res.status(400).json({ message: 'Missing userId' });
 
     const user = await User.findById(userId).select('-password');

@@ -1,4 +1,3 @@
-// CompletedQuestsPage.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.js';
@@ -9,7 +8,7 @@ function CompletedQuestsPage() {
     const navigate = useNavigate();
     const location = useLocation();
     const { user: authUser } = useAuth();
-    
+
     // Get userId from query params or use current user
     const queryParams = new URLSearchParams(location.search);
     const userId = queryParams.get('userId') || (authUser ? authUser._id : localStorage.getItem('userId'));
@@ -34,7 +33,7 @@ function CompletedQuestsPage() {
                 }
                 const questsData = await questsResponse.json();
                 setCompletedQuests(questsData);
-                
+
                 // If this is a friend's profile, fetch their username
                 if (queryParams.get('userId')) {
                     const userRes = await fetch(`/api/auth/users/${userId}/fullprofile`);
@@ -61,7 +60,7 @@ function CompletedQuestsPage() {
             <h1 className="completed-quests-title">
                 {username ? `${username}'s Completed Quests` : 'Completed Quests'}
             </h1>
-            
+
             <div className="completed-quests-section">
                 {completedQuests.length > 0 ? (
                     completedQuests.map((quest) => (
@@ -94,7 +93,7 @@ function CompletedQuestsPage() {
             </div>
 
             {queryParams.get('userId') && (
-                <button 
+                <button
                     className="btn btn-primary btn-block"
                     onClick={() => navigate(`/friend-profile/${userId}`)}
                 >

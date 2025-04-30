@@ -1,4 +1,3 @@
-// models/Quest.js
 import mongoose from 'mongoose';
 
 const checkpointSchema = new mongoose.Schema({

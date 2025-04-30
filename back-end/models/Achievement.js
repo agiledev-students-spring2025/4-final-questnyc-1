@@ -1,10 +1,9 @@
-// models/Achievement.js
 import mongoose from 'mongoose';
 
 const achievementSchema = new mongoose.Schema({
   name: String,
   description: String,
-  total: Number, // goal to achieve
+  total: Number,
   type: { type: String, enum: ['daily', 'weekly', 'streak', 'custom'] },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   progress: { type: Number, default: 0 },

@@ -1,4 +1,3 @@
-// models/UserQuestProgress.js
 import mongoose from 'mongoose';
 
 const checkpointProgressSchema = new mongoose.Schema({
