@@ -49,9 +49,9 @@ function CreateAccountPage() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ 
-                    username, 
-                    password, 
+                body: JSON.stringify({
+                    username,
+                    password,
                     confirmPass,
                     profilePic: selectedProfilePic
                 })
@@ -83,15 +83,15 @@ function CreateAccountPage() {
             {/* Profile Picture Selection (scrolling horizontally) */}
             <div className="text-center mb-md">
                 <h4>Choose a Profile Picture:</h4>
-                <div 
-                    style={{ 
-                        display: 'flex', 
-                        overflowX: 'auto', 
-                        padding: '10px 0', 
-                        gap: '20px', 
+                <div
+                    style={{
+                        display: 'flex',
+                        overflowX: 'auto',
+                        padding: '10px 0',
+                        gap: '20px',
                         marginTop: '10px',
-                        scrollbarWidth: 'none', // Firefox
-                        msOverflowStyle: 'none' // IE
+                        scrollbarWidth: 'none',
+                        msOverflowStyle: 'none'
                     }}
                 >
                     {profilePicOptions.map((pic, index) => (

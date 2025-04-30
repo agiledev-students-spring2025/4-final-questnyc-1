@@ -9,30 +9,30 @@ export async function checkAndUpdateAchievements(userId, quest) {
   const markProgress = async (name, increment = 1) => {
     const ach = await Achievement.findOne({ userId, name });
     if (!ach) return;
-  
+
     const wasCompleted = ach.completed;
-  
+
     ach.progress += increment;
     if (ach.progress >= ach.total) {
       ach.progress = ach.total;
       ach.completed = true;
     }
-  
+
     ach.updatedAt = new Date();
     await ach.save();
-  
-    // ✅ Add XP if achievement just completed
+
+    // Add XP if achievement just completed
     if (!wasCompleted && ach.completed) {
       newlyCompleted.push({ name: ach.name, description: ach.description });
-  
+
       const xpForAchievement = 50;
       user.totalXP = (user.totalXP || 0) + xpForAchievement;
       await user.save();
     }
   };
-  
 
-  // ✅ 1. XP tracking
+
+  // XP tracking
   const user = await User.findById(userId);
   user.totalXP = (user.totalXP || 0) + (quest.rewardXP || 0);
   await user.save();
@@ -41,7 +41,7 @@ export async function checkAndUpdateAchievements(userId, quest) {
     await markProgress('All the Way');
   }
 
-  // ✅ 2. Basic milestones
+  // Basic milestones
   await markProgress('First Quest Completed');
   await markProgress('Completed Quests');
   await markProgress('Checkpoint Crusher', quest.checkpoints.length);
@@ -51,7 +51,7 @@ export async function checkAndUpdateAchievements(userId, quest) {
     await markProgress('High Roller XP');
   }
 
-  // ✅ 3. Theme-based achievements
+  // Theme-based achievements
   const themeMap = {
     'Ghost Stories': 'Ghost Hunter',
     'Historic NYC': 'History Buff',
@@ -65,7 +65,7 @@ export async function checkAndUpdateAchievements(userId, quest) {
     await markProgress(themeMap[quest.theme]);
   }
 
-  // ✅ 4. Daily quest tracking
+  // Daily quest tracking
   const todayStart = moment().startOf('day').toDate();
   const todayEnd = moment().endOf('day').toDate();
 
@@ -78,7 +78,7 @@ export async function checkAndUpdateAchievements(userId, quest) {
     await markProgress('Daily Quests');
   }
 
-  // ✅ 5. Weekly quest tracking
+  // Weekly quest tracking
   const weekStart = moment().startOf('week').toDate();
   const weekEnd = moment().endOf('week').toDate();
 
@@ -91,7 +91,7 @@ export async function checkAndUpdateAchievements(userId, quest) {
     await markProgress('Weekly Warrior');
   }
 
-  // ✅ 6. Streak logic
+  // Streak logic
   const today = moment().startOf('day');
   const last = moment(user.lastQuestDate).startOf('day');
 
@@ -127,7 +127,7 @@ export async function updateAchievement(userId, name, increment = 1) {
   await ach.save();
 
   if (!wasCompleted && ach.completed) {
-    // ✅ Reward XP for completed achievements (e.g., from quest acceptance)
+    // Reward XP for completed achievements (e.g., from quest acceptance)
     const user = await User.findById(userId);
     const xpForAchievement = 50;
     user.totalXP = (user.totalXP || 0) + xpForAchievement;

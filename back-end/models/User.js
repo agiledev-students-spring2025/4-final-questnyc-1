@@ -1,4 +1,3 @@
-// models/User.js - Updated with friends array
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
@@ -16,7 +15,7 @@ const userSchema = new mongoose.Schema({
         ref: 'UserQuestProgress'
     }],
     lastQuestDate: Date,
-    questStreak: {type: Number, default: 0},
+    questStreak: { type: Number, default: 0 },
     friends: [{
         userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         username: { type: String }
