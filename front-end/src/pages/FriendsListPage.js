@@ -19,7 +19,7 @@ function FriendListPage() {
             
             try {
                 setLoading(true);
-                const res = await fetch(`http://localhost:5000/api/friends/${authUser._id}`);
+                const res = await fetch(`/api/friends/${authUser._id}`);
                 if (res.ok) {
                     const data = await res.json();
                     setFriends(data);

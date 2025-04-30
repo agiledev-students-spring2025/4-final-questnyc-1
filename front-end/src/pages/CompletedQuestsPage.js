@@ -28,7 +28,7 @@ function CompletedQuestsPage() {
         const fetchData = async () => {
             try {
                 // Fetch completed quests
-                const questsResponse = await fetch(`http://localhost:5000/api/user/${userId}/quests/completed`);
+                const questsResponse = await fetch(`/api/user/${userId}/quests/completed`);
                 if (!questsResponse.ok) {
                     throw new Error('Failed to fetch completed quests');
                 }
@@ -37,7 +37,7 @@ function CompletedQuestsPage() {
                 
                 // If this is a friend's profile, fetch their username
                 if (queryParams.get('userId')) {
-                    const userRes = await fetch(`http://localhost:5000/api/auth/users/${userId}/fullprofile`);
+                    const userRes = await fetch(`/api/auth/users/${userId}/fullprofile`);
                     if (userRes.ok) {
                         const userData = await userRes.json();
                         setUsername(userData.username);

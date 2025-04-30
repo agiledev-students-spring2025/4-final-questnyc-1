@@ -13,7 +13,7 @@ function ProfilePage() {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/profile?userId=${authUser._id}`); // 👈 fetch real user
+                const res = await fetch(`/api/profile?userId=${authUser._id}`); // 👈 fetch real user
                 const data = await res.json();
                 setUser(data);
             } catch (error) {
